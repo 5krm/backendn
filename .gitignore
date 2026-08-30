@@ -22,3 +22,6 @@
 /.fleet
 /.idea
 /.vscode
+
+.vercel
+.env*
