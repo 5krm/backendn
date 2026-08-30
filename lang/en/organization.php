@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'follow' => 'Follow',
+    'unfollow' => 'Unfollow',
+    'following' => 'Following',
+    'back_to_courses' => 'Back to Courses',
+    'rating' => 'Rating',
+    'students' => 'Students',
+    'category' => 'Category',
+    'position' => 'Location',
+    'courses' => 'Courses',
+    'followers' => 'Followers',
+    'founded' => 'Founded',
+    'instructors' => 'Instructors',
+    'website' => 'Website',
+    'clickToVisit' => 'Click to visit →',
+    'courses_by' => 'Courses by :name',
+    'courses_available' => 'Courses',
+    'no_courses' => 'No courses available yet',
+    'view_course' => 'View Course',
+    'view_organization' => 'View organization',
+    'lessons' => 'Lessons',
+    'enrolled' => 'Enrolled',
+    'info' => 'Organization Info',
+    'contact_title' => 'Have a question?',
+    'contact_desc' => 'Reach out directly to the organization for assistance.',
+    'send_message' => 'Send message',
+    'followedBy' => 'followed by :followers students'
+];

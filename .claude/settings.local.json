@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php \"E:/projects/my-php84-app/training-portal/artisan\")"
+    ]
+  }
+}

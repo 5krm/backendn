@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" width="100%" height="100%">
+  <defs>
+    <!-- Card Surface Gradient -->
+    <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="70%" stop-color="#F2F3F5" />
+      <stop offset="100%" stop-color="#E1E3E8" />
+    </linearGradient>
+
+    <!-- Drop Shadow / Inner Depth Gradient -->
+    <linearGradient id="shadowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9EA3B0" />
+      <stop offset="100%" stop-color="#6C7280" />
+    </linearGradient>
+
+    <!-- Soft Glow/Inner Light -->
+    <linearGradient id="innerHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <g transform="rotate(-12, 120, 80)">
+    
+    <!-- 1. Back/Bottom Shadow Thickness Layer -->
+    <path d="M 66 38 
+             L 174 26 
+             A 12 12 0 0 1 188 38 
+             L 182 108 
+             A 12 12 0 0 1 170 120 
+             L 95 128 
+             L 75 145 
+             L 78 130 
+             L 66 131 
+             A 12 12 0 0 1 52 119 
+             L 52 50 
+             A 12 12 0 0 1 66 38 Z" 
+          fill="url(#shadowGrad)" />
+
+    <!-- 2. Dark Outline Frame for Sketchy Look -->
+    <path d="M 64 34 
+             L 172 22 
+             A 14 14 0 0 1 188 36 
+             L 182 106 
+             A 14 14 0 0 1 168 120 
+             L 94 128 
+             L 72 146 
+             L 76 129 
+             L 64 130 
+             A 14 14 0 0 1 48 116 
+             L 48 48 
+             A 14 14 0 0 1 64 34 Z" 
+          fill="#8A909D" />
+
+    <!-- 3. Main Speech Bubble Front Face -->
+    <path d="M 65 35 
+             L 171 24 
+             A 12 12 0 0 1 185 37 
+             L 179 105 
+             A 12 12 0 0 1 166 117 
+             L 93 125 
+             L 73 142 
+             L 76 126 
+             L 65 127 
+             A 12 12 0 0 1 51 114 
+             L 51 47 
+             A 12 12 0 0 1 65 35 Z" 
+          fill="url(#bubbleGrad)" />
+
+    <!-- 4. Inner Top/Left Highlight Border -->
+    <path d="M 66 38 
+             L 168 28 
+             A 9 9 0 0 1 178 37 
+             L 175 60 
+             L 55 72 
+             L 55 49 
+             A 9 9 0 0 1 66 38 Z" 
+          fill="url(#innerHighlight)" 
+          opacity="0.6" />
+
+    <!-- 5. Three Hand-Drawn Stars -->
+    <!-- Star 1 (Left) -->
+    <polygon points="85,58 88,67 97,66 90,73 92,82 85,76 77,81 80,72 73,66 82,66" fill="#888E9B" />
+    
+    <!-- Star 2 (Center) -->
+    <polygon points="117,55 120,64 129,63 122,70 124,79 117,73 109,78 112,69 105,63 114,63" fill="#888E9B" />
+    
+    <!-- Star 3 (Right) -->
+    <polygon points="149,52 152,61 161,60 154,67 156,76 149,70 141,75 144,66 137,60 146,60" fill="#888E9B" />
+
+  </g>
+
+  <!-- 6. Decorative Burst Lines & Dots (Hand-Drawn Accent Marks) -->
+  <g stroke="#9EA3B0" stroke-width="2.5" stroke-linecap="round" fill="none">
+    <!-- Top-Left Action Lines -->
+    <line x1="42" y1="52" x2="30" y2="44" />
+    <line x1="53" y1="41" x2="48" y2="28" />
+    <line x1="40" y1="64" x2="26" y2="65" />
+
+    <!-- Right Side Vertical Accent Curve -->
+    <path d="M 200 48 Q 202 65 199 82" stroke-width="2" opacity="0.7" />
+
+    <!-- Scattered Dots -->
+    <circle cx="98" cy="28" r="1" fill="#9EA3B0" stroke="none" />
+    <circle cx="50" cy="85" r="1.2" fill="#9EA3B0" stroke="none" />
+    <circle cx="42" cy="112" r="1" fill="#9EA3B0" stroke="none" />
+    <circle cx="204" cy="98" r="1.2" fill="#9EA3B0" stroke="none" />
+  </g>
+
+  <!-- 7. Sleepy "z z" Text in Bottom-Right -->
+  <g fill="#8A909D" font-family="sans-serif" font-weight="bold" font-style="italic">
+    <circle cx="178" cy="128" r="1" fill="#8A909D" />
+    <text x="186" y="129" font-size="13" letter-spacing="-1">z</text>
+    <text x="196" y="126" font-size="15" letter-spacing="-1">z</text>
+  </g>
+</svg>

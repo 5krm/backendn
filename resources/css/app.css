@@ -1,0 +1,365 @@
+@import url("https://fonts.googleapis.com/css2?family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --choices-bg-color: transparent;
+    --choices-border-radius: var(--rounded-btn, 0.5rem);
+}
+
+html {
+    font-size: 14px;
+}
+
+/* Force Zain font on everything */
+html,
+body,
+* {
+    font-family: "Zain", sans-serif !important;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+.btn-outline.btn-primary:hover,
+.btn-primary,
+.btn-error {
+    @apply text-white;
+}
+
+.link {
+    @apply no-underline text-secondary hover:text-primary hover:underline;
+}
+
+.card-body {
+    @apply p-6;
+}
+
+.checkbox:checked,
+.checkbox[checked="true"],
+.checkbox[aria-checked="true"] {
+    background-image:
+        linear-gradient(-45deg, transparent 65%, var(--chkbg) 65.99%),
+        linear-gradient(45deg, transparent 75%, var(--chkbg) 75.99%),
+        linear-gradient(-45deg, var(--chkbg) 40%, transparent 40.99%),
+        linear-gradient(
+            45deg,
+            var(--chkbg) 30%,
+            white 30.99%,
+            white 40%,
+            transparent 40.99%
+        ),
+        linear-gradient(-45deg, white 50%, var(--chkbg) 50.99%);
+}
+
+/* Scrollbar CSS */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #f6f6f7;
+    box-shadow: inset 0 0 6px #f6f6f7;
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background: #00cc99 !important;
+    -webkit-box-shadow: inset 0 0 6px #f6f6f7;
+    box-shadow: inset 0 0 6px #f6f6f7;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #00cc99 !important;
+}
+
+/* End Scrollbar CSS */
+
+.lesson .tabs-bordered > .tab:not(input:checked) {
+    padding-bottom: 35px;
+    border-bottom: 3px solid transparent;
+}
+
+.lesson .tab.tab-active:not(.tab-disabled):not([disabled]),
+.tab:is(input:checked) {
+    padding-bottom: 35px;
+    border-bottom: 3px solid #00cc99;
+}
+
+.note-colors .arrow {
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.modal-screen,
+.modal-screen .modal-box {
+    border-radius: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+
+iframe {
+    width: 100% !important;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+}
+
+.reversed {
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
+
+.lesson-side-label {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .lesson-side-label {
+        display: flex;
+    }
+}
+
+.lesson-side-menu-details {
+    display: none;
+}
+
+.lesson-side-menu-open .lesson-side-label {
+    display: none;
+}
+
+.lesson-side-menu-open .lesson-side-menu-details {
+    display: block;
+}
+
+/* Professional Course Details Styling */
+
+/* Hide scrollbar for tab navigation */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Better focus states for accessibility */
+.btn:focus-visible,
+.input:focus-visible,
+a:focus-visible {
+    outline: 2px solid #00cc99;
+    outline-offset: 2px;
+}
+
+/* Smooth scroll padding for fixed headers */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+/* Professional hover effects */
+.btn {
+    transition: all 0.2s ease-in-out;
+    height: 2.5rem;
+    min-height: 2.5rem !important;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Card hover effects */
+.card {
+    transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Border transitions */
+.border {
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* Details/Summary professional styling */
+details summary {
+    transition: all 0.2s ease-in-out;
+}
+
+details[open] > summary {
+    margin-bottom: 0;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Professional typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: -0.025em;
+}
+
+
+/* Sticky sidebar */
+.sidebar-sticky {
+    position: sticky;
+    top: 8rem;
+}
+
+/* Professional spacing */
+section {
+    scroll-margin-top: 6rem;
+}
+
+/* Clean animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slideInDown {
+    animation: slideInDown 0.45s ease-out both;
+}
+
+@keyframes pulseGlow {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Loading states */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, #f0f0f0 4%, #e0e0e0 25%, #f0f0f0 36%);
+    background-size: 1000px 100%;
+}
+
+/* Professional shadows */
+.shadow-professional {
+    box-shadow:
+        0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.shadow-professional-lg {
+    box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.prose :where(table):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    text-align: inherit;
+}
+
+.grecaptcha-badge {
+    visibility: hidden !important;
+}
+
+html[dir="rtl"] .choices[data-type*="select-one"]::after {
+    right: unset;
+    left: var(--choices-arrow-right, 11.5px) !important;
+}
+
+.lesson-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.bg-dots {
+    background-image: radial-gradient(
+        theme("colors.slate.200") 1.5px,
+        transparent 1.5px
+    );
+    background-size: 24px 24px;
+}
+
+.fi-fo-toggle-buttons button[data-checked] span,
+.fi-fo-toggle-buttons button[data-checked] svg {
+    --text: #ffffff !important;
+}
+@media (min-width: 1400px) {
+    main.container:has(.exam-info){
+    max-width: none;
+
+    }
+}
+main.container:has(.exam-info){
+    margin:0;
+    padding:0px;
+}
+.btn-sm{
+    min-height: 2rem!important;
+    height:2rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+
+.btn-linkedin{    
+    @apply py-2 px-3  bg-white rounded-lg text-sm flex items-center shadow-sm;     
+}
+.btn-linkedin:hover, .btn-linkedin:hover i{
+    border:1px solid #0A66C2;
+    color: #0A66C2;
+}

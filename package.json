@@ -1,0 +1,27 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@iconify-json/heroicons": "^1.2.3",
+        "@tailwindcss/typography": "^0.5.10",
+        "autoprefixer": "^10.4.16",
+        "axios": "^1.6.4",
+        "daisyui": "^4.6.0",
+        "laravel-vite-plugin": "^1.0.0",
+        "postcss": "^8.4.33",
+        "tailwindcss": "^3.4.1",
+        "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "@iconify-json/mdi": "^1.1.64",
+        "@iconify/tailwind": "^0.1.4",
+        "@vimeo/player": "^2.21.0",
+        "alpinejs": "^3.15.2",
+        "swiper": "^11.0.7"
+    }
+}

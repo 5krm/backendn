@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="200" viewBox="0 0 240 200" fill="none">
+  <defs fill="#000000">
+    <!-- Card Drop Shadow -->
+    <filter id="shadow" x="15" y="40" width="210" height="120" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" fill="#000000">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.08" fill="#000000"/>
+    </filter>
+    <!-- Gradient Accents -->
+    <linearGradient id="primaryGlow" x1="0" y1="0" x2="240" y2="200" gradientUnits="userSpaceOnUse" fill="#000000">
+      <stop stop-color="#EEF2FF" fill="#000000"/>
+      <stop offset="1" stop-color="#F8FAFC" fill="#000000"/>
+    </linearGradient>
+    <linearGradient id="starGradient" x1="0" y1="0" x2="0" y2="100%" fill="#000000">
+      <stop stop-color="#CBD5E1" fill="#000000"/>
+      <stop offset="1" stop-color="#94A3B8" fill="#000000"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Backdrop Circle -->
+  <circle cx="120" cy="100" r="75" fill="#F1F5F9" opacity="0.7"/>
+  <circle cx="180" cy="45" r="4" fill="#71fcdb"/>
+  <circle cx="55" cy="150" r="6" fill="#91decb"/>
+
+  <!-- Floating Glass Card Base -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="50" width="180" height="90" rx="16" fill="url(#primaryGlow)" stroke="#E2E8F0" stroke-width="1.5"/>
+  </g>
+
+  <!-- Star Rating Slot Placeholder Bar -->
+  <g transform="translate(42, 80)">
+    <!-- 5 Empty Stars -->
+    <!-- Star 1 -->
+    <path d="M12 2l2.9 6.2 6.8.8-5 4.7 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.7 6.8-.8z" fill="#E2E8F0"/>
+    <!-- Star 2 -->
+    <path d="M44 2l2.9 6.2 6.8.8-5 4.7 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.7 6.8-.8z" fill="#E2E8F0"/>
+    <!-- Star 3 -->
+    <path d="M76 2l2.9 6.2 6.8.8-5 4.7 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.7 6.8-.8z" fill="#E2E8F0"/>
+    <!-- Star 4 -->
+    <path d="M108 2l2.9 6.2 6.8.8-5 4.7 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.7 6.8-.8z" fill="#E2E8F0"/>
+    <!-- Star 5 -->
+    <path d="M140 2l2.9 6.2 6.8.8-5 4.7 1.3 6.7-6-3.3-6 3.3 1.3-6.7-5-4.7 6.8-.8z" fill="#E2E8F0"/>
+  </g>
+
+  <!-- CTA Badge (Overlaying Bottom Right) -->
+  <g transform="translate(160, 105)">
+    <circle cx="16" cy="16" r="16" fill="#00cc99"/>
+    <path d="M16 10v12M10 16h12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="#000000"/>
+  </g>
+
+  <!-- Dashed Target Arc -->
+  <path d="M40 120 C 70 135, 130 135, 150 125" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+</svg>

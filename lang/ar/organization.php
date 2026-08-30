@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'follow' => 'متابعة',
+    'unfollow' => 'إلغاء المتابعة',
+    'following' => 'متابَع',
+    'back_to_courses' => 'العودة إلى الدورات',
+    'rating' => 'التقييم',
+    'students' => 'الطلاب',
+    'category' => 'التصنيف',
+    'position' => 'الموقع الرئيسي',
+    'courses' => 'الدورات',
+    'followers' => 'المتابِعون',
+    'founded' => 'تأسست',
+    'instructors' => 'المدربون',
+    'website' => 'الموقع الإلكتروني',
+    'visit' => 'زيارة',
+    'clickToVisit' => 'اضغط للزيارة →',
+    'courses_by' => 'دورات :name',
+    'courses_available' => 'الدورات',
+    'no_courses' => 'لا توجد دورات متاحة بعد',
+    'view_course' => 'عرض الدورة',
+    'view_organization' => 'عرض المؤسسة',
+    'lessons' => 'الدروس',
+    'enrolled' => 'المسجلون',
+    'info' => 'معلومات المؤسسة',
+    'contact_title' => 'هل لديك استفسار؟',
+    'contact_desc' => 'تواصل مباشرة مع فريق المؤسسة للحصول على المساعدة.',
+    'send_message' => 'إرسال رسالة',
+    'followedBy' => 'متابع من قبل :followers طالب'
+];
