@@ -57,7 +57,7 @@ class CertificateService
     private function generateCertificateNumber(): string
     {
         do {
-            $number = 'CERT-' . date('Y') . '-' . strtoupper(uniqid());
+            $number = 'CERT-'.date('Y').'-'.strtoupper(uniqid());
         } while (Certificate::query()->where('certificate_number', $number)->exists());
 
         return $number;

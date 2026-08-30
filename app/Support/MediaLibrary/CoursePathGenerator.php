@@ -14,11 +14,11 @@ class CoursePathGenerator implements PathGenerator
 
     public function getPathForConversions(Media $media): string
     {
-        return $this->getPath($media) . 'conversions/';
+        return $this->getPath($media).'conversions/';
     }
 
     public function getPathForResponsiveImages(Media $media): string
     {
-        return $this->getPath($media) . 'responsive/';
+        return $this->getPath($media).'responsive/';
     }
 }

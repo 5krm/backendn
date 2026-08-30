@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum SocialPlatform: string implements HasLabel, HasIcon
+enum SocialPlatform: string implements HasIcon, HasLabel
 {
     case Website = 'website';
     case LinkedIn = 'linkedin';

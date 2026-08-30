@@ -2,22 +2,27 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
 class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $direction = 'ltr';
-    private  $token;
+
+    private $token;
+
     private User $user;
+
     public static $createUrlCallback;
+
     public function __construct(User $user, $token)
     {
         $this->user = $user;
@@ -40,11 +45,13 @@ class ResetPassword extends Mailable
     public function content(): Content
     {
         $resetLink = $this->resetUrl();
+
         return new Content(
             markdown: 'emails.reset-password',
             with: ['user' => $this->user, 'url' => $resetLink, 'direction' => $this->direction]
         );
     }
+
     protected function resetUrl()
     {
         if (static::$createUrlCallback) {
@@ -57,11 +64,10 @@ class ResetPassword extends Mailable
         ], false));
     }
 
-
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

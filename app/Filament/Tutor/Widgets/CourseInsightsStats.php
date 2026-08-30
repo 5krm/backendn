@@ -7,7 +7,6 @@ use App\Models\Courses\Enrollment;
 use App\Models\Lessons\LessonTracking;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Support\Facades\DB;
 
 class CourseInsightsStats extends StatsOverviewWidget
 {
@@ -17,7 +16,7 @@ class CourseInsightsStats extends StatsOverviewWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return [];
         }
 
@@ -66,7 +65,7 @@ class CourseInsightsStats extends StatsOverviewWidget
                 ->descriptionIcon('heroicon-m-trophy')
                 ->color('success'),
 
-            Stat::make(__('tutor.stats.avg_progress'), number_format($avgProgress, 1) . '%')
+            Stat::make(__('tutor.stats.avg_progress'), number_format($avgProgress, 1).'%')
                 ->description(__('tutor.stats.average_student_progress'))
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('warning'),
@@ -76,7 +75,7 @@ class CourseInsightsStats extends StatsOverviewWidget
                 ->descriptionIcon('heroicon-m-user-plus')
                 ->color('info'),
 
-            Stat::make(__('tutor.stats.avg_score'), number_format($avgScore, 1) . '%')
+            Stat::make(__('tutor.stats.avg_score'), number_format($avgScore, 1).'%')
                 ->description(__('tutor.stats.average_student_score'))
                 ->descriptionIcon('heroicon-m-academic-cap')
                 ->color('primary'),

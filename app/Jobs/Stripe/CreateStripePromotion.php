@@ -16,11 +16,10 @@ class CreateStripePromotion implements ShouldQueue
     public function handle(StripeClient $stripe): void
     {
         $coupon = $stripe->coupons->create([
-            'name'=> $this->promotion->title, 
+            'name' => $this->promotion->title,
             'duration' => 'once',
             'percent_off' => $this->promotion->discount_percent,
         ]);
-
 
         $this->promotion->stripe_promotion_id = $coupon->id;
         $this->promotion->save();

@@ -2,9 +2,13 @@
 
 namespace App\Filament\Tutor\Pages;
 
+use App\Filament\Tutor\Widgets\RecentCommentsWidget;
+use App\Filament\Tutor\Widgets\RecentNotificationsWidget;
+use App\Filament\Tutor\Widgets\TutorStatsOverview;
+use App\Filament\Tutor\Widgets\UpcomingMilestonesWidget;
+use BackedEnum;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Support\Icons\Heroicon;
-use BackedEnum;
 
 class Dashboard extends BaseDashboard
 {
@@ -25,10 +29,10 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\TutorStatsOverview::class,
-            \App\Filament\Tutor\Widgets\UpcomingMilestonesWidget::class,
-            \App\Filament\Tutor\Widgets\RecentNotificationsWidget::class,
-            \App\Filament\Tutor\Widgets\RecentCommentsWidget::class,
+            TutorStatsOverview::class,
+            UpcomingMilestonesWidget::class,
+            RecentNotificationsWidget::class,
+            RecentCommentsWidget::class,
         ];
     }
 

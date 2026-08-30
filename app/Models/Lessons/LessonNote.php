@@ -2,9 +2,9 @@
 
 namespace App\Models\Lessons;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LessonNote extends Model
 {
@@ -24,6 +24,6 @@ class LessonNote extends Model
     }
 
     public const Colors = [
-        '#fde68a', '#d9f99d', '#fed7aa', '#ddd6fe', '#e7e5e4'
+        '#fde68a', '#d9f99d', '#fed7aa', '#ddd6fe', '#e7e5e4',
     ];
 }

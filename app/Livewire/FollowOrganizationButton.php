@@ -33,8 +33,6 @@ class FollowOrganizationButton extends Component
             return;
         }
 
-        
-
         $follow = OrganizationFollower::query()
             ->where('user_id', auth()->id())
             ->where('organization_id', $this->organization->id)

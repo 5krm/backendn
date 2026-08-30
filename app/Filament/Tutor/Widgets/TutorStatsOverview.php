@@ -21,7 +21,7 @@ class TutorStatsOverview extends StatsOverviewWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return [];
         }
 
@@ -45,7 +45,7 @@ class TutorStatsOverview extends StatsOverviewWidget
 
         // Optimized certificate count
         $certificatesCount = Certificate::where('tutor_id', $tutorId)->count();
-        
+
         // Optimized revenue calculation
         $totalRevenue = DB::table('courses')
             ->join('enrollments', 'courses.id', '=', 'enrollments.course_id')
@@ -84,7 +84,7 @@ class TutorStatsOverview extends StatsOverviewWidget
                 ->color('primary')
                 ->chart([2, 5, 10, 15, 22, 30, $certificatesCount]),
 
-            Stat::make(__('tutor.dashboard.total_revenue'), '$' . number_format($totalRevenue ?? 0, 2))
+            Stat::make(__('tutor.dashboard.total_revenue'), '$'.number_format($totalRevenue ?? 0, 2))
                 ->description(__('tutor.dashboard.total_revenue_desc'))
                 ->descriptionIcon('heroicon-m-currency-dollar')
                 ->color('primary')

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\App\Lessons;
 
-use App\Models\User;
 use App\Enums\CourseStatus;
-use App\Models\Quizzes\Quiz;
-use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
 use App\Events\LessonTrackingEvent;
-use App\Models\Courses\Enrollment;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Courses\Course;
+use App\Models\Courses\Enrollment;
+use App\Models\Lessons\Lesson;
 use App\Models\Lessons\LessonTracking;
-use App\ViewModels\Courses\CourseView;
-use App\ViewModels\Lessons\LessonView;
+use App\Models\Quizzes\Quiz;
+use App\Models\User;
 use App\Services\CourseCompletionService;
+use App\ViewModels\Courses\CourseView;
 use App\ViewModels\Lessons\LessonDetailsView;
+use App\ViewModels\Lessons\LessonView;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -25,12 +25,12 @@ class LessonController extends Controller
         $lastLesson = LessonTracking::with('lesson')
             ->where('user_id', auth()->id())
             ->where('course_id', $course->id)
-            ->whereHas('lesson', fn($q) =>  $q->where('status', CourseStatus::published))
+            ->whereHas('lesson', fn ($q) => $q->where('status', CourseStatus::published))
             ->orderBy('created_at', 'desc')
             ->first()?->lesson;
 
         // If no tracked lesson, try to get the first published lesson
-        if (!$lastLesson) {
+        if (! $lastLesson) {
             $lastLesson = Lesson::where('course_id', $course->id)
                 ->where('status', CourseStatus::published)
                 ->orderBy('order')
@@ -38,7 +38,7 @@ class LessonController extends Controller
         }
 
         // If still no lesson found, redirect to course details with a message
-        if (!$lastLesson) {
+        if (! $lastLesson) {
             return redirect()
                 ->route('app.courses.details', $course->slug)
                 ->with('error', 'This course has no lessons yet. Please check back later.');
@@ -59,7 +59,7 @@ class LessonController extends Controller
         /** @var User */
         $user = auth()->user();
 
-        if (!$lesson->completed($user->id)) {
+        if (! $lesson->completed($user->id)) {
             if ($lesson->quizzes()->exists()) {
                 return redirect(route('app.lessons.lesson', $lesson?->public_key));
             }
@@ -68,13 +68,13 @@ class LessonController extends Controller
         }
 
         $courseHasExam = Quiz::query()
-            ->whereHas('lesson', fn($q) =>  $q->where('course_id', $lesson->course->id))
+            ->whereHas('lesson', fn ($q) => $q->where('course_id', $lesson->course->id))
             ->exists();
 
         if ($courseHasExam) {
             return redirect(route('app.courses.exam-info', ['course' => $lesson->course->slug]));
         } else {
-            (new CourseCompletionService())->finish_course($lesson->course, 100);
+            (new CourseCompletionService)->finish_course($lesson->course, 100);
         }
 
         return redirect(route('app.courses.details', $lesson->course->slug));
@@ -93,15 +93,15 @@ class LessonController extends Controller
         $user = auth()->user();
 
         $previousLesson = $lesson->previous();
-        if ($previousLesson && !$previousLesson->completed($user->id)) {
-            if ($previousLesson->quizzes()->exists() || !$previousLesson->trackings()->where('user_id', $user->id)->exists()) {
+        if ($previousLesson && ! $previousLesson->completed($user->id)) {
+            if ($previousLesson->quizzes()->exists() || ! $previousLesson->trackings()->where('user_id', $user->id)->exists()) {
                 return redirect(route('app.lessons.lesson', $previousLesson?->public_key));
             }
 
             event(new LessonTrackingEvent($previousLesson));
         }
 
-        if (!$user->lessons()->where('public_key', $key)->exists()) {
+        if (! $user->lessons()->where('public_key', $key)->exists()) {
             $user->lessons()->attach($lesson, ['course_id' => $lesson->course_id]);
         }
 
@@ -109,26 +109,26 @@ class LessonController extends Controller
         $lessonModel = (new LessonDetailsView($lesson, $lesson->course?->slug, $trackings))->toArray();
 
         $course = $lesson->course;
-        $course->load(['sections' => fn($q) => $q->whereHas('publishedLessons'), 'sections.publishedLessons'])->loadCount('publishedLessons');
+        $course->load(['sections' => fn ($q) => $q->whereHas('publishedLessons'), 'sections.publishedLessons'])->loadCount('publishedLessons');
 
         $enrollment = Enrollment::query()
             ->where('course_id', $lesson->course_id)
             ->where('user_id', Auth::id())
             ->first();
 
-        $sections = $course->sections->map(fn($sec) => array_merge($sec->toArray(), [
+        $sections = $course->sections->map(fn ($sec) => array_merge($sec->toArray(), [
             'textDuration' => $sec->textDuration,
-            'lessons' => $sec->publishedLessons->map(fn($lesson) => (new LessonView($lesson, $trackings))->toArray())
+            'lessons' => $sec->publishedLessons->map(fn ($lesson) => (new LessonView($lesson, $trackings))->toArray()),
         ]));
 
         $courseModel = (new CourseView($course))->toArray();
-        $courseModel['has_quizzes'] = Quiz::whereHas('lesson', fn($q) =>  $q->where('course_id', $course->id))->exists();
+        $courseModel['has_quizzes'] = Quiz::whereHas('lesson', fn ($q) => $q->where('course_id', $course->id))->exists();
 
         return view('app.courses.lesson', [
             'enrollment' => $enrollment,
             'course' => $courseModel,
             'lesson' => $lessonModel,
-            'sections' => $sections
+            'sections' => $sections,
         ]);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Filament\Tutor\Resources\Organizations;
 use App\Filament\Tutor\Resources\Organizations\Pages\CreateOrganization;
 use App\Filament\Tutor\Resources\Organizations\Pages\EditOrganization;
 use App\Filament\Tutor\Resources\Organizations\Pages\ListOrganizations;
+use App\Filament\Tutor\Resources\Organizations\RelationManagers\CoursesRelationManager;
+use App\Filament\Tutor\Resources\Organizations\RelationManagers\UsersRelationManager;
 use App\Filament\Tutor\Resources\Organizations\Schemas\OrganizationForm;
 use App\Filament\Tutor\Resources\Organizations\Tables\OrganizationsTable;
 use App\Models\Organization;
@@ -13,8 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use App\Filament\Tutor\Resources\Organizations\RelationManagers\UsersRelationManager;
-use App\Filament\Tutor\Resources\Organizations\RelationManagers\CoursesRelationManager;
+
 class OrganizationResource extends Resource
 {
     protected static ?string $model = Organization::class;
@@ -23,7 +24,7 @@ class OrganizationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-     public static function getNavigationGroup(): string
+    public static function getNavigationGroup(): string
     {
         return __('tutor.nav.settings');
     }
@@ -47,7 +48,6 @@ class OrganizationResource extends Resource
     {
         return __('tutor.resources.organization');
     }
-    
 
     public static function getPluralModelLabel(): string
     {

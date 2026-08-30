@@ -9,15 +9,18 @@ use Symfony\Component\Process\Process;
 class BackupRun
 {
     private int $timeout = 1200;
+
     private string $outputFilename;
+
     private string $outputFilepath;
+
     private string $credentialsFile;
 
     public function __construct()
     {
-        $this->outputFilename = 'db_backup_' . now()->timestamp . '.sql.gz';
-        $this->credentialsFile = storage_path('app/.my-' . now()->format('Y-m-d_H-i-s') . '.cnf');
-        $this->outputFilepath = storage_path('app/backups/' . $this->outputFilename);
+        $this->outputFilename = 'db_backup_'.now()->timestamp.'.sql.gz';
+        $this->credentialsFile = storage_path('app/.my-'.now()->format('Y-m-d_H-i-s').'.cnf');
+        $this->outputFilepath = storage_path('app/backups/'.$this->outputFilename);
     }
 
     public function execute(): bool
@@ -46,7 +49,7 @@ class BackupRun
                 );
             }
 
-            $this->uploadBackupToAzure($this->outputFilepath, 'backups/' . $this->outputFilename);
+            $this->uploadBackupToAzure($this->outputFilepath, 'backups/'.$this->outputFilename);
             $deleteLocalBackup = true;
 
             return true;
@@ -93,7 +96,7 @@ class BackupRun
         ];
 
         $ignoreOptions = collect($ignoreTables)
-            ->map(fn($table) => "--ignore-table={$database}.{$table}")
+            ->map(fn ($table) => "--ignore-table={$database}.{$table}")
             ->implode(' ');
 
         $command = sprintf(
@@ -109,10 +112,12 @@ class BackupRun
 
     private function setupBackupDirectory(): void
     {
-        if (is_dir(storage_path('app/backups/'))) return;
+        if (is_dir(storage_path('app/backups/'))) {
+            return;
+        }
         $created = mkdir(storage_path('app/backups/'), 0755, true);
 
-        if (!$created) {
+        if (! $created) {
             throw new \Exception('Failed to create temp backup directory');
         }
     }

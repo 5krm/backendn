@@ -3,8 +3,6 @@
 namespace App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons;
 
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Pages\ListLessons;
-use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Pages\CreateLesson;
-use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Pages\EditLesson;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Schemas\LessonForm;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Tables\LessonsTable;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\SectionResource;
@@ -32,7 +30,6 @@ class LessonResource extends Resource
 
     protected static ?string $relatedResource = QuizResource::class;
 
-
     public static function form(Schema $schema): Schema
     {
         return LessonForm::configure($schema);
@@ -47,6 +44,7 @@ class LessonResource extends Resource
     {
         return __('tutor.resources.lesson');
     }
+
     public static function getPluralModelLabel(): string
     {
         return __('tutor.resources.lessons');
@@ -85,12 +83,12 @@ class LessonResource extends Resource
     {
         // If for some reason the hidden fields weren't set (e.g. direct API call),
         // this ensures data integrity.
-        if (empty($data['section_id']) && !empty($data['course_id'])) {
+        if (empty($data['section_id']) && ! empty($data['course_id'])) {
             // This case is unlikely if the form is correct, but good for safety
             return $data;
         }
 
-        if (empty($data['course_id']) && !empty($data['section_id'])) {
+        if (empty($data['course_id']) && ! empty($data['section_id'])) {
             $section = CourseSection::find($data['section_id']);
             if ($section) {
                 $data['course_id'] = $section->course_id;
@@ -109,13 +107,17 @@ class LessonResource extends Resource
     {
         // Use the route parameter key defined in getParentId()
         $parentId = request()->route(static::getParentId());
-        if (!$parentId) return null;
+        if (! $parentId) {
+            return null;
+        }
 
         return CourseSection::find($parentId);
     }
+
     public static function getCourse()
     {
         $courseId = request()->route()->parameter('course');
+
         return $courseId ? Course::where('slug', $courseId)->first() : null;
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use App\Models\Courses\Course;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -30,11 +30,11 @@ class Category extends Model
     public function getLocalizedNameAttribute(): string
     {
         $locale = app()->getLocale();
-        
+
         if ($locale === 'ar' && $this->name_ar) {
             return $this->name_ar;
         }
-        
+
         return $this->name;
     }
 
@@ -46,11 +46,11 @@ class Category extends Model
     public function scopeForLocale(Builder $query, ?string $locale = null): Builder
     {
         $locale = $locale ?? app()->getLocale();
-        
+
         if ($locale === 'ar') {
             return $query->whereNotNull('name_ar')->where('name_ar', '!=', '');
         }
-        
+
         return $query;
     }
 
@@ -59,7 +59,7 @@ class Category extends Model
         static::creating(function (Category $category) {
             $name = $category->name;
             if (Category::where('slug', Str::slug($name))->exists()) {
-                $name .= '-' . Str::random(5);
+                $name .= '-'.Str::random(5);
             }
 
             $category->slug = Str::slug($name);

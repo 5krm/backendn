@@ -17,12 +17,12 @@ class ViewNotification extends ViewRecord
                 ->label('Mark as Read')
                 ->icon('heroicon-o-check')
                 ->color('success')
-                ->visible(fn () => !$this->record->read_at)
+                ->visible(fn () => ! $this->record->read_at)
                 ->action(function () {
                     $this->record->markAsRead();
                     $this->redirect(NotificationResource::getUrl('index'));
                 }),
-            
+
             Actions\DeleteAction::make(),
         ];
     }
@@ -30,10 +30,10 @@ class ViewNotification extends ViewRecord
     protected function mutateFormDataBeforeFill(array $data): array
     {
         // Mark as read when viewing
-        if (!$this->record->read_at) {
+        if (! $this->record->read_at) {
             $this->record->markAsRead();
         }
-        
+
         return $data;
     }
 }

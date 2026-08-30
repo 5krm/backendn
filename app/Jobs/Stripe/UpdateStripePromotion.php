@@ -15,10 +15,12 @@ class UpdateStripePromotion implements ShouldQueue
 
     public function handle(StripeClient $stripe): void
     {
-        if ($this->promotion->stripe_promotion_id == null) return;
+        if ($this->promotion->stripe_promotion_id == null) {
+            return;
+        }
 
         $coupon = $stripe->coupons->update($this->promotion->stripe_promotion_id, [
-            'name' => $this->promotion->title
+            'name' => $this->promotion->title,
         ]);
 
         $this->promotion->stripe_promotion_id = $coupon->id;

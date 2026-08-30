@@ -2,14 +2,14 @@
 
 namespace App\Models\Quizzes;
 
+use App\Models\Courses\Course;
 use App\Models\Lessons\Lesson;
-use App\Models\Tutor;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Quiz extends Model
 {
@@ -26,7 +26,7 @@ class Quiz extends Model
 
     public function course(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Courses\Course::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function lesson(): BelongsTo
@@ -36,7 +36,7 @@ class Quiz extends Model
 
     public function tutor(): BelongsTo
     {
-        return $this->belongsTo(User::class, "user_id");
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function quizOptions(): HasMany
@@ -57,7 +57,7 @@ class Quiz extends Model
     public function correctOption(): Attribute
     {
         return Attribute::get(function () {
-            if (!$this->relationLoaded('quizOptions')) {
+            if (! $this->relationLoaded('quizOptions')) {
                 $this->load('quizOptions');
             }
 

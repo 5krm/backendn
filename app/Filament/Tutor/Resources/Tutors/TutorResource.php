@@ -2,12 +2,12 @@
 
 namespace App\Filament\Tutor\Resources\Tutors;
 
+use App\Filament\Tutor\RelationManagers\SocialLinksRelationManager;
 use App\Filament\Tutor\Resources\Tutors\Pages\CreateTutor;
 use App\Filament\Tutor\Resources\Tutors\Pages\EditTutor;
 use App\Filament\Tutor\Resources\Tutors\Pages\ListTutors;
 use App\Filament\Tutor\Resources\Tutors\Schemas\TutorForm;
 use App\Filament\Tutor\Resources\Tutors\Tables\TutorsTable;
-use App\Filament\Tutor\RelationManagers\SocialLinksRelationManager;
 use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -24,10 +24,12 @@ class TutorResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'name';
+
     public static function getNavigationGroup(): string
     {
         return __('tutor.nav.settings');
     }
+
     public static function getNavigationLabel(): string
     {
         return __('tutor.tutors._');
@@ -37,7 +39,6 @@ class TutorResource extends Resource
     {
         return __('tutor.tutors.tutor');
     }
-
 
     public static function getPluralModelLabel(): string
     {

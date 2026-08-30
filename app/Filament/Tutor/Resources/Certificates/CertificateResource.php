@@ -2,18 +2,17 @@
 
 namespace App\Filament\Tutor\Resources\Certificates;
 
-use BackedEnum;
-use Filament\Tables\Table;
-use App\Models\Certificate;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Tutor\Resources\Certificates\Pages;
 use App\Filament\Tutor\Resources\Certificates\Pages\ListCertificates;
 use App\Filament\Tutor\Resources\Certificates\Schemas\CertificateForm;
 use App\Filament\Tutor\Resources\Certificates\Tables\CertificatesTable;
+use App\Models\Certificate;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CertificateResource extends Resource
 {
@@ -58,7 +57,7 @@ class CertificateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCertificates::route('/')
+            'index' => ListCertificates::route('/'),
         ];
     }
 

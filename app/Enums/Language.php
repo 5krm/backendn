@@ -10,7 +10,7 @@ enum Language: string
     case English = 'en';
     case Arabic = 'ar';
 
-    static function getListItems(): Collection
+    public static function getListItems(): Collection
     {
         return collect(self::cases())->map(fn ($value) => new ListItemData($value->value, $value->name));
     }

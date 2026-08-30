@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\Course;
 use App\Models\Coupon;
-use Stripe\Stripe;
+use App\Models\Course;
+use Illuminate\Http\Request;
 use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class MobilePaymentController extends Controller
 {
@@ -44,10 +43,10 @@ class MobilePaymentController extends Controller
         ]);
 
         $coupon = Coupon::where('code', $request->code)->first();
-        if (!$coupon) {
+        if (! $coupon) {
             return response()->json(['error' => 'Invalid coupon code.'], 400);
         }
-        
+
         if ($coupon->expires_at && $coupon->expires_at->isPast()) {
             return response()->json(['error' => 'Coupon has expired.'], 400);
         }

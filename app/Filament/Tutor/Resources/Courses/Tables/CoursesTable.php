@@ -4,28 +4,25 @@ namespace App\Filament\Tutor\Resources\Courses\Tables;
 
 use App\Enums\CourseStatus;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Actions\Action;
-use App\Filament\Tutor\Resources\Courses\Resources\Sections\SectionResource;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
+use Illuminate\Database\Eloquent\Collection;
 
 class CoursesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('tutor_id', auth()->user()->id))
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('tutor_id', auth()->user()->id))
             ->columns([
                 ImageColumn::make('cover_image')
                     ->label(__('tutor.table.cover'))
@@ -109,8 +106,8 @@ class CoursesTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->before(function (DeleteBulkAction $action, \Illuminate\Database\Eloquent\Collection $records) {
-                            $hasEnrollments = $records->contains(fn($course) => $course->students()->exists());
+                        ->before(function (DeleteBulkAction $action, Collection $records) {
+                            $hasEnrollments = $records->contains(fn ($course) => $course->students()->exists());
 
                             if ($hasEnrollments) {
                                 Notification::make()

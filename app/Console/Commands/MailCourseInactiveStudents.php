@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 #[Description('Mailing inactive students over courses')]
 class MailCourseInactiveStudents extends Command
 {
-
     /**
      * Execute the console command.
      */
@@ -38,8 +37,9 @@ class MailCourseInactiveStudents extends Command
             foreach ($studentIds as $studentId) {
                 $user = $enrolls->where('user_id', $studentId)->first()->user;
                 // TO-ASK: should I let the check the alreadySent here too? Point is: is executing a Job that won't do anything will take much??
-                if ($mail != null)
+                if ($mail != null) {
                     SendCourseEmailJob::dispatch($user, $mail);
+                }
             }
         }
     }
@@ -53,6 +53,7 @@ class MailCourseInactiveStudents extends Command
         $mails = CourseMail::with('course')
             ->whereIn('id', $topMailIds)
             ->select(['id', 'course_id', 'type'])->get();
+
         return $mails;
     }
 
@@ -74,10 +75,11 @@ class MailCourseInactiveStudents extends Command
         $studentIds = array_merge($studentIds, $enrolls->whereNull('passed_at')
             ->whereIn('user_id', $finishedUsers)
             ->pluck('user_id')->toArray());
+
         return $studentIds;
     }
 
-    function getAlmostFinishedUsers(CourseMail $mail)
+    public function getAlmostFinishedUsers(CourseMail $mail)
     {
         $lessonsNo = Lesson::where('course_id', $mail->course_id)->where('status', CourseStatus::published->value)->count();
         $groupedLessons = DB::table('lesson_trackings')
@@ -88,6 +90,7 @@ class MailCourseInactiveStudents extends Command
         $finishedUsers = $groupedLessons->where('total_lessons', $lessonsNo)
             ->where('last_complete', '<', now()->subDays(3))
             ->pluck('user_id');
+
         return $finishedUsers;
     }
 }

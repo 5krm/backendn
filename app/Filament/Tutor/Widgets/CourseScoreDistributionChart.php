@@ -23,20 +23,20 @@ class CourseScoreDistributionChart extends ChartWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return ['datasets' => [], 'labels' => []];
         }
 
         $courseIds = Course::where('tutor_id', $tutorId)->pluck('id');
 
         // Only include students who actually attempted (score > 0)
-        $baseQuery = fn() => Enrollment::whereIn('course_id', $courseIds)->where('score', '>', 0);
+        $baseQuery = fn () => Enrollment::whereIn('course_id', $courseIds)->where('score', '>', 0);
 
         $ranges = [
-            '1-20%'   => [1,  20],
-            '21-40%'  => [21, 40],
-            '41-60%'  => [41, 60],
-            '61-80%'  => [61, 80],
+            '1-20%' => [1,  20],
+            '21-40%' => [21, 40],
+            '41-60%' => [41, 60],
+            '61-80%' => [61, 80],
             '81-100%' => [81, 100],
         ];
 

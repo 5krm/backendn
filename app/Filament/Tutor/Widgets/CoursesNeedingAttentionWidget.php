@@ -45,12 +45,12 @@ class CoursesNeedingAttentionWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('tutor.tables.course'))
                     ->limit(25)
-                    ->url(fn($record) => route('filament.tutor.resources.courses.edit', $record))
+                    ->url(fn ($record) => route('filament.tutor.resources.courses.edit', $record))
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('tutor.tables.status'))
                     ->badge()
-                    ->color(fn($state) => $state->getColor()),
+                    ->color(fn ($state) => $state->getColor()),
                 Tables\Columns\TextColumn::make('issue')
                     ->label(__('tutor.tables.issue'))
                     ->getStateUsing(function ($record) {
@@ -70,6 +70,7 @@ class CoursesNeedingAttentionWidget extends BaseWidget
                         if (empty($record->objectives)) {
                             $issues[] = __('tutor.issues.no_objectives');
                         }
+
                         return implode(', ', $issues) ?: __('tutor.issues.ok');
                     })
                     ->badge()
@@ -83,6 +84,6 @@ class CoursesNeedingAttentionWidget extends BaseWidget
             ->emptyStateHeading(__('tutor.empty.all_courses_good'))
             ->emptyStateDescription(__('tutor.empty.no_courses_need_attention'))
             ->emptyStateIcon('heroicon-o-check-circle')
-            ->recordUrl(fn($record) => route('filament.tutor.resources.courses.edit', $record));
+            ->recordUrl(fn ($record) => route('filament.tutor.resources.courses.edit', $record));
     }
 }

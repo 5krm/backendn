@@ -6,8 +6,8 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $sitemap = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        $sitemap = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+        $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 
         // Home page
         $sitemap .= $this->addUrl(route('home'), '1.0', 'daily');
@@ -25,7 +25,7 @@ class SitemapController extends Controller
         $sitemap .= '</urlset>';
 
         return response($sitemap, 200, [
-            'Content-Type' => 'application/xml'
+            'Content-Type' => 'application/xml',
         ]);
     }
 

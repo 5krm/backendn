@@ -2,21 +2,16 @@
 
 namespace App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Schemas;
 
-use App\Enums\CourseStatus;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use SpykApp\UppyUpload\Forms\Components\UppyUpload;
 
 class LessonForm
 {
-
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -39,7 +34,7 @@ class LessonForm
                             ->prefixIcon('heroicon-o-clock')
                             ->placeholder('30')
                             ->required()
-                            ->helperText(__('tutor.form.duration_help'))
+                            ->helperText(__('tutor.form.duration_help')),
                     ])
                     ->columns(1)
                     ->collapsible()
@@ -56,7 +51,7 @@ class LessonForm
                         TextInput::make('video_id')
                             ->label(__('tutor.form.video_url'))
                             ->maxLength(255)
-                            ->rules(['nullable', 'regex:/^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)[\w\-]{11}/'])
+                            ->rules(['nullable', 'regex:/^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)[\w\-]{11}/']),
                     ])
                     ->collapsible()->columnSpanFull(),
 
@@ -66,7 +61,7 @@ class LessonForm
                     ->schema([
                         Repeater::make('resources')
                             ->label('')
-                            ->relationship('resources', fn($query) => $query->with('media'))
+                            ->relationship('resources', fn ($query) => $query->with('media'))
                             ->hiddenLabel()
                             ->defaultItems(0)
                             ->schema([
@@ -79,7 +74,7 @@ class LessonForm
                                 SpatieMediaLibraryFileUpload::make('file_path')
                                     ->label(__('tutor.form.file'))
                                     ->collection('resources')
-                                    ->customProperties(fn(callable $get) => [
+                                    ->customProperties(fn (callable $get) => [
                                         'course_id' => $get('../../course_id') ?? 'temp',
                                     ])
                                     ->maxSize(5120)
@@ -88,7 +83,7 @@ class LessonForm
                                         'application/pdf',
                                         'image/*',
                                         'application/msword',
-                                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                                     ])
                                     ->downloadable(),
                             ])

@@ -3,9 +3,9 @@
 namespace App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes;
 
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\LessonResource;
-use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes\Pages\ListQuizzes;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes\Pages\CreateQuiz;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes\Pages\EditQuiz;
+use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes\Pages\ListQuizzes;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes\Schemas\QuizForm;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Resources\Quizzes\Tables\QuizzesTable;
 use App\Models\Quizzes\Quiz;
@@ -26,6 +26,7 @@ class QuizResource extends Resource
     protected static ?string $parentResource = LessonResource::class;
 
     protected static ?string $recordTitleAttribute = 'title';
+
     public static function getNavigationLabel(): string
     {
         return __('tutor.resources.quizzes');
@@ -35,6 +36,7 @@ class QuizResource extends Resource
     {
         return __('tutor.resources.quiz');
     }
+
     public static function getPluralModelLabel(): string
     {
         return __('tutor.resources.quizzes');
@@ -74,6 +76,7 @@ class QuizResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
     public static function getParentId(): string
     {
         return 'lesson'; // This must match the key used in the URL above

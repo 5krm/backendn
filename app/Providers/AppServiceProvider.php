@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 use Laravel\Sentinel\Drivers\Laravel as SentinelLaravelDriver;
 use Laravel\Sentinel\Sentinel;
-use Illuminate\Validation\Rules\Password;
 use League\Flysystem\Filesystem;
 use Stripe\StripeClient;
 
@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
 
         foreach (['horizon', 'telescope'] as $driver) {
             Sentinel::extend($driver, function ($app) {
-                return new class(fn() => $app) extends SentinelLaravelDriver
+                return new class(fn () => $app) extends SentinelLaravelDriver
                 {
                     public function authorize(Request $request): bool
                     {
@@ -71,7 +71,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
         Model::preventLazyLoading(! app()->isProduction());
-
 
         Password::defaults(function () {
             return Password::min(8);

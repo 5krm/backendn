@@ -3,10 +3,8 @@
 namespace App\Filament\Tutor\Resources\Organizations\Pages;
 
 use App\Filament\Tutor\Resources\Organizations\OrganizationResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Actions\Action;
-
+use Filament\Resources\Pages\EditRecord;
 
 class EditOrganization extends EditRecord
 {

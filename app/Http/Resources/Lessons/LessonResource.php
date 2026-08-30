@@ -28,7 +28,7 @@ class LessonResource extends JsonResource
             'quizzes' => QuizResource::collection($this->whenLoaded('quizzes')),
             'status' => [
                 'key' => $this->status,
-                'value' => CourseStatus::titles()[$this->status->value]
+                'value' => CourseStatus::titles()[$this->status->value],
             ],
         ];
     }

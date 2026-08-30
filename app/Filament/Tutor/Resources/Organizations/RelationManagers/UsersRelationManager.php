@@ -3,31 +3,28 @@
 namespace App\Filament\Tutor\Resources\Organizations\RelationManagers;
 
 use App\Filament\Tutor\Resources\Organizations\OrganizationResource;
+use App\Mail\TutorInvitation;
 use App\Models\Courses\Course;
+use App\Models\PasswordResetToken;
 use App\Models\User;
+use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Table;
-use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Carbon\Carbon;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\Action;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 use Filament\Notifications\Notification;
-use App\Mail\TutorInvitation;
-use App\Models\PasswordResetToken;
-use Illuminate\Support\Str;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Str;
 
 class UsersRelationManager extends RelationManager
 {
     protected static string $relationship = 'users';
+
     protected static ?string $title = 'Organization Users';
     // protected static ?string $title = null;
 
@@ -37,6 +34,7 @@ class UsersRelationManager extends RelationManager
     {
         return $schema->components([]);
     }
+
     public function table(Table $table): Table
     {
         return $table
@@ -52,7 +50,6 @@ class UsersRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
 
-
             ])
             ->headerActions([
                 // CreateAction::make()
@@ -66,12 +63,12 @@ class UsersRelationManager extends RelationManager
                             ->multiple()
                             ->searchable()
                             ->preload()
-                            ->options(fn() => User::query()
+                            ->options(fn () => User::query()
                                 ->whereNull('organization_id')
                                 ->orderBy('name')
                                 ->pluck('name', 'id')
                                 ->toArray())
-                            ->getOptionLabelsUsing(fn(array $values): array => User::query()
+                            ->getOptionLabelsUsing(fn (array $values): array => User::query()
                                 ->whereKey($values)
                                 ->pluck('name', 'id')
                                 ->toArray())
@@ -122,7 +119,7 @@ class UsersRelationManager extends RelationManager
                             ->all();
 
                         $users = User::whereIn('id', $userIds)->get();
-                        
+
                         foreach ($users as $user) {
                             $shouldInvite = is_null($user->email_verified_at) || is_null($user->password);
 
@@ -130,8 +127,6 @@ class UsersRelationManager extends RelationManager
                             $user->forceFill([
                                 'organization_id' => $organization->id,
                             ]);
-
-
 
                             // Promote existing active users to tutor when needed
                             if (! $user->is_tutor) {
@@ -155,7 +150,7 @@ class UsersRelationManager extends RelationManager
                             ->success()
                             ->title(__('tutor.form.users_assigned_successfully'))
                             ->send();
-                    })
+                    }),
 
             ])
             ->recordActions([
@@ -179,6 +174,7 @@ class UsersRelationManager extends RelationManager
                     })->successRedirectUrl(request()->header('Referer')),
             ]);
     }
+
     protected function sendTutorInvitation(User $user): void
     {
         $plainToken = Str::random(64);
@@ -187,7 +183,7 @@ class UsersRelationManager extends RelationManager
             $existingToken->update([
                 'token' => hash('sha256', $plainToken),
                 'type' => 'invitation',
-                'expired_at' => null
+                'expired_at' => null,
             ]);
         } else {
             PasswordResetToken::create([

@@ -24,7 +24,7 @@ class CourseCompletionFunnelChart extends ChartWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return ['datasets' => [], 'labels' => []];
         }
 

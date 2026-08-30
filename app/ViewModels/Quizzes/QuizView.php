@@ -2,19 +2,17 @@
 
 namespace App\ViewModels\Quizzes;
 
-use App\Models\Quizzes\Quiz;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Wireable;
 
-class QuizView   implements Wireable
+class QuizView implements Wireable
 {
     public function __construct(
         public int $id,
         public string $question,
         public Collection $quizOptions,
         public ?bool $is_correct,
-    ) {
-    }
+    ) {}
 
     public function toLivewire()
     {

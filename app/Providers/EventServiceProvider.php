@@ -29,12 +29,10 @@ class EventServiceProvider extends ServiceProvider
         LessonPublished::class => [SendPublishedLessonEmail::class],
     ];
 
-
     public function register(): void
     {
         //
     }
-
 
     public function boot(): void
     {

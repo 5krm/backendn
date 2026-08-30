@@ -2,27 +2,28 @@
 
 namespace App\Models\Courses;
 
-use Carbon\Carbon;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Enrollment extends Pivot implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
     protected $table = 'enrollments';
-    
+
     public $incrementing = true;
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'user_id',
-        'course_id', 
+        'course_id',
         'progress',
         'score',
         'passed_at',
@@ -49,9 +50,10 @@ class Enrollment extends Pivot implements HasMedia
 
         return [
             'start' => $this->created_at->format('M d, Y'),
-            'end' => $this->created_at->addDays($required_days)->format('M d, Y')
+            'end' => $this->created_at->addDays($required_days)->format('M d, Y'),
         ];
     }
+
     /**
      * @return Attribute<string, never>
      */

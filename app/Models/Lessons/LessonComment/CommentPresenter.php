@@ -3,14 +3,11 @@
 namespace App\Models\Lessons\LessonComment;
 
 use App\Models\User;
-use App\Models\Lessons\LessonComment\Comment;
-use Illuminate\Support\HtmlString;
 use Carbon\Carbon;
+use Illuminate\Support\HtmlString;
 
 class CommentPresenter
 {
-
-
     public Comment $comment;
 
     public function __construct(Comment $comment)
@@ -40,10 +37,10 @@ class CommentPresenter
             if ($user) {
                 $userRoutePrefix = 'users';
 
-                $replacements['@' . $username] = '<a href="/' . $userRoutePrefix . '/' . $username . '">@' . $username .
+                $replacements['@'.$username] = '<a href="/'.$userRoutePrefix.'/'.$username.'">@'.$username.
                     '</a>';
             } else {
-                $replacements['@' . $username] = '@' . $username;
+                $replacements['@'.$username] = '@'.$username;
             }
         }
 

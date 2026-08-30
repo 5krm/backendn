@@ -14,8 +14,8 @@ use League\Flysystem\UnableToCopyFile;
 use League\Flysystem\UnableToCreateDirectory;
 use League\Flysystem\UnableToDeleteFile;
 use League\Flysystem\UnableToMoveFile;
-use League\Flysystem\UnableToReadFile;
 use League\Flysystem\UnableToProvideChecksum;
+use League\Flysystem\UnableToReadFile;
 use League\Flysystem\UnableToRetrieveMetadata;
 use League\Flysystem\UnableToSetVisibility;
 use League\Flysystem\UnableToWriteFile;
@@ -25,9 +25,13 @@ use Throwable;
 class AzureFilesystemAdapter implements FilesystemAdapter
 {
     protected string $baseUrl;
+
     protected string $accountName;
+
     protected string $accountKey;
+
     protected string $container;
+
     protected string $apiVersion = '2026-10-06';
 
     public function __construct(string $accountName, string $accountKey, string $container)
@@ -42,6 +46,7 @@ class AzureFilesystemAdapter implements FilesystemAdapter
     public function fileExists(string $path): bool
     {
         $response = $this->sendRequest('HEAD', $this->normalizePath($path));
+
         return $response->ok();
     }
 
@@ -151,7 +156,7 @@ class AzureFilesystemAdapter implements FilesystemAdapter
         }
 
         try {
-            $this->write($path . '/', '', $config);
+            $this->write($path.'/', '', $config);
         } catch (Throwable) {
             throw UnableToCreateDirectory::atLocation($path, 'Azure Blob storage does not create virtual directories directly.');
         }
@@ -348,14 +353,14 @@ class AzureFilesystemAdapter implements FilesystemAdapter
         $canonicalizedHeaders = '';
         foreach ($headers as $key => $value) {
             if (str_starts_with($key, 'x-ms-')) {
-                $canonicalizedHeaders .= strtolower($key) . ':' . trim($value) . "\n";
+                $canonicalizedHeaders .= strtolower($key).':'.trim($value)."\n";
             }
         }
 
-        $canonicalizedResource = '/' . trim($this->accountName, '/') . '/' . trim($this->container, '/');
+        $canonicalizedResource = '/'.trim($this->accountName, '/').'/'.trim($this->container, '/');
 
         if ($path !== '') {
-            $canonicalizedResource .= '/' . ltrim($this->encodePath($path), '/');
+            $canonicalizedResource .= '/'.ltrim($this->encodePath($path), '/');
         }
 
         $canonicalizedResource .= $this->canonicalizeQueryParameters($query);
@@ -373,7 +378,7 @@ class AzureFilesystemAdapter implements FilesystemAdapter
             '',
             '',
             '',
-            $canonicalizedHeaders . $canonicalizedResource,
+            $canonicalizedHeaders.$canonicalizedResource,
         ]);
 
         $signature = base64_encode(
@@ -389,7 +394,7 @@ class AzureFilesystemAdapter implements FilesystemAdapter
         $resourceType = $options['resource'] ?? 'b';
         $version = $options['version'] ?? $this->apiVersion;
         $expiry = $expiration->format('Y-m-d\TH:i:s\Z');
-        $canonicalizedResource = '/blob/' . $this->accountName . '/' . $this->container . '/' . ltrim($this->encodePath($path), '/');
+        $canonicalizedResource = '/blob/'.$this->accountName.'/'.$this->container.'/'.ltrim($this->encodePath($path), '/');
 
         $stringToSign = implode("\n", [
             $permissions,
@@ -418,7 +423,9 @@ class AzureFilesystemAdapter implements FilesystemAdapter
 
     protected function canonicalizeQueryParameters(array $query): string
     {
-        if ($query === []) return '';
+        if ($query === []) {
+            return '';
+        }
 
         $normalized = [];
         foreach ($query as $key => $value) {
@@ -429,9 +436,9 @@ class AzureFilesystemAdapter implements FilesystemAdapter
 
         $canonicalized = '';
         foreach ($normalized as $key => $values) {
-            $values = array_map(fn($value) => (string) $value, $values);
+            $values = array_map(fn ($value) => (string) $value, $values);
             sort($values, SORT_STRING);
-            $canonicalized .= "\n{$key}:" . implode(',', $values);
+            $canonicalized .= "\n{$key}:".implode(',', $values);
         }
 
         return $canonicalized;
@@ -462,7 +469,8 @@ class AzureFilesystemAdapter implements FilesystemAdapter
     protected function normalizeDirectoryPrefix(string $path): string
     {
         $normalized = $this->normalizePath($path);
-        return $normalized === '' ? '' : $normalized . '/';
+
+        return $normalized === '' ? '' : $normalized.'/';
     }
 
     protected function buildUrl(string $path, array $query = []): string
@@ -471,11 +479,11 @@ class AzureFilesystemAdapter implements FilesystemAdapter
         $encodedPath = $this->encodePath($path);
 
         if ($encodedPath !== '') {
-            $url .= '/' . ltrim($encodedPath, '/');
+            $url .= '/'.ltrim($encodedPath, '/');
         }
 
         if ($query !== []) {
-            $url .= '?' . http_build_query($query);
+            $url .= '?'.http_build_query($query);
         }
 
         return $url;
@@ -490,7 +498,7 @@ class AzureFilesystemAdapter implements FilesystemAdapter
         }
 
         return implode('/', array_map(
-            static fn(string $segment) => rawurlencode($segment),
+            static fn (string $segment) => rawurlencode($segment),
             explode('/', $normalizedPath)
         ));
     }

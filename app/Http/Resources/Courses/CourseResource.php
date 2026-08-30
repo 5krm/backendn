@@ -6,6 +6,8 @@ use App\Enums\CourseStatus;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\Lessons\CourseSectionResource;
 use App\Http\Resources\TutorResource;
+use App\Models\Courses\Enrollment;
+use App\Models\Lessons\LessonTracking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,7 +34,7 @@ class CourseResource extends JsonResource
             'stripe_price_id' => $this->stripe_price_id,
             'status' => [
                 'key' => $this->status->value,
-                'value' => CourseStatus::titles()[$this->status->value]
+                'value' => CourseStatus::titles()[$this->status->value],
             ],
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'lesson_count' => $this->lessons_count ?? 0,
@@ -41,12 +43,12 @@ class CourseResource extends JsonResource
             'category' => CategoryResource::make($this->whenLoaded('category')),
             'sections' => CourseSectionResource::collection($this->whenLoaded('sections')),
             'is_enrolled' => $this->when(auth('sanctum')->check(), function () {
-                return \App\Models\Courses\Enrollment::where('course_id', $this->id)
+                return Enrollment::where('course_id', $this->id)
                     ->where('user_id', auth('sanctum')->id())
                     ->exists();
             }),
             'completed_lessons_count' => $this->when(auth('sanctum')->check(), function () {
-                return \App\Models\Lessons\LessonTracking::where('user_id', auth('sanctum')->id())
+                return LessonTracking::where('user_id', auth('sanctum')->id())
                     ->whereNotNull('completed_at')
                     ->whereIn('lesson_id', $this->lessons()->pluck('id'))
                     ->count();

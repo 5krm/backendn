@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Certificate;
-use App\Models\Courses\Course;
 use App\Enums\CourseEmailType;
 use App\Jobs\SendCourseEmailJob;
+use App\Models\Certificate;
+use App\Models\Courses\Course;
 use App\Models\Courses\CourseMail;
+use App\Models\User;
+use Carbon\Carbon;
 
 class CourseCompletionService
 {
@@ -18,17 +18,18 @@ class CourseCompletionService
         $user = auth()->user();
         $user->courses()->updateExistingPivot($course->id, [
             'passed_at' => Carbon::now(),
-            'score' => $score
+            'score' => $score,
         ]);
 
         $this->sendCourseCompletionEmail($course, $user);
 
         // Generate certificate automatically
-        $certificateService = app(\App\Services\CertificateService::class);
+        $certificateService = app(CertificateService::class);
+
         return $certificateService->issueCertificate($user, $course, $score);
     }
 
-    function sendCourseCompletionEmail(Course $course, User $user)
+    public function sendCourseCompletionEmail(Course $course, User $user)
     {
         $mail = CourseMail::where('course_id', $course->id)
             ->where('type', CourseEmailType::completion)

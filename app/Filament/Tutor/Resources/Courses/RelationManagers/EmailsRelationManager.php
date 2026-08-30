@@ -8,6 +8,7 @@ use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -19,12 +20,9 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Filament\Forms\Components\Hidden;
-use Filament\Support\Components\Component;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Override;
 
 class EmailsRelationManager extends RelationManager
@@ -37,6 +35,7 @@ class EmailsRelationManager extends RelationManager
 
         return __('course.emails._');
     }
+
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -57,10 +56,10 @@ class EmailsRelationManager extends RelationManager
                                     ->label(__('course.emails.fields.type'))
                                     ->options(
                                         collect(CourseEmailType::cases())
-                                            ->reject(fn($enum) => in_array($enum, [
-                                                CourseEmailType::NewCourse, CourseEmailType::PublishedLesson
-                                            ]))                                            
-                                            ->mapWithKeys(fn($enum) => [$enum->value => $enum->getLabel()])
+                                            ->reject(fn ($enum) => in_array($enum, [
+                                                CourseEmailType::NewCourse, CourseEmailType::PublishedLesson,
+                                            ]))
+                                            ->mapWithKeys(fn ($enum) => [$enum->value => $enum->getLabel()])
                                             ->toArray()
                                     )
                                     ->default(CourseEmailType::welcome)
@@ -100,12 +99,12 @@ class EmailsRelationManager extends RelationManager
                                     ->schema([
                                         ViewField::make('preview')
                                             ->view('filament.tutor.course_mails.email-preview')
-                                            ->viewData(fn($get) => [
+                                            ->viewData(fn ($get) => [
                                                 'subject' => $get('subject'),
                                                 'body' => $get('body'),
                                                 'tags' => $this->getTags(),
                                                 'course' => $this->ownerRecord,
-                                                'tutor' => auth()->user()
+                                                'tutor' => auth()->user(),
                                             ])
                                             ->dehydrated(false),
                                     ])->columnSpanFull(),
@@ -165,14 +164,15 @@ class EmailsRelationManager extends RelationManager
             'tutor_name' => '{tutor_name}',
             'tutor_email' => '{tutor_email}',
             'course_url' => '{course_url}',
-            'student_name' => '{student_name}'
+            'student_name' => '{student_name}',
         ];
     }
-    function getDefaultContent()
+
+    public function getDefaultContent()
     {
-        return "<p>Dear {student_name},
+        return '<p>Dear {student_name},
             </p><p>Congrats on your achievement on the course <strong>{course_name}</strong>, Well Done!</p>
             <p>For any further questions please contact me at : {tutor_email}.</p>
-            <p>keep it up!<br><br>Your instructor: {tutor_name}</p>";
+            <p>keep it up!<br><br>Your instructor: {tutor_name}</p>';
     }
 }

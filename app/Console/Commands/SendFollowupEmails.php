@@ -61,7 +61,7 @@ class SendFollowupEmails extends Command
                         ->where('course_id', $course->id)
                         ->sortByDesc('pivot.created_at')
                         ->first();
-                    if (!isset($lastLesson) || $course->pivot->progress < 100) {
+                    if (! isset($lastLesson) || $course->pivot->progress < 100) {
                         return null;
                     }
 

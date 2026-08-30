@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Mobile\Student;
 
+use App\Enums\CourseStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendCourseEmailJob;
 use App\Models\Courses\Course;
 use App\Models\Courses\CourseMail;
 use App\Models\Courses\Enrollment;
 use App\Models\Invoice;
-use App\Models\Lessons\Lesson;
 use App\Models\Lessons\LessonTracking;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -32,11 +32,11 @@ class MobileEnrollmentController extends Controller
         $user = $request->user();
 
         // Only published courses
-        $isPublished = ($course->status instanceof \App\Enums\CourseStatus)
+        $isPublished = ($course->status instanceof CourseStatus)
             ? $course->status->value === 'published'
             : $course->status === 'published';
 
-        if (!$isPublished) {
+        if (! $isPublished) {
             return $this->error('This course is not available for enrollment.', null, 422);
         }
 
@@ -55,7 +55,7 @@ class MobileEnrollmentController extends Controller
                 ->where('course_id', $course->prerequisite_course_id)
                 ->first();
 
-            if (!$prerequisiteEnrollment || !$prerequisiteEnrollment->passed_at) {
+            if (! $prerequisiteEnrollment || ! $prerequisiteEnrollment->passed_at) {
                 return $this->error('You must complete the prerequisite course before enrolling.', null, 403);
             }
         }
@@ -66,12 +66,12 @@ class MobileEnrollmentController extends Controller
         if ($course->is_free || $coursePrice <= 0) {
             $enrollment = Enrollment::firstOrCreate(
                 [
-                    'user_id'   => $user->id,
+                    'user_id' => $user->id,
                     'course_id' => $course->id,
                 ],
                 [
-                    'progress'  => 0,
-                    'score'     => 0,
+                    'progress' => 0,
+                    'score' => 0,
                 ]
             );
 
@@ -86,9 +86,9 @@ class MobileEnrollmentController extends Controller
             'This is a paid course. Please complete payment to enroll.',
             [
                 'requires_payment' => true,
-                'course_id'        => $course->id,
-                'price'            => $coursePrice,
-                'title'            => $course->title,
+                'course_id' => $course->id,
+                'price' => $coursePrice,
+                'title' => $course->title,
             ],
             402
         );
@@ -101,11 +101,11 @@ class MobileEnrollmentController extends Controller
         $user = $request->user();
 
         // Only published courses
-        $isPublished = ($course->status instanceof \App\Enums\CourseStatus)
+        $isPublished = ($course->status instanceof CourseStatus)
             ? $course->status->value === 'published'
             : $course->status === 'published';
 
-        if (!$isPublished) {
+        if (! $isPublished) {
             return $this->error('This course is not available for purchase.', null, 422);
         }
 
@@ -127,36 +127,36 @@ class MobileEnrollmentController extends Controller
                 ->where('course_id', $course->prerequisite_course_id)
                 ->first();
 
-            if (!$prerequisiteEnrollment || !$prerequisiteEnrollment->passed_at) {
+            if (! $prerequisiteEnrollment || ! $prerequisiteEnrollment->passed_at) {
                 return $this->error('You must complete the prerequisite course before enrolling.', null, 403);
             }
         }
 
-        $purchaseId = (string) $request->input('purchase_id', 'iap_' . time() . '_' . uniqid());
-        $platform   = (string) $request->input('platform', 'unknown');
-        $price      = (float) $request->input('price', $course->activePrice?->amount ?? $course->price ?? 0);
+        $purchaseId = (string) $request->input('purchase_id', 'iap_'.time().'_'.uniqid());
+        $platform = (string) $request->input('platform', 'unknown');
+        $price = (float) $request->input('price', $course->activePrice?->amount ?? $course->price ?? 0);
 
         $enrollment = DB::transaction(function () use ($user, $course, $purchaseId, $price) {
             $enrollment = Enrollment::firstOrCreate(
                 [
-                    'user_id'   => $user->id,
+                    'user_id' => $user->id,
                     'course_id' => $course->id,
                 ],
                 [
                     'progress' => 0,
-                    'score'    => 0,
+                    'score' => 0,
                 ]
             );
 
             // Record Invoice if paid
-            if (!$course->is_free && $price > 0) {
+            if (! $course->is_free && $price > 0) {
                 Invoice::create([
-                    'user_id'          => $user->id,
-                    'invoiceable_id'   => $course->id,
+                    'user_id' => $user->id,
+                    'invoiceable_id' => $course->id,
                     'invoiceable_type' => Course::class,
-                    'amount_total'     => $price,
-                    'amount_subtotal'  => $price,
-                    'stripe_session_id'=> $purchaseId,
+                    'amount_total' => $price,
+                    'amount_subtotal' => $price,
+                    'stripe_session_id' => $purchaseId,
                 ]);
             }
 
@@ -206,8 +206,8 @@ class MobileEnrollmentController extends Controller
 
         $course = $enrollment->course->load([
             'sections' => fn ($q) => $q->where('status', 'published')
-                                       ->orderBy('order')
-                                       ->with(['lessons' => fn ($lq) => $lq->orderBy('lesson_order')]),
+                ->orderBy('order')
+                ->with(['lessons' => fn ($lq) => $lq->orderBy('lesson_order')]),
         ]);
 
         $completedLessonIds = LessonTracking::where('user_id', $request->user()->id)
@@ -216,26 +216,26 @@ class MobileEnrollmentController extends Controller
             ->pluck('lesson_id')
             ->toArray();
 
-        $totalLessons     = $course->lessons()->count();
-        $completedCount   = count($completedLessonIds);
-        $progressPercent  = $totalLessons > 0 ? round($completedCount / $totalLessons * 100) : 0;
+        $totalLessons = $course->lessons()->count();
+        $completedCount = count($completedLessonIds);
+        $progressPercent = $totalLessons > 0 ? round($completedCount / $totalLessons * 100) : 0;
 
         return $this->success([
-            'enrollment'      => $this->formatEnrollment($enrollment, $course),
-            'total_lessons'   => $totalLessons,
+            'enrollment' => $this->formatEnrollment($enrollment, $course),
+            'total_lessons' => $totalLessons,
             'completed_lessons' => $completedCount,
             'progress_percent' => $progressPercent,
-            'sections'         => $course->sections->map(fn ($s) => [
-                'id'      => $s->id,
-                'title'   => $s->title,
-                'order'   => $s->order,
+            'sections' => $course->sections->map(fn ($s) => [
+                'id' => $s->id,
+                'title' => $s->title,
+                'order' => $s->order,
                 'lessons' => $s->lessons->map(fn ($l) => [
-                    'id'           => $l->id,
-                    'title'        => $l->title,
-                    'duration'     => $l->duration ?? 0,
+                    'id' => $l->id,
+                    'title' => $l->title,
+                    'duration' => $l->duration ?? 0,
                     'is_completed' => in_array($l->id, $completedLessonIds),
-                    'video_url'    => $l->video_url ?? null,
-                    'video_id'     => $l->getVideoId(),
+                    'video_url' => $l->video_url ?? null,
+                    'video_id' => $l->getVideoId(),
                 ]),
             ]),
         ]);
@@ -247,11 +247,11 @@ class MobileEnrollmentController extends Controller
     {
         $userId = $request->user()->id;
 
-        $totalEnrolled  = Enrollment::where('user_id', $userId)->count();
-        $completed      = Enrollment::where('user_id', $userId)
+        $totalEnrolled = Enrollment::where('user_id', $userId)->count();
+        $completed = Enrollment::where('user_id', $userId)
             ->whereNotNull('passed_at')
             ->count();
-        $inProgress     = $totalEnrolled - $completed;
+        $inProgress = $totalEnrolled - $completed;
 
         $recentCourses = Enrollment::where('user_id', $userId)
             ->with(['course:id,slug,title', 'course.activePrice'])
@@ -259,16 +259,16 @@ class MobileEnrollmentController extends Controller
             ->limit(5)
             ->get()
             ->map(fn ($e) => [
-                'course_id'    => $e->course_id,
+                'course_id' => $e->course_id,
                 'course_title' => $e->course?->title,
-                'course_slug'  => $e->course?->slug,
-                'progress'     => $e->progress ?? 0,
+                'course_slug' => $e->course?->slug,
+                'progress' => $e->progress ?? 0,
             ]);
 
         return $this->success([
             'total_enrolled' => $totalEnrolled,
-            'completed'      => $completed,
-            'in_progress'    => $inProgress,
+            'completed' => $completed,
+            'in_progress' => $inProgress,
             'recent_courses' => $recentCourses,
         ]);
     }
@@ -278,17 +278,17 @@ class MobileEnrollmentController extends Controller
     private function formatEnrollment(Enrollment $enrollment, ?Course $course): array
     {
         return [
-            'id'               => $enrollment->id,
-            'course_id'        => $enrollment->course_id,
-            'enrolled_at'      => $enrollment->created_at?->toISOString(),
-            'completed_at'     => $enrollment->passed_at?->toISOString(),
+            'id' => $enrollment->id,
+            'course_id' => $enrollment->course_id,
+            'enrolled_at' => $enrollment->created_at?->toISOString(),
+            'completed_at' => $enrollment->passed_at?->toISOString(),
             'progress_percent' => $enrollment->progress ?? 0,
-            'course'           => $course ? [
-                'id'          => $course->id,
-                'slug'        => $course->slug,
-                'title'       => $course->title,
+            'course' => $course ? [
+                'id' => $course->id,
+                'slug' => $course->slug,
+                'title' => $course->title,
                 'cover_image' => $course->cover_image,
-                'tutor_name'  => $course->tutor?->name ?? 'Unknown',
+                'tutor_name' => $course->tutor?->name ?? 'Unknown',
                 'lessons_count' => $course->lessons_count ?? ($course->lessons()->count()),
             ] : null,
         ];

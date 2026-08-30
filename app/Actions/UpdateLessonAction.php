@@ -2,9 +2,9 @@
 
 namespace App\Actions;
 
-use Exception;
-use App\Models\Lessons\Lesson;
 use App\Data\Lessons\LessonData;
+use App\Models\Lessons\Lesson;
+use Exception;
 use Vimeo\Laravel\Facades\Vimeo;
 
 class UpdateLessonAction
@@ -15,7 +15,9 @@ class UpdateLessonAction
         if ($data->video_id && $data->video_id != $lesson->video_id) {
 
             $videoInfo = $this->getVideoInfo($data->video_id);
-            if (!$videoInfo) return null;
+            if (! $videoInfo) {
+                return null;
+            }
 
             [$html, $duration] = $videoInfo;
 

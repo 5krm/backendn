@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Log;
-use App\Models\Course;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\Webhook;
 
 class MobileWebhookController extends Controller
 {
@@ -20,13 +20,13 @@ class MobileWebhookController extends Controller
         $event = null;
 
         try {
-            $event = \Stripe\Webhook::constructEvent(
+            $event = Webhook::constructEvent(
                 $payload, $sig_header, $endpoint_secret
             );
         } catch (\UnexpectedValueException $e) {
             // Invalid payload
             return response()->json(['error' => 'Invalid payload'], 400);
-        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+        } catch (SignatureVerificationException $e) {
             // Invalid signature
             return response()->json(['error' => 'Invalid signature'], 400);
         }
@@ -35,7 +35,7 @@ class MobileWebhookController extends Controller
         switch ($event->type) {
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
-                
+
                 $course_id = $paymentIntent->metadata->course_id ?? null;
                 $user_id = $paymentIntent->metadata->user_id ?? null;
 
@@ -44,7 +44,7 @@ class MobileWebhookController extends Controller
                     if ($user) {
                         // Assuming the User model has a courses() many-to-many relationship
                         // Check if already enrolled to avoid duplicates
-                        if (!$user->courses()->where('course_id', $course_id)->exists()) {
+                        if (! $user->courses()->where('course_id', $course_id)->exists()) {
                             $user->courses()->attach($course_id);
                             Log::info("User {$user_id} enrolled in course {$course_id}");
                         }
@@ -52,7 +52,7 @@ class MobileWebhookController extends Controller
                 }
                 break;
             default:
-                Log::info('Received unknown event type ' . $event->type);
+                Log::info('Received unknown event type '.$event->type);
         }
 
         return response()->json(['status' => 'success']);

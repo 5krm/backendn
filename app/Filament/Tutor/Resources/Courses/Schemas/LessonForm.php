@@ -2,7 +2,6 @@
 
 namespace App\Filament\Tutor\Resources\Courses\Schemas;
 
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -16,10 +15,10 @@ class LessonForm
     {
         return [
             Hidden::make('course_id')
-                ->default(fn($livewire) => $livewire->record?->id),
+                ->default(fn ($livewire) => $livewire->record?->id),
 
             Hidden::make('section_id')
-                ->default(fn($get, $livewire) => $get('../../id')),
+                ->default(fn ($get, $livewire) => $get('../../id')),
 
             TextInput::make('title')
                 ->label(__('tutor.form.lesson_title'))
@@ -60,17 +59,17 @@ class LessonForm
                 ->label(__('tutor.form.quizzes'))
 
                 ->extraFieldWrapperAttributes([
-                    'class' => 'quizzes-wrapper'
+                    'class' => 'quizzes-wrapper',
                 ])
                 ->schema([
                     Hidden::make('course_id')
-                        ->default(fn($livewire) => $livewire->record?->id),
+                        ->default(fn ($livewire) => $livewire->record?->id),
 
                     Hidden::make('lesson_id')
-                        ->default(fn($get) => $get('../../id')),
+                        ->default(fn ($get) => $get('../../id')),
 
                     Hidden::make('tutor_id')
-                        ->default(fn() => auth()->user()->id),
+                        ->default(fn () => auth()->user()->id),
 
                     TextInput::make('question')
                         ->label(__('tutor.form.quiz_question'))
@@ -87,7 +86,7 @@ class LessonForm
                         ->relationship('quizOptions')
                         ->label(__('tutor.form.answer_options'))
                         ->extraFieldWrapperAttributes([
-                            'class' => 'quiz-options-wrapper'
+                            'class' => 'quiz-options-wrapper',
                         ])
                         ->schema([
                             Hidden::make('id'),
@@ -103,7 +102,7 @@ class LessonForm
                                 ->helperText(__('tutor.form.correct_answer_help')),
 
                             Hidden::make('order')
-                                ->default(fn($get) => count($get('../../quizOptions') ?? []) + 1),
+                                ->default(fn ($get) => count($get('../../quizOptions') ?? []) + 1),
                         ])
                         ->columns(2)
                         ->minItems(2)
@@ -112,10 +111,10 @@ class LessonForm
                         ->addActionLabel(__('tutor.form.add_option'))
                         ->columnSpanFull()
                         ->collapsible()
-                        ->itemLabel(fn(array $state): ?string => $state['value'] ?? __('tutor.form.add_option')),
+                        ->itemLabel(fn (array $state): ?string => $state['value'] ?? __('tutor.form.add_option')),
                 ])
                 ->columns(3)
-                ->itemLabel(fn(array $state): ?string => $state['title'] ?? __('tutor.form.new_quiz'))
+                ->itemLabel(fn (array $state): ?string => $state['title'] ?? __('tutor.form.new_quiz'))
                 ->collapsed()
                 ->collapsible()
                 ->addActionLabel(__('tutor.form.add_quiz'))

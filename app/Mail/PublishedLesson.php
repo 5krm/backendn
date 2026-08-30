@@ -9,6 +9,7 @@ use App\Models\Lessons\Lesson;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -20,6 +21,7 @@ class PublishedLesson extends Mailable
     use Queueable, SerializesModels;
 
     public $direction = 'ltr';
+
     private $type = PreferenceKey::UpdateEmail;
 
     /**
@@ -46,20 +48,21 @@ class PublishedLesson extends Mailable
      */
     public function content(): Content
     {
-        $lesson = Lesson::whereHas('course')->find($this->lesson->id);       
+        $lesson = Lesson::whereHas('course')->find($this->lesson->id);
 
         $log = CourseMailLog::create([
             'course_id' => $lesson->course_id,
             'user_id' => $this->user->id,
             'type' => CourseEmailType::PublishedLesson,
-            'record_id' => $lesson->id
+            'record_id' => $lesson->id,
         ]);
 
-        if (!$log || !$log->id) {
+        if (! $log || ! $log->id) {
             return throw (new \Exception('failed to create log record!'));
         }
 
         $unsubscribe_link = route('email.unsubscribe', ['token' => encrypt($this->user->email), 'type' => $this->type]);
+
         return new Content(
             markdown: 'emails.courses.published-lesson',
             with: ['unsubscribe_link' => $unsubscribe_link, 'direction' => $this->direction]
@@ -69,17 +72,16 @@ class PublishedLesson extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {
         return [];
     }
 
-
     public function failed(Throwable $exception): void
     {
         // Execute logic when the email fails to send after all retries
-        Log::info('Mailable failed to send: ' . $exception->getMessage());
+        Log::info('Mailable failed to send: '.$exception->getMessage());
     }
 }

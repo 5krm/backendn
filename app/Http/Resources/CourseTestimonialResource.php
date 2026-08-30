@@ -15,7 +15,7 @@ class CourseTestimonialResource extends JsonResource
             'name' => $this->name,
             'job_title' => $this->job_title,
             'image' => $this->AuthorImage,
-            'content' => $this->content
+            'content' => $this->content,
         ];
     }
 }

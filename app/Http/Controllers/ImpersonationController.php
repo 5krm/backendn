@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Filament\Facades\Filament;
 
 class ImpersonationController extends Controller
 {
@@ -18,14 +18,14 @@ class ImpersonationController extends Controller
         $impeorsonatorId = auth()->id();
 
         // Log out the manager and cleanly log in the target user using Filament's explicit panel guard
-        \Filament\Facades\Filament::auth()->logout();
+        Filament::auth()->logout();
         session()->invalidate();
         session()->regenerate();
 
         // save the impersonator ID into the freshly regenerated session
         session(['impersonator_id' => $impeorsonatorId]);
 
-        \Filament\Facades\Filament::auth()->login($user);
+        Filament::auth()->login($user);
 
         // Redirect to your panel dashboard home
         return redirect()->to('/tutor');
@@ -39,11 +39,11 @@ class ImpersonationController extends Controller
 
         $manager = User::findOrFail(session('impersonator_id'));
 
-        \Filament\Facades\Filament::auth()->logout();
+        Filament::auth()->logout();
         session()->invalidate();
         session()->regenerate();
 
-        \Filament\Facades\Filament::auth()->login($manager);
+        Filament::auth()->login($manager);
 
         // Send the manager right back to their resource workspace
         return redirect()->to('/tutor/tutors');

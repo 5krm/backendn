@@ -29,12 +29,12 @@ class QuizzesPerCourseTable extends BaseWidget
                     ->withCount('quizzes')
                     ->withCount([
                         // Students who attempted (score > 0)
-                        'students as attempted_count' => fn($q) => $q->where('enrollments.score', '>', 0),
+                        'students as attempted_count' => fn ($q) => $q->where('enrollments.score', '>', 0),
                         // Students who passed
-                        'students as passed_count' => fn($q) => $q->whereNotNull('enrollments.passed_at'),
+                        'students as passed_count' => fn ($q) => $q->whereNotNull('enrollments.passed_at'),
                     ])
                     ->withAvg(
-                        ['students as avg_score' => fn($q) => $q->where('enrollments.score', '>', 0)],
+                        ['students as avg_score' => fn ($q) => $q->where('enrollments.score', '>', 0)],
                         'enrollments.score'
                     )
                     ->orderByDesc('attempted_count')
@@ -62,19 +62,22 @@ class QuizzesPerCourseTable extends BaseWidget
                 Tables\Columns\TextColumn::make('pass_rate')
                     ->label(__('tutor.tables.pass_rate'))
                     ->getStateUsing(function ($record) {
-                        if ($record->attempted_count === 0) return '0%';
-                        return round(($record->passed_count / $record->attempted_count) * 100, 1) . '%';
+                        if ($record->attempted_count === 0) {
+                            return '0%';
+                        }
+
+                        return round(($record->passed_count / $record->attempted_count) * 100, 1).'%';
                     })
                     ->badge()
-                    ->color(fn($state) => (float)$state >= 70 ? 'success' : ((float)$state >= 50 ? 'warning' : 'danger')),
+                    ->color(fn ($state) => (float) $state >= 70 ? 'success' : ((float) $state >= 50 ? 'warning' : 'danger')),
                 Tables\Columns\TextColumn::make('avg_score')
                     ->label(__('tutor.tables.avg_score'))
-                    ->formatStateUsing(fn($state) => $state ? number_format($state, 1) . '%' : 'N/A')
+                    ->formatStateUsing(fn ($state) => $state ? number_format($state, 1).'%' : 'N/A')
                     ->sortable(),
             ])
             ->paginated(false)
             ->emptyStateHeading(__('tutor.empty.no_courses_with_quizzes'))
             ->emptyStateIcon('heroicon-o-academic-cap')
-            ->heading( __('tutor.widgets.quiz_summary'));
+            ->heading(__('tutor.widgets.quiz_summary'));
     }
 }

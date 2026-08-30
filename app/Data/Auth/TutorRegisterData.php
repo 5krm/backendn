@@ -12,13 +12,12 @@ use Spatie\LaravelData\Data;
 
 class TutorRegisterData extends Data
 {
-	public function __construct(
-		#[Max(255)]
-		public string $name,
-		#[Max(255), Email(), Unique(User::class)]
-		public string $email,
-		#[Password(default: true), Confirmed()]
-		public string $password,
-	) {
-	}
+    public function __construct(
+        #[Max(255)]
+        public string $name,
+        #[Max(255), Email(), Unique(User::class)]
+        public string $email,
+        #[Password(default: true), Confirmed()]
+        public string $password,
+    ) {}
 }

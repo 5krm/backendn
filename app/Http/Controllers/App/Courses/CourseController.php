@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\App\Courses;
 
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Wishlist;
-use App\Models\Certificate;
+use App\Actions\GenerateCertificate;
 use App\Enums\CourseStatus;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Certificate;
 use App\Models\Courses\Course;
 use App\Models\Courses\Enrollment;
-use App\Actions\GenerateCertificate;
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Wishlist;
 use App\ViewModels\Courses\CourseView;
 use App\ViewModels\Promotions\PromotionBannerView;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-
     public function index(Request $request)
     {
         $lang = auth()->check()
@@ -33,17 +32,17 @@ class CourseController extends Controller
         $courses = Course::query()
             ->with(['media', 'tutor', 'category', 'organization.media', 'userWishlists', 'userEnrollment', 'activePromotions'])
             ->withCount([
-                'lessons' => fn($q) => $q->where('status', 'published'),
+                'lessons' => fn ($q) => $q->where('status', 'published'),
                 'students',
             ])
-            ->when($category, fn($q) => $q->where('category_id', $category->id))
+            ->when($category, fn ($q) => $q->where('category_id', $category->id))
             ->when($request->filled('search'), function ($q) use ($request) {
                 $q->where(function ($sub) use ($request) {
                     $sub->where('title', 'like', "%{$request->search}%")
                         ->orWhere('description', 'like', "%{$request->search}%");
                 });
             })
-            ->when($freeOnly, fn($q) => $q->where('is_free', 1))
+            ->when($freeOnly, fn ($q) => $q->where('is_free', 1))
             ->when($sort, function ($q) use ($sort) {
                 return match ($sort) {
                     'title' => $q->orderBy('title'),
@@ -52,7 +51,7 @@ class CourseController extends Controller
                     'free' => $q->orderByDesc('is_free')->orderByDesc('created_at'),
                     default => $q->orderByDesc('created_at'),
                 };
-            }, fn($q) => $q->orderByDesc('created_at'))
+            }, fn ($q) => $q->orderByDesc('created_at'))
             ->whereIn('status', [
                 CourseStatus::published->value,
                 CourseStatus::preview->value,
@@ -90,8 +89,8 @@ class CourseController extends Controller
             })
             ->where('slug', $slug)
             ->withCount([
-                'lessons' => fn($query) => $query->where('status', 'published'),
-                'students'
+                'lessons' => fn ($query) => $query->where('status', 'published'),
+                'students',
             ])
             ->firstOrFail();
         $courseView = new CourseView($course);
@@ -126,11 +125,11 @@ class CourseController extends Controller
         }
 
         $course->setDurationToEnglish();
-        $stream = (new GenerateCertificate())->execute($user, $course);
+        $stream = (new GenerateCertificate)->execute($user, $course);
+
         return $stream;
     }
 
-    
     public function certificate(Course $course)
     {
         return view('app.courses.exam.certificate', ['course' => $course]);

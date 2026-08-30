@@ -2,16 +2,10 @@
 
 namespace App\Jobs\Stripe;
 
-use App\Models\Courses\Course;
 use App\Models\Courses\CoursePrice;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Stripe\StripeClient;
-
-use function Illuminate\Log\log;
 
 class CreateStripePrice implements ShouldQueue
 {
@@ -21,16 +15,18 @@ class CreateStripePrice implements ShouldQueue
 
     public function handle(StripeClient $stripe): void
     {
-        if ($this->coursePrice->course->stripe_product_id == null) return;
-        $this->coursePrice->load("course");
+        if ($this->coursePrice->course->stripe_product_id == null) {
+            return;
+        }
+        $this->coursePrice->load('course');
         $price = $stripe->prices->create([
             'currency' => 'usd',
             'unit_amount' => $this->coursePrice->price * 100,
             'product' => $this->coursePrice->course->stripe_product_id,
             'metadata' => [
                 'course_id' => $this->coursePrice->course_id,
-                'course_price_id' => $this->coursePrice->id
-            ]
+                'course_price_id' => $this->coursePrice->id,
+            ],
         ]);
 
         $this->coursePrice->stripe_price_id = $price->id;

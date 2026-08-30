@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class LessonDetailsView implements Arrayable
 {
     public string $courseSlug;
+
     public ?Pivot $tracking;
 
     public function __construct(public Lesson $lesson, string $courseSlug, $trackings)
@@ -34,7 +35,7 @@ class LessonDetailsView implements Arrayable
             'has_quiz' => $this->lesson->quizzes()->exists(),
             'next' => $this->lesson->next(),
             'previous' => $this->lesson->previous(),
-            'resources_count' => $this->lesson->resources_count
+            'resources_count' => $this->lesson->resources_count,
         ];
     }
 }

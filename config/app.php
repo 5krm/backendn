@@ -139,8 +139,8 @@ return [
         'secret' => env('RECAPTCHA_SECRET_ID', '6LeQmPMsAAAAAGpvBT6TThpuqpxaGex8QUNXDG_g'),
     ],
     'stripe' => [
-        'secret' => env("STRIPE_SECRET"),
-        'client' => env("STRIPE_CLIENT")
-    ]
+        'secret' => env('STRIPE_SECRET'),
+        'client' => env('STRIPE_CLIENT'),
+    ],
 
 ];

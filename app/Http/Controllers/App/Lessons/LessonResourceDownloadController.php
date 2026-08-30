@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\App\Lessons;
 
-use Exception;
 use App\Http\Controllers\Controller;
 use App\Models\Lessons\LessonResource;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class LessonResourceDownloadController extends Controller
@@ -13,12 +13,12 @@ class LessonResourceDownloadController extends Controller
     {
         try {
             $media = $resource->getLastMedia('resources');
-            abort_if(!$media, 404, 'File not found');
+            abort_if(! $media, 404, 'File not found');
 
             // clean safe filename
             $filename = preg_replace('/[^A-Za-z0-9\- ]/', '', $resource->title)
-                . '.'
-                . $media->extension;
+                .'.'
+                .$media->extension;
 
             return Storage::download(
                 $media->getPath(),

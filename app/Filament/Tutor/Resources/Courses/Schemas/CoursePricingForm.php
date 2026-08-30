@@ -30,11 +30,11 @@ class CoursePricingForm
                                 ->label(__('tutor.form.price'))
                                 ->numeric()
                                 ->minValue(0)
-                                ->required(fn($get) => !$get('is_free'))
+                                ->required(fn ($get) => ! $get('is_free'))
                                 ->prefix('$')
                                 ->placeholder('49')
                                 ->prefixIcon('heroicon-o-currency-dollar')
-                                ->visible(fn($get) => !$get('is_free'))
+                                ->visible(fn ($get) => ! $get('is_free'))
                                 ->default(0)
                                 ->columnSpanFull(),
 
@@ -47,8 +47,8 @@ class CoursePricingForm
                                 ->prefixIcon('heroicon-o-receipt-percent')
                                 ->helperText(__('tutor.form.show_discount'))
                                 ->nullable()
-                                ->visible(fn($get) => !$get('is_free'))
-                                ->minValue(fn($get)=>  $get('price'))
+                                ->visible(fn ($get) => ! $get('is_free'))
+                                ->minValue(fn ($get) => $get('price'))
                                 ->columnSpanFull(),
                         ])
                         ->columns(1),

@@ -9,7 +9,6 @@ use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
@@ -18,7 +17,6 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class CourseCommentsRelationManager extends RelationManager
 {
@@ -38,7 +36,7 @@ class CourseCommentsRelationManager extends RelationManager
     {
         return $table
             ->modifyQueryUsing(
-                fn(Builder $query) => $query
+                fn (Builder $query) => $query
                     ->whereNull('parent_id')
                     ->with(['user', 'lesson', 'children.user'])
             )
@@ -60,12 +58,12 @@ class CourseCommentsRelationManager extends RelationManager
                     ->searchable()
                     ->sortable()
                     ->limit(35)
-                    ->tooltip(fn(Comment $record) => $record->lesson?->title),
+                    ->tooltip(fn (Comment $record) => $record->lesson?->title),
 
                 TextColumn::make('content')
                     ->label(__('tutor.comments.comment'))
                     ->limit(60)
-                    ->tooltip(fn(Comment $record) => $record->content)
+                    ->tooltip(fn (Comment $record) => $record->content)
                     ->wrap()
                     ->searchable(),
 
@@ -95,8 +93,8 @@ class CourseCommentsRelationManager extends RelationManager
                         ])
                         ->action(function (Comment $record, array $data): void {
                             $reply = Comment::create([
-                                'content'   => $data['content'],
-                                'user_id'   => auth()->id(),
+                                'content' => $data['content'],
+                                'user_id' => auth()->id(),
                                 'lesson_id' => $record->lesson_id,
                                 'parent_id' => $record->id,
                             ]);
@@ -104,11 +102,11 @@ class CourseCommentsRelationManager extends RelationManager
                         }),
 
                     Action::make('manage_replies')
-                        ->label(fn(Comment $record) => __('tutor.comments.manage_replies') . ' (' . ($record->children_count ?? 0) . ')')
+                        ->label(fn (Comment $record) => __('tutor.comments.manage_replies').' ('.($record->children_count ?? 0).')')
                         ->icon('heroicon-o-chat-bubble-left-right')
-                        ->visible(fn(Comment $record) => ($record->children_count ?? 0) > 0)
+                        ->visible(fn (Comment $record) => ($record->children_count ?? 0) > 0)
                         ->modalHeading(__('tutor.comments.manage_replies'))
-                        ->modalContent(fn(Comment $record) => view('livewire.tutor.comment-replies-modal', ['commentId' => $record->id]))
+                        ->modalContent(fn (Comment $record) => view('livewire.tutor.comment-replies-modal', ['commentId' => $record->id]))
                         ->modalSubmitAction(false)
                         ->slideOver(),
 
@@ -116,16 +114,16 @@ class CourseCommentsRelationManager extends RelationManager
                         ->label(__('tutor.comments.copy_testimonial'))
                         ->icon('heroicon-o-chat-bubble-left-ellipsis')
                         ->action(function (Comment $record): void {
-                            $testimonial =  CourseTestimonial::create([
-                                "name" => $record->user->name,
-                                "content" => $record->content,
-                                "course_id" => $record->lesson->course_id,
-                                "job_title" => ""
+                            $testimonial = CourseTestimonial::create([
+                                'name' => $record->user->name,
+                                'content' => $record->content,
+                                'course_id' => $record->lesson->course_id,
+                                'job_title' => '',
                             ]);
-                            
+
                             $profile = $record->user->getMedia('avatars')->last();
                             $isFileExists = $profile ? File::exists($profile->getPath()) : false;
-                            
+
                             if ($profile && $isFileExists) {
                                 $testimonial->addMedia($profile->getPath())
                                     ->preservingOriginal()

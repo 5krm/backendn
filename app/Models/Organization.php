@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use App\Models\Courses\Course;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\URL;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Organization extends Model implements HasMedia
 {
@@ -66,7 +66,7 @@ class Organization extends Model implements HasMedia
         return Attribute::make(
             get: function () {
                 $media = $this->getFirstMedia('logo');
-                $default = URL::to('/') . '/assets/images/default-org-logo.png';
+                $default = URL::to('/').'/assets/images/default-org-logo.png';
 
                 if ($media) {
                     return $media->getUrl();
@@ -113,9 +113,9 @@ class Organization extends Model implements HasMedia
         return Attribute::make(
             get: function () {
                 $media = $this->getFirstMedia('stamp');
-                $default = URL::to('/') . '/assets/images/signature.png';
+                $default = URL::to('/').'/assets/images/signature.png';
 
-                if ($media  != null) {
+                if ($media != null) {
                     return $media->getUrl();
                 }
 

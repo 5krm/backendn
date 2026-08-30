@@ -34,16 +34,16 @@ class UploadLesson
             $chunkSizeBytes
         );
 
-        $filePath = public_path('uploads/' . $lesson->video_path);
+        $filePath = public_path('uploads/'.$lesson->video_path);
         $mediaUpload->setFileSize(filesize($filePath));
 
         $status = false;
-        $handle = fopen($filePath, "rb");
-        while (!$status && !feof($handle)) {
+        $handle = fopen($filePath, 'rb');
+        while (! $status && ! feof($handle)) {
             $chunk = fread($handle, $chunkSizeBytes);
             $status = $mediaUpload->nextChunk($chunk);
 
-            echo "chunk uploaded ";
+            echo 'chunk uploaded ';
         }
 
         fclose($handle);
@@ -60,15 +60,15 @@ class UploadLesson
 
     private function createVideo(Lesson $lesson): Video
     {
-        $video = new Video();
-        $snippet = new VideoSnippet();
+        $video = new Video;
+        $snippet = new VideoSnippet;
         $snippet->setTitle($lesson->title);
 
         // Education category.
         $snippet->setCategoryId('27');
         $video->setSnippet($snippet);
 
-        $status = new VideoStatus();
+        $status = new VideoStatus;
         $status->setPrivacyStatus(VideoStatus::PRIVACY_STATUS_unlisted);
         $video->setStatus($status);
 

@@ -2,13 +2,11 @@
 
 namespace App\Filament\Tutor\Resources\Courses\RelationManagers;
 
-use App\Models\Wishlist;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,7 +28,7 @@ class WishlistsRelationManager extends RelationManager
     {
         return $table
             ->modifyQueryUsing(
-                fn(Builder $query) => $query->with(['user'])
+                fn (Builder $query) => $query->with(['user'])
             )
             ->columns([
                 ImageColumn::make('user.profile')

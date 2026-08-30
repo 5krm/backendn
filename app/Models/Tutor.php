@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
- use App\Models\Lessons\Lesson;
-use App\Models\Quizzes\Quiz;
+use App\Models\Courses\Course;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\URL;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Support\Facades\URL;
-use App\Models\Courses\Course;
- 
+
 class Tutor extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -51,7 +49,7 @@ class Tutor extends Model implements HasMedia
             'user_id'   // local key on tutors table
         );
     }
- 
+
     /**
      * Get the tutor's specialization in the current locale.
      * Falls back to the Arabic specialization if no English one is set.
@@ -62,7 +60,7 @@ class Tutor extends Model implements HasMedia
             get: function () {
                 $locale = app()->getLocale();
 
-                if ($locale === 'en' && !empty($this->specialization_en)) {
+                if ($locale === 'en' && ! empty($this->specialization_en)) {
                     return $this->specialization_en;
                 }
 
@@ -81,7 +79,7 @@ class Tutor extends Model implements HasMedia
             get: function () {
                 $locale = app()->getLocale();
 
-                if ($locale === 'en' && !empty($this->name_en)) {
+                if ($locale === 'en' && ! empty($this->name_en)) {
                     return $this->name_en;
                 }
 
@@ -107,7 +105,7 @@ class Tutor extends Model implements HasMedia
                     return $this->user->profile;
                 }
 
-                return URL::to('/') . '/assets/images/default-user.png';
+                return URL::to('/').'/assets/images/default-user.png';
             }
         );
     }

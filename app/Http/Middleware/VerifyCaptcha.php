@@ -7,13 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
-use function Illuminate\Log\log;
-
 class VerifyCaptcha
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (config("env") != "production") {
+        if (config('env') != 'production') {
             return $next($request);
         }
 
@@ -24,7 +22,7 @@ class VerifyCaptcha
             'response' => $response,
         ]);
 
-        if (!$result->json('success') ||  $result->json('score') < 0.7) {
+        if (! $result->json('success') || $result->json('score') < 0.7) {
             return back()->withErrors(['recaptcha' => 'Failed reCAPTCHA verification']);
         }
 

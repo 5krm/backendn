@@ -1,0 +1,10 @@
+/node_modules
+/tests
+.git
+.github
+.env
+.env.*
+.agents
+.ai
+.claude
+.gemini

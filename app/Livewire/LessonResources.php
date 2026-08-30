@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Lessons\LessonResource;
 use Illuminate\Support\Facades\Route;
+use Livewire\Component;
 
 class LessonResources extends Component
 {
@@ -14,7 +14,7 @@ class LessonResources extends Component
     {
         $lessonKey = Route::current()->parameter('lesson');
         $this->resources = LessonResource::with('media')
-            ->whereHas('lesson', fn($q) => $q->where('public_key', $lessonKey))
+            ->whereHas('lesson', fn ($q) => $q->where('public_key', $lessonKey))
             ->get();
     }
 
@@ -26,9 +26,10 @@ class LessonResources extends Component
     public function download($id)
     {
         $resource = LessonResource::findOrFail($id);
+
         return response()->download(
-            storage_path('app/public/' . $resource->file_path),
-            $resource->title . '.' . pathinfo($resource->file_path, PATHINFO_EXTENSION)
+            storage_path('app/public/'.$resource->file_path),
+            $resource->title.'.'.pathinfo($resource->file_path, PATHINFO_EXTENSION)
         );
     }
 }

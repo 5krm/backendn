@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\ApiResponseTrait;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Traits\ApiResponseTrait;
 
 class CheckApiVersion
 {
@@ -20,14 +20,14 @@ class CheckApiVersion
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
         $clientVersion = $request->header('X-App-Version');
 
-        if (!$clientVersion) {
-            // Optional: Block entirely if missing, or allow with warning. 
+        if (! $clientVersion) {
+            // Optional: Block entirely if missing, or allow with warning.
             // For now, we enforce it.
             return $this->errorResponse('Missing X-App-Version header. Please update your app.', null, 426);
         }

@@ -1,10 +1,17 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\Filament\TutorPanelProvider;
+use App\Providers\HorizonServiceProvider;
+use App\Providers\TelescopeServiceProvider;
+use Vimeo\Laravel\VimeoServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\EventServiceProvider::class,
-    App\Providers\Filament\TutorPanelProvider::class,
-    App\Providers\HorizonServiceProvider::class,
-    App\Providers\TelescopeServiceProvider::class,
-    Vimeo\Laravel\VimeoServiceProvider::class,
+    AppServiceProvider::class,
+    EventServiceProvider::class,
+    TutorPanelProvider::class,
+    HorizonServiceProvider::class,
+    TelescopeServiceProvider::class,
+    VimeoServiceProvider::class,
 ];

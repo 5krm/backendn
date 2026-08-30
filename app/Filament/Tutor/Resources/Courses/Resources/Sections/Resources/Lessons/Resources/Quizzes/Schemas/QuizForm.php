@@ -5,14 +5,11 @@ namespace App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Less
 use App\Models\Lessons\Lesson;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Support\Enums\Alignment;
 
 class QuizForm
@@ -22,13 +19,13 @@ class QuizForm
         return $schema
             ->components([
                 Hidden::make('tutor_id')
-                    ->default(fn() => auth()->user()->id),
+                    ->default(fn () => auth()->user()->id),
                 Hidden::make('course_id')
-                    ->default(fn($get) => $get('lesson_id')
+                    ->default(fn ($get) => $get('lesson_id')
                         ? Lesson::find($get('lesson_id'))->course_id
                         : null),
                 Hidden::make('lesson_id')
-                    ->default(fn($get, $record) => $record?->lesson_id ?? null),
+                    ->default(fn ($get, $record) => $record?->lesson_id ?? null),
 
                 TextInput::make('question')
                     ->label(__('tutor.form.question'))
@@ -42,9 +39,8 @@ class QuizForm
                     ->rows(3)
                     ->columnSpanFull(),
                 Hidden::make('title')
-                    ->default(fn($get) => $get('question') ?? 'Untitled Quiz')
+                    ->default(fn ($get) => $get('question') ?? 'Untitled Quiz')
                     ->rules(['required']),
-
 
                 Repeater::make('options')
                     ->relationship('quizOptions')
@@ -54,7 +50,7 @@ class QuizForm
                         function () {
                             return function (string $attribute, $value, \Closure $fail) {
                                 $hasCorrect = collect($value)->contains(
-                                    fn($option) => !empty($option['is_correct'])
+                                    fn ($option) => ! empty($option['is_correct'])
                                 );
 
                                 if (! $hasCorrect) {
@@ -65,15 +61,15 @@ class QuizForm
                     ])
 
                     ->table([
-                        TableColumn::make(__("tutor.form.option_text"))->markAsRequired()->alignment(Alignment::Start),
+                        TableColumn::make(__('tutor.form.option_text'))->markAsRequired()->alignment(Alignment::Start),
                         TableColumn::make(__('tutor.form.correct'))->alignment(Alignment::Start),
                     ])
                     ->schema([
                         TextInput::make('value')
-                            ->label(__("tutor.form.option_text"))
+                            ->label(__('tutor.form.option_text'))
                             ->required(),
                         Toggle::make('is_correct')
-                            ->label(__("tutor.form.correct"))
+                            ->label(__('tutor.form.correct')),
                     ])
                     ->minItems(2)
                     ->maxItems(6)

@@ -4,6 +4,7 @@ namespace App\Filament\Tutor\Widgets;
 
 use App\Models\Courses\Course;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Str;
 
 class PopularCoursesChart extends ChartWidget
 {
@@ -22,7 +23,7 @@ class PopularCoursesChart extends ChartWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return [
                 'datasets' => [],
                 'labels' => [],
@@ -53,7 +54,7 @@ class PopularCoursesChart extends ChartWidget
                     'borderRadius' => 6,
                 ],
             ],
-            'labels' => $courses->pluck('title')->map(fn($title) => \Illuminate\Support\Str::limit($title, 20))->toArray(),
+            'labels' => $courses->pluck('title')->map(fn ($title) => Str::limit($title, 20))->toArray(),
         ];
     }
 

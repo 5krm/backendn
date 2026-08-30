@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api\Courses;
 
+use App\Http\Controllers\Controller;
 use App\Models\Courses\Course;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
 
 class CourseStudentsController extends Controller
 {
     const FILTER_COMPLETED = 1;
+
     const FILTER_NOT_STARTED = 2;
 
     public function students(Course $course): JsonResponse
@@ -19,11 +20,11 @@ class CourseStudentsController extends Controller
             ->students()
             ->when(
                 $filter == self::FILTER_NOT_STARTED,
-                fn($q) => $q->where('progress', 0)
+                fn ($q) => $q->where('progress', 0)
             )
             ->when(
                 $filter == self::FILTER_COMPLETED,
-                fn($q) => $q->where('progress', 100)
+                fn ($q) => $q->where('progress', 100)
             )
             ->get()
             ->map(function ($student) {

@@ -14,7 +14,7 @@ class QuizResource extends JsonResource
             'question' => $this->question,
             'order' => $this->order,
             'lesson_id' => $this->lesson_id,
-            'options' => $this->quizOptions ?? []
+            'options' => $this->quizOptions ?? [],
         ];
     }
 }

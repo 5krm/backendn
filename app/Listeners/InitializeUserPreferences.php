@@ -2,14 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Models\User;
 use App\Enums\PreferenceKey;
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Session;
 
 class InitializeUserPreferences
 {
-
     public function handle(Registered $event): void
     {
 
@@ -23,7 +22,7 @@ class InitializeUserPreferences
 
         $existingKeys = $user->preferences()
             ->pluck('key')
-            ->map(fn($key) => $key instanceof PreferenceKey ? $key->value : (string) $key)
+            ->map(fn ($key) => $key instanceof PreferenceKey ? $key->value : (string) $key)
             ->all();
 
         $defaults = collect([
@@ -32,13 +31,13 @@ class InitializeUserPreferences
             ['key' => PreferenceKey::FollowupEmail, 'value' => true],
             ['key' => PreferenceKey::NotificationEmail, 'value' => true],
             ['key' => PreferenceKey::UpdateEmail, 'value' => true],
-        ])->reject(fn(array $preference) => in_array($preference['key']->value, $existingKeys, true));
+        ])->reject(fn (array $preference) => in_array($preference['key']->value, $existingKeys, true));
 
         if ($defaults->isEmpty()) {
             return;
         }
 
-        $user->preferences()->insert($defaults->map(fn(array $preference) => [
+        $user->preferences()->insert($defaults->map(fn (array $preference) => [
             'user_id' => $user->id,
             'key' => $preference['key']->value,
             'value' => $preference['value'],

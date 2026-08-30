@@ -20,7 +20,7 @@ class OtpService
         DB::table('otps')->updateOrInsert(
             ['email' => $email],
             [
-                'otp_code'   => $otpCode, // or hashed if you prefer, but requirement says otp_code
+                'otp_code' => $otpCode, // or hashed if you prefer, but requirement says otp_code
                 'expires_at' => now()->addMinutes(10),
                 'created_at' => now(),
                 'updated_at' => now(),

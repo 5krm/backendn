@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\Courses;
 
-use App\Models\Courses\Course;
 use App\Enums\SatisfactionCase;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseSurveyResource;
-
+use App\Models\Courses\Course;
 
 class CourseSurveyController extends Controller
 {
@@ -14,9 +13,11 @@ class CourseSurveyController extends Controller
     {
         CourseSurveyResource::withoutWrapping();
     }
+
     public function index(Course $course)
     {
         $surveys = $course->surveys()->get();
+
         return CourseSurveyResource::collection($surveys);
     }
 
@@ -26,12 +27,13 @@ class CourseSurveyController extends Controller
 
         $statistics = [];
         foreach (SatisfactionCase::values() as $status) {
-            $statistics[]  = [
+            $statistics[] = [
                 'key' => $status,
                 'status' => SatisfactionCase::names()[$status],
-                'total' =>  $course->surveys->where('satisfaction', $status)->count()
+                'total' => $course->surveys->where('satisfaction', $status)->count(),
             ];
         }
+
         return response()->json($statistics);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Filament\Tutor\Pages;
 
+use App\Filament\Tutor\Widgets\ContentOverviewStats;
+use App\Filament\Tutor\Widgets\DraftContentWidget;
+use App\Filament\Tutor\Widgets\RecentlyUpdatedWidget;
 use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -31,16 +34,16 @@ class ContentManagement extends Page
     public function getHeaderWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\ContentOverviewStats::class,
+            ContentOverviewStats::class,
         ];
     }
 
     public function getFooterWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\RecentlyUpdatedWidget::class,
+            RecentlyUpdatedWidget::class,
             // \App\Filament\Tutor\Widgets\CoursesNeedingAttentionWidget::class,
-            \App\Filament\Tutor\Widgets\DraftContentWidget::class,
+            DraftContentWidget::class,
         ];
     }
 

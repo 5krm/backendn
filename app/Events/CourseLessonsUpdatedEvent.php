@@ -8,7 +8,5 @@ class CourseLessonsUpdatedEvent
 {
     use Dispatchable;
 
-    public function __construct(public int $course_id)
-    {
-    }
+    public function __construct(public int $course_id) {}
 }

@@ -2,8 +2,8 @@
 
 namespace App\Data\Courses;
 
-use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Data;
 
 class CourseTestimonialData extends Data
 {
@@ -13,6 +13,5 @@ class CourseTestimonialData extends Data
         #[Max(255)]
         public string $job_title,
         public string $content
-    ) {
-    }
+    ) {}
 }

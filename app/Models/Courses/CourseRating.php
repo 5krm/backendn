@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CourseRating extends Model
 {
     protected $primaryKey = 'id';
+
     protected $fillable = ['user_id', 'course_id', 'rating', 'review'];
 
     public function user(): BelongsTo

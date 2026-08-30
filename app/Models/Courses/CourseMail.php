@@ -2,10 +2,10 @@
 
 namespace App\Models\Courses;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\CourseEmailType;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CourseMail extends Model
 {
@@ -13,7 +13,7 @@ class CourseMail extends Model
 
     protected $casts = [
         'type' => CourseEmailType::class,
-        'active' => 'boolean'
+        'active' => 'boolean',
     ];
 
     public function course(): BelongsTo

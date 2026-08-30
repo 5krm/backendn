@@ -3,8 +3,8 @@
 namespace App\Filament\Tutor\Widgets;
 
 use App\Models\Courses\Course;
-use App\Models\Courses\Enrollment;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Str;
 
 class QuizPassRateChart extends ChartWidget
 {
@@ -23,16 +23,16 @@ class QuizPassRateChart extends ChartWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return ['datasets' => [], 'labels' => []];
         }
 
         $courses = Course::where('tutor_id', $tutorId)
             ->withCount([
                 // Students who attempted (score > 0)
-                'students as attempted_students' => fn($q) => $q->where('enrollments.score', '>', 0),
+                'students as attempted_students' => fn ($q) => $q->where('enrollments.score', '>', 0),
                 // Students who passed
-                'students as passed_students' => fn($q) => $q->whereNotNull('enrollments.passed_at'),
+                'students as passed_students' => fn ($q) => $q->whereNotNull('enrollments.passed_at'),
             ])
             ->having('attempted_students', '>', 0)
             ->orderByDesc('attempted_students')
@@ -51,14 +51,19 @@ class QuizPassRateChart extends ChartWidget
                     'label' => __('tutor.charts.pass_rate_percent'),
                     'data' => $passRates->toArray(),
                     'backgroundColor' => $passRates->map(function ($rate) {
-                        if ($rate >= 70) return 'rgba(16, 185, 129, 0.8)';
-                        if ($rate >= 50) return 'rgba(245, 158, 11, 0.8)';
+                        if ($rate >= 70) {
+                            return 'rgba(16, 185, 129, 0.8)';
+                        }
+                        if ($rate >= 50) {
+                            return 'rgba(245, 158, 11, 0.8)';
+                        }
+
                         return 'rgba(239, 68, 68, 0.8)';
                     })->toArray(),
                     'borderRadius' => 6,
                 ],
             ],
-            'labels' => $courses->pluck('title')->map(fn($t) => \Illuminate\Support\Str::limit($t, 15))->toArray(),
+            'labels' => $courses->pluck('title')->map(fn ($t) => Str::limit($t, 15))->toArray(),
         ];
     }
 

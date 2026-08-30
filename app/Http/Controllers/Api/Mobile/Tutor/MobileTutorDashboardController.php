@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Mobile\Tutor;
 use App\Http\Controllers\Controller;
 use App\Models\Courses\Course;
 use App\Models\Courses\Enrollment;
-use App\Models\Lessons\LessonTracking;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,11 +27,11 @@ class MobileTutorDashboardController extends Controller
 
         $tutorCourseIds = Course::where('tutor_id', $user->id)->pluck('id');
 
-        $totalCourses    = $tutorCourseIds->count();
-        $totalStudents   = Enrollment::whereIn('course_id', $tutorCourseIds)
+        $totalCourses = $tutorCourseIds->count();
+        $totalStudents = Enrollment::whereIn('course_id', $tutorCourseIds)
             ->distinct('user_id')
             ->count('user_id');
-        $totalCompleted  = Enrollment::whereIn('course_id', $tutorCourseIds)
+        $totalCompleted = Enrollment::whereIn('course_id', $tutorCourseIds)
             ->whereNotNull('passed_at')
             ->count();
 
@@ -45,11 +44,11 @@ class MobileTutorDashboardController extends Controller
             ->limit(10)
             ->get()
             ->map(fn ($e) => [
-                'student_name'  => $e->user?->name,
+                'student_name' => $e->user?->name,
                 'student_email' => $e->user?->email,
-                'course_title'  => $e->course?->title,
-                'enrolled_at'   => $e->created_at->toISOString(),
-                'progress'      => $e->progress ?? 0,
+                'course_title' => $e->course?->title,
+                'enrolled_at' => $e->created_at->toISOString(),
+                'progress' => $e->progress ?? 0,
             ]);
 
         // Monthly enrollment counts for the last 6 months
@@ -61,10 +60,10 @@ class MobileTutorDashboardController extends Controller
             ->pluck('count', 'month');
 
         return $this->success([
-            'total_courses'       => $totalCourses,
-            'total_students'      => $totalStudents,
-            'completed_students'  => $totalCompleted,
-            'recent_enrollments'  => $recentEnrollments,
+            'total_courses' => $totalCourses,
+            'total_students' => $totalStudents,
+            'completed_students' => $totalCompleted,
+            'recent_enrollments' => $recentEnrollments,
             'monthly_enrollments' => $monthlyStats,
         ]);
     }
@@ -80,19 +79,19 @@ class MobileTutorDashboardController extends Controller
             ->get();
 
         return $this->success($courses->map(fn ($c) => [
-            'id'              => $c->id,
-            'slug'            => $c->slug,
-            'title'           => $c->title,
-            'cover_image'     => $c->cover_image,
-            'status'          => $c->status?->value ?? $c->status,
-            'level'           => $c->level?->value ?? $c->level,
-            'is_free'         => (bool) $c->is_free,
-            'price'           => $c->activePrice?->amount ?? 0,
-            'students_count'  => $c->students_count,
-            'lessons_count'   => $c->lessons_count,
-            'average_rating'  => (float) ($c->average_rating ?? 0),
-            'category_name'   => $c->category?->name ?? null,
-            'created_at'      => $c->created_at->toISOString(),
+            'id' => $c->id,
+            'slug' => $c->slug,
+            'title' => $c->title,
+            'cover_image' => $c->cover_image,
+            'status' => $c->status?->value ?? $c->status,
+            'level' => $c->level?->value ?? $c->level,
+            'is_free' => (bool) $c->is_free,
+            'price' => $c->activePrice?->amount ?? 0,
+            'students_count' => $c->students_count,
+            'lessons_count' => $c->lessons_count,
+            'average_rating' => (float) ($c->average_rating ?? 0),
+            'category_name' => $c->category?->name ?? null,
+            'created_at' => $c->created_at->toISOString(),
         ]));
     }
 
@@ -115,14 +114,14 @@ class MobileTutorDashboardController extends Controller
         return $this->paginated(
             $enrollments,
             fn ($items) => collect($items)->map(fn ($e) => [
-                'enrollment_id'    => $e->id,
-                'student_id'       => $e->user_id,
-                'student_name'     => $e->user?->name,
-                'student_email'    => $e->user?->email,
-                'enrolled_at'      => $e->created_at->toISOString(),
+                'enrollment_id' => $e->id,
+                'student_id' => $e->user_id,
+                'student_name' => $e->user?->name,
+                'student_email' => $e->user?->email,
+                'enrolled_at' => $e->created_at->toISOString(),
                 'progress_percent' => $e->progress ?? 0,
-                'completed_at'     => $e->passed_at?->toISOString(),
-                'total_lessons'    => $totalLessons,
+                'completed_at' => $e->passed_at?->toISOString(),
+                'total_lessons' => $totalLessons,
             ])->all()
         );
     }
@@ -133,10 +132,10 @@ class MobileTutorDashboardController extends Controller
     {
         // Placeholder — real earnings require Stripe payment records
         return $this->success([
-            'total_earnings'   => 0,
-            'this_month'       => 0,
-            'currency'         => 'USD',
-            'note'             => 'Earnings tracking coming soon',
+            'total_earnings' => 0,
+            'this_month' => 0,
+            'currency' => 'USD',
+            'note' => 'Earnings tracking coming soon',
         ]);
     }
 }

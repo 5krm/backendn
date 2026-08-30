@@ -11,6 +11,5 @@ class SurveyData extends Data
         public string $comment,
         public string $as_expected,
         public ?array $suggestions,
-    ) {
-    }
+    ) {}
 }

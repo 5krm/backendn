@@ -4,8 +4,8 @@ namespace App\Filament\Tutor\Resources\NotificationResource\Pages;
 
 use App\Filament\Tutor\Resources\NotificationResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\ListRecords;
 
 class ListNotifications extends ListRecords
 {
@@ -26,7 +26,7 @@ class ListNotifications extends ListRecords
                         ->success()
                         ->send();
                 })
-                ->visible(fn() => auth()->user()->unreadNotifications->count() > 0),
+                ->visible(fn () => auth()->user()->unreadNotifications->count() > 0),
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\ViewModels\Courses;
 
-use App\Models\User;
 use App\Enums\CourseStatus;
 use App\Models\Courses\Course;
 use App\Models\Courses\Enrollment;
@@ -12,8 +11,11 @@ use Illuminate\Contracts\Support\Arrayable;
 class CourseView implements Arrayable
 {
     public bool $enrolled;
+
     public string $link;
+
     public ?Enrollment $enrollment = null;
+
     public bool $inWishlist = false;
 
     public function __construct(public Course $course)
@@ -38,10 +40,10 @@ class CourseView implements Arrayable
     {
         $previewLesson = null;
         if ($this->course->relationLoaded('sections')) {
-            if ($this->course->sections->first()?->relationLoaded('publishedLessons'))
+            if ($this->course->sections->first()?->relationLoaded('publishedLessons')) {
                 $previewLesson = $this->course->sections->first()->publishedLessons->first();
+            }
         }
-
 
         return [
             'file' => $this->course->coverImage,
@@ -72,13 +74,16 @@ class CourseView implements Arrayable
             return $this->course->activePromotions?->first()?->discount_percent ?? 0;
         }
 
-        if ($this->course->old_price == 0) return 0;
+        if ($this->course->old_price == 0) {
+            return 0;
+        }
 
         $diff = $this->course->old_price - $this->course->price;
         $discount = ($diff / $this->course->old_price) * 100;
 
         return ceil($discount);
     }
+
     public function isPreview(): bool
     {
         return $this->course->status === CourseStatus::preview;

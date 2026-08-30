@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Courses;
 
-use Illuminate\Http\Request;
-use App\Models\Courses\Course;
-use App\Http\Controllers\Controller;
-use App\Models\Courses\CourseTestimonial;
 use App\Data\Courses\CourseTestimonialData;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseTestimonialResource;
+use App\Models\Courses\Course;
+use App\Models\Courses\CourseTestimonial;
+use Illuminate\Http\Request;
 
 class CourseTestimonialController extends Controller
 {
@@ -15,9 +15,11 @@ class CourseTestimonialController extends Controller
     {
         CourseTestimonialResource::withoutWrapping();
     }
+
     public function index(Course $course)
     {
         $testimonials = $course->testimonials()->get();
+
         return CourseTestimonialResource::collection($testimonials);
     }
 
@@ -33,6 +35,7 @@ class CourseTestimonialController extends Controller
     public function update(Course $course, CourseTestimonial $testimonial, CourseTestimonialData $data)
     {
         $testimonial->update($data->toArray());
+
         return CourseTestimonialResource::make($testimonial);
     }
 
@@ -48,6 +51,7 @@ class CourseTestimonialController extends Controller
     public function delete(Course $course, CourseTestimonial $testimonial)
     {
         $testimonial->delete();
+
         return response()->noContent();
     }
 }

@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\App;
 
 use App\Enums\CourseStatus;
-use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Models\Courses\Course;
 use App\Models\Courses\CourseRating;
 use App\Models\Courses\Enrollment;
 use App\Models\Lessons\LessonComment\Comment;
-use App\Models\Lessons\LessonNote;
 use App\Models\Lessons\LessonTracking;
 use App\Models\Wishlist;
-use App\ViewModels\Courses\CourseView;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -33,9 +31,8 @@ class DashboardController extends Controller
             ->where('user_id', auth()->id())
             ->get();
 
-        $enrollments = $enrollments->filter(fn($en) => $en->course !== null && $en->course->status == CourseStatus::published);
+        $enrollments = $enrollments->filter(fn ($en) => $en->course !== null && $en->course->status == CourseStatus::published);
         $progress = $enrollments->where('course_id', $nextLesson?->course_id)->first()?->progress ?? 0;
-
 
         $certificates = Certificate::query()
             ->with(['course.media', 'media', 'course.organization'])
@@ -62,12 +59,10 @@ class DashboardController extends Controller
             ->with(['course.media'])
             ->whereHas(
                 'course',
-                fn($q) =>
-                $q->where('status', CourseStatus::preview)
+                fn ($q) => $q->where('status', CourseStatus::preview)
             )
             ->latest()
             ->get();
-
 
         $totals = [
             'in_progress' => $enrollments->where('progress', '<', 100)->count(),
@@ -76,18 +71,16 @@ class DashboardController extends Controller
             'certificates' => $certificates->count(),
         ];
 
-        
-
         return view('app.home', [
             'lesson' => $nextLesson,
             'progress' => $progress,
-            'enrollments' =>  $enrollments,
-            'certificates' =>  $certificates,
+            'enrollments' => $enrollments,
+            'certificates' => $certificates,
             'wishlistCourses' => $wishlistCourses,
             'comments' => $comments,
             'user' => $user,
             'totals' => $totals,
-            'ratings' => $ratings
+            'ratings' => $ratings,
         ]);
     }
 

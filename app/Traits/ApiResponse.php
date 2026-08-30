@@ -4,8 +4,6 @@ namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
  * Provides consistent JSON response envelopes across all mobile API controllers.
@@ -32,7 +30,7 @@ trait ApiResponse
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data'    => $data,
+            'data' => $data,
         ], $code);
     }
 
@@ -55,13 +53,13 @@ trait ApiResponse
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data'    => $transform($paginator->items()),
-            'meta'    => [
+            'data' => $transform($paginator->items()),
+            'meta' => [
                 'current_page' => $paginator->currentPage(),
-                'last_page'    => $paginator->lastPage(),
-                'per_page'     => $paginator->perPage(),
-                'total'        => $paginator->total(),
-                'has_more'     => $paginator->hasMorePages(),
+                'last_page' => $paginator->lastPage(),
+                'per_page' => $paginator->perPage(),
+                'total' => $paginator->total(),
+                'has_more' => $paginator->hasMorePages(),
             ],
         ]);
     }
@@ -77,7 +75,7 @@ trait ApiResponse
         return response()->json([
             'success' => false,
             'message' => $message,
-            'errors'  => $errors,
+            'errors' => $errors,
         ], $code);
     }
 
@@ -113,7 +111,7 @@ trait ApiResponse
         return response()->json([
             'success' => false,
             'message' => $message,
-            'errors'  => $errors,
+            'errors' => $errors,
         ], 422);
     }
 }

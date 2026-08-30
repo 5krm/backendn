@@ -34,7 +34,8 @@ class PasswordResetToken extends Model
     // Check if token is expired
     public function isExpired(int $minutes = 120): bool
     {
-        return isset($this->expired_at) ;
+        return isset($this->expired_at);
+
         return $this->created_at->lt(Carbon::now()->subMinutes($minutes));
     }
 

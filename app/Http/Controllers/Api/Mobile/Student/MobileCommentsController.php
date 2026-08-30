@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Mobile\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MobileCommentsController extends Controller
 {
@@ -20,10 +20,10 @@ class MobileCommentsController extends Controller
             ->select('comments.*', 'users.name as user_name')
             ->orderBy('comments.created_at', 'desc')
             ->get();
-            
+
         return response()->json([
             'success' => true,
-            'data' => $comments
+            'data' => $comments,
         ]);
     }
 
@@ -55,7 +55,7 @@ class MobileCommentsController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Comment posted successfully',
-            'data' => $comment
+            'data' => $comment,
         ], 201);
     }
 }

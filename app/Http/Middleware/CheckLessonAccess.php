@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\Enums\CourseStatus;
 use App\Models\Lessons\Lesson;
-use App\Models\Tutor;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class CheckLessonAccess
             ->where('status', CourseStatus::published)
             ->first();
 
-        if (!$lesson) {
+        if (! $lesson) {
             return redirect(route('dashboard'));
         }
 
@@ -28,7 +27,7 @@ class CheckLessonAccess
         $user = auth()->user();
         $enrolled = $user->courses()->where('course_id', $lesson->course_id)->exists();
         $isTutor = ($lesson->course->tutor_id == $user->id) ?? false;
-        if (!$enrolled && !$isTutor) {
+        if (! $enrolled && ! $isTutor) {
             return redirect(route('dashboard'));
         }
 

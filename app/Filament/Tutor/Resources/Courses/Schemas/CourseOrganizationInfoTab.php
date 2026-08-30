@@ -26,7 +26,7 @@ class CourseOrganizationInfoTab
                             }
 
                             return new HtmlString(
-                                '<img src="' . e($organization->logo_url) . '" width="100" height="100"  alt="" class="w-24 h-24 object-cover rounded-lg">'
+                                '<img src="'.e($organization->logo_url).'" width="100" height="100"  alt="" class="w-24 h-24 object-cover rounded-lg">'
                             );
                         })
                         ->columnSpanFull(),

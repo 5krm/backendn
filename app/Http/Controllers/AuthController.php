@@ -25,9 +25,9 @@ class AuthController extends Controller
         $language = app()->getLocale();
         $countries = Country::all();
         $countryItems = $countries
-            ->map(fn($c) => new ListItemData($c->id, $language == 'ar' ? $c->name_ar : $c->name))
-            ->sort(fn($a, $b) => $a->text <=> $b->text);
-        
+            ->map(fn ($c) => new ListItemData($c->id, $language == 'ar' ? $c->name_ar : $c->name))
+            ->sort(fn ($a, $b) => $a->text <=> $b->text);
+
         return view('auth.register', compact('countries', 'countryItems'));
     }
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
                     'email' => $data->email,
                     'password' => $hashedPassword,
                     'country_id' => $data->country_id,
-                    'phone' => $data->phone
+                    'phone' => $data->phone,
                 ]);
             }
 
@@ -66,6 +66,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Sentry\captureException($e);
+
             return back()->withErrors(['email' => __('auth.register.failed')]);
         }
     }

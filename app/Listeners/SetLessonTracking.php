@@ -46,14 +46,16 @@ class SetLessonTracking
         }
         $enrollment->save();
     }
-    function sendCourseHalfwayEmail($courseId, $userId)
+
+    public function sendCourseHalfwayEmail($courseId, $userId)
     {
         $user = User::find($userId);
         $mail = CourseMail::where('course_id', $courseId)
             ->where('type', CourseEmailType::halfway)
             ->where('active', true)->first();
 
-        if ($mail != null)
+        if ($mail != null) {
             SendCourseEmailJob::dispatch($user, $mail);
+        }
     }
 }

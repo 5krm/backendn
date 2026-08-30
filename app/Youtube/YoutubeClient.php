@@ -2,9 +2,9 @@
 
 namespace App\Youtube;
 
-use Google\Client;
 use App\Models\YoutubeToken;
 use Carbon\CarbonImmutable;
+use Google\Client;
 use Google_Service_YouTube;
 use Illuminate\Http\Request;
 
@@ -13,6 +13,7 @@ class YoutubeClient
     public static function getAuthUrl(): string
     {
         $client = self::initClient();
+
         return $client->createAuthUrl();
     }
 
@@ -23,7 +24,7 @@ class YoutubeClient
 
         $yearToExpire = 12 * 30 * 24 * 60 * 60;
         $tokenCreated = CarbonImmutable::createFromTimestamp($result['created']);
-      
+
         YoutubeToken::query()->create([
             'access_token' => $result['access_token'],
             'refresh_token' => $result['refresh_token'],
@@ -36,12 +37,13 @@ class YoutubeClient
 
     /**
      * Get the youtube client
+     *
      * @return array{Google_Service_YouTube, Client}
      */
     public static function getClient(): array
     {
         $token = YoutubeToken::query()->latest()->first();
-        if (!$token) {
+        if (! $token) {
             throw new \Exception('No Youtube access has been granted.');
         }
 
@@ -54,7 +56,7 @@ class YoutubeClient
 
         return [
             new Google_Service_YouTube($client),
-            $client
+            $client,
         ];
     }
 
@@ -64,13 +66,13 @@ class YoutubeClient
         $result = $client->fetchAccessTokenWithRefreshToken($refreshToken);
 
         $token = YoutubeToken::query()->latest()->first();
-        if (!$token) {
+        if (! $token) {
             throw new \Exception('No Youtube access has been granted.');
         }
 
         $yearToExpire = 12 * 30 * 24 * 60 * 60;
         $tokenCreated = CarbonImmutable::createFromTimestamp($result['created']);
-        
+
         $token->update([
             'access_token' => $result['access_token'],
             'refresh_token' => $result['refresh_token'],
@@ -93,7 +95,7 @@ class YoutubeClient
 
     private static function initClient(): Client
     {
-        $client = new Client();
+        $client = new Client;
         $client->setAuthConfig(storage_path('app/gc_client_secret.json'));
         $client->addScope(Google_Service_YouTube::YOUTUBE_UPLOAD);
 

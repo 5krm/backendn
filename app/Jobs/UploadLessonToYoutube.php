@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use DateTimeZone;
-use Carbon\Carbon;
 use App\Models\Lessons\Lesson;
 use App\Youtube\UploadLesson;
+use Carbon\Carbon;
+use DateTimeZone;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -32,6 +32,7 @@ class UploadLessonToYoutube implements ShouldQueue
             $delay = $now->diffInSeconds($midnight);
 
             $this->release($delay);
+
             return;
         }
 

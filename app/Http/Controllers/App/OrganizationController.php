@@ -8,21 +8,21 @@ use App\Models\Courses\Enrollment;
 use App\Models\Organization;
 use App\Models\OrganizationFollower;
 use App\Models\Tutor;
-use App\ViewModels\Courses\CourseView;
 use App\Models\User;
-use Illuminate\View\View; 
+use App\ViewModels\Courses\CourseView;
+use Illuminate\View\View;
 
 class OrganizationController extends Controller
 {
     public function index(Organization $organization): View
     {
         abort_unless($organization->is_active, 404);
-        $organization->loadMissing("users");
+        $organization->loadMissing('users');
         $courses = $organization->courses()
             ->with(['media', 'category', 'organization.media', 'tutor.tutorProfile', 'tutor.tutorProfile.media'])
             ->withCount([
-                'lessons' => fn($q) => $q->where('status', CourseStatus::published),
-                'students'
+                'lessons' => fn ($q) => $q->where('status', CourseStatus::published),
+                'students',
             ])
             ->whereIn('status', [
                 CourseStatus::published->value,
@@ -37,7 +37,7 @@ class OrganizationController extends Controller
                     ? $view->forUser(auth()->user())->toArray()
                     : $view->toArray();
 
-                 $payload['organization'] = null;
+                $payload['organization'] = null;
 
                 return $payload;
             });
@@ -52,7 +52,7 @@ class OrganizationController extends Controller
                 ->count('user_id');
 
         $instructorsCount = User::query()
-            ->where("organization_id", $organization->id)
+            ->where('organization_id', $organization->id)
             ->whereHas('tutorCourses')
             ->count();
 
@@ -67,9 +67,9 @@ class OrganizationController extends Controller
         $rating = $courseIds->isEmpty()
             ? null
             : Enrollment::query()
-            ->whereIn('course_id', $courseIds)
-            ->whereNotNull('score')
-            ->avg('score');
+                ->whereIn('course_id', $courseIds)
+                ->whereNotNull('score')
+                ->avg('score');
 
         $followersCount = OrganizationFollower::query()
             ->where('organization_id', $organization->id)
@@ -88,6 +88,4 @@ class OrganizationController extends Controller
             ],
         ]);
     }
-
- 
 }

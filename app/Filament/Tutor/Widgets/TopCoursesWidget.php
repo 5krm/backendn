@@ -37,7 +37,7 @@ class TopCoursesWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('tutor.tables.course'))
                     ->limit(35)
-                    ->tooltip(fn($record) => $record->title)
+                    ->tooltip(fn ($record) => $record->title)
                     ->searchable()
                     ->weight('medium'),
 
@@ -49,11 +49,11 @@ class TopCoursesWidget extends BaseWidget
 
                 Tables\Columns\TextColumn::make('price')
                     ->label(__('tutor.tables.price'))
-                    ->formatStateUsing(fn($state, $record) => $record->is_free 
-                        ? __('tutor.tables.free') 
-                        : '$' . number_format($state, 2))
+                    ->formatStateUsing(fn ($state, $record) => $record->is_free
+                        ? __('tutor.tables.free')
+                        : '$'.number_format($state, 2))
                     ->badge()
-                    ->color(fn($record) => $record->is_free ? 'primary' : 'secondary'),
+                    ->color(fn ($record) => $record->is_free ? 'primary' : 'secondary'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('tutor.tables.created'))

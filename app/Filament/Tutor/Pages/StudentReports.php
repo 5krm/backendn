@@ -2,10 +2,13 @@
 
 namespace App\Filament\Tutor\Pages;
 
+use App\Filament\Tutor\Widgets\AtRiskStudentsTable;
+use App\Filament\Tutor\Widgets\EnrollmentTrendsChart;
+use App\Filament\Tutor\Widgets\StudentStatsOverview;
+use App\Filament\Tutor\Widgets\TopStudentsTable;
+use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
-use BackedEnum;
-use UnitEnum;
 
 class StudentReports extends Page
 {
@@ -13,13 +16,13 @@ class StudentReports extends Page
 
     protected static ?string $navigationLabel = null;
 
-    
     protected static ?string $title = null;
 
     public static function getNavigationGroup(): string
     {
         return __('tutor.nav.reports_analytics');
     }
+
     public static function getNavigationLabel(): string
     {
         return __('tutor.reports.student_reports');
@@ -37,16 +40,16 @@ class StudentReports extends Page
     public function getHeaderWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\StudentStatsOverview::class,
+            StudentStatsOverview::class,
         ];
     }
 
     public function getFooterWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\EnrollmentTrendsChart::class,
-            \App\Filament\Tutor\Widgets\TopStudentsTable::class,
-            \App\Filament\Tutor\Widgets\AtRiskStudentsTable::class,
+            EnrollmentTrendsChart::class,
+            TopStudentsTable::class,
+            AtRiskStudentsTable::class,
         ];
     }
 

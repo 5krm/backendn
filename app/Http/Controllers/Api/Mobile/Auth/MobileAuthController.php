@@ -7,12 +7,10 @@ use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
-use Carbon\Carbon;
 
 /**
  * Handles all authentication for the Flutter mobile app.
@@ -28,26 +26,26 @@ class MobileAuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'email'                 => ['required', 'email', 'unique:users,email'],
-            'password'              => ['required', 'confirmed', PasswordRule::min(8)],
-            'phone'                 => ['nullable', 'string', 'max:20'],
-            'is_tutor'              => ['boolean'],
-            'device_name'           => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed', PasswordRule::min(8)],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'is_tutor' => ['boolean'],
+            'device_name' => ['required', 'string', 'max:255'],
         ]);
 
         $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
+            'name' => $data['name'],
+            'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'phone'    => $data['phone'] ?? null,
+            'phone' => $data['phone'] ?? null,
             'is_tutor' => $data['is_tutor'] ?? false,
         ]);
 
         $token = $user->createToken($data['device_name'])->plainTextToken;
 
         return $this->created([
-            'user'  => $this->userPayload($user),
+            'user' => $this->userPayload($user),
             'token' => ['access_token' => $token, 'token_type' => 'Bearer'],
         ], 'Registration successful');
     }
@@ -57,8 +55,8 @@ class MobileAuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'email'       => ['required', 'email'],
-            'password'    => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
             'device_name' => ['required', 'string', 'max:255'],
         ]);
 
@@ -74,7 +72,7 @@ class MobileAuthController extends Controller
         $token = $user->createToken($data['device_name'])->plainTextToken;
 
         return $this->success([
-            'user'  => $this->userPayload($user),
+            'user' => $this->userPayload($user),
             'token' => ['access_token' => $token, 'token_type' => 'Bearer'],
         ], 'Login successful');
     }
@@ -92,9 +90,9 @@ class MobileAuthController extends Controller
 
     public function refresh(Request $request): JsonResponse
     {
-        $user        = $request->user();
+        $user = $request->user();
         $currentToken = $user->currentAccessToken();
-        $deviceName  = $currentToken->name;
+        $deviceName = $currentToken->name;
 
         $currentToken->delete();
         $newToken = $user->createToken($deviceName)->plainTextToken;
@@ -118,9 +116,9 @@ class MobileAuthController extends Controller
     public function updateProfile(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'name'       => ['sometimes', 'string', 'max:255'],
-            'phone'      => ['sometimes', 'nullable', 'string', 'max:20'],
-            'bio'        => ['sometimes', 'nullable', 'string', 'max:1000'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'phone' => ['sometimes', 'nullable', 'string', 'max:20'],
+            'bio' => ['sometimes', 'nullable', 'string', 'max:1000'],
             'country_id' => ['sometimes', 'nullable', 'exists:countries,id'],
         ]);
 
@@ -180,10 +178,10 @@ class MobileAuthController extends Controller
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $request->email],
             [
-                'token'      => Hash::make($otp),
+                'token' => Hash::make($otp),
                 'created_at' => now(),
-                'expired'    => false,
-                'type'       => 'mobile_otp',
+                'expired' => false,
+                'type' => 'mobile_otp',
             ]
         );
 
@@ -201,8 +199,8 @@ class MobileAuthController extends Controller
     public function resetPassword(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'email'    => ['required', 'email'],
-            'otp'      => ['required', 'string', 'size:6'],
+            'email' => ['required', 'email'],
+            'otp' => ['required', 'string', 'size:6'],
             'password' => ['required', 'confirmed', PasswordRule::min(8)],
         ]);
 
@@ -236,14 +234,14 @@ class MobileAuthController extends Controller
     }
 
     // ── Delete Account ────────────────────────────────────────────────────────
-    
+
     public function deleteAccount(Request $request): JsonResponse
     {
         $user = $request->user();
-        
+
         // Revoke all tokens
         $user->tokens()->delete();
-        
+
         // Soft delete the user
         $user->delete();
 
@@ -258,16 +256,16 @@ class MobileAuthController extends Controller
     private function userPayload(User $user): array
     {
         return [
-            'id'         => $user->id,
-            'name'       => $user->name,
-            'email'      => $user->email,
-            'phone'      => $user->phone ?? null,
-            'bio'        => $user->bio ?? null,
-            'avatar'     => $user->profile, // uses the `profile` accessor
-            'is_tutor'   => $user->isTutor(),
-            'is_admin'   => $user->isAdmin(),
-            'country'    => $user->country ? [
-                'id'   => $user->country->id,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone ?? null,
+            'bio' => $user->bio ?? null,
+            'avatar' => $user->profile, // uses the `profile` accessor
+            'is_tutor' => $user->isTutor(),
+            'is_admin' => $user->isAdmin(),
+            'country' => $user->country ? [
+                'id' => $user->country->id,
                 'name' => $user->country->name,
             ] : null,
             'email_verified_at' => $user->email_verified_at?->toISOString(),

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\App;
 
 use App\Enums\CourseStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Courses\Course;
 use App\Models\Promotion;
 use App\Models\User;
-use App\Models\Courses\Course;
 use App\ViewModels\Courses\CourseView;
 use App\ViewModels\Promotions\PromotionBannerView;
 
@@ -36,7 +36,7 @@ class PromotionController extends Controller
                 fn ($query) => $query->where('promotions.id', $promotion->id)
             )
             ->whereIn('status', [
-                CourseStatus::published->value            
+                CourseStatus::published->value,
             ])
             // ->where('lang', $lang)
             ->orderByDesc('created_at')

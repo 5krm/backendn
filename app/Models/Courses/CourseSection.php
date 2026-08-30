@@ -3,18 +3,17 @@
 namespace App\Models\Courses;
 
 use App\Enums\CourseStatus;
-use App\Traits\HasDuration;
-use App\Models\Courses\Course;
 use App\Models\Lessons\Lesson;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\HasDuration;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CourseSection extends Model
 {
-    use HasFactory, SoftDeletes, HasDuration;
+    use HasDuration, HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
 

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Courses;
 
-use Illuminate\Http\Request;
-use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
-use App\Http\Controllers\Controller;
-use App\Models\Courses\CourseSection;
 use App\Data\Courses\CourseSectionData;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Lessons\CourseSectionResource;
+use App\Models\Courses\Course;
+use App\Models\Courses\CourseSection;
+use App\Models\Lessons\Lesson;
+use Illuminate\Http\Request;
 
 class CourseSectionController extends Controller
 {
@@ -39,6 +39,7 @@ class CourseSectionController extends Controller
     public function update(CourseSection $section, CourseSectionData $data)
     {
         $section->update($data->toArray());
+
         return CourseSectionResource::make($section->load('lessons'));
     }
 
@@ -57,11 +58,12 @@ class CourseSectionController extends Controller
             ->sections
             ->each(function (CourseSection $section) use ($data) {
                 if ($section->update(['order' => $data[$section->id]['index']])) {
-                    $section->lessons->each(fn(Lesson $lesson) =>  $lesson->update(['section_order' => $section->order]));
+                    $section->lessons->each(fn (Lesson $lesson) => $lesson->update(['section_order' => $section->order]));
                 }
             });
 
         $result = $course->sections->sortBy('order')->values();
+
         return CourseSectionResource::collection($result);
     }
 

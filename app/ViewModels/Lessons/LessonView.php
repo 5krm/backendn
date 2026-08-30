@@ -3,9 +3,9 @@
 namespace App\ViewModels\Lessons;
 
 use App\Models\Lessons\Lesson;
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Collection;
 
 class LessonView implements Arrayable
 {

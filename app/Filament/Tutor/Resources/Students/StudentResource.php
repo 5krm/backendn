@@ -23,10 +23,12 @@ class StudentResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'name';
+
     public static function getNavigationGroup(): string
     {
         return __('tutor.nav.settings');
     }
+
     public static function getNavigationLabel(): string
     {
         return __('tutor.students._');
@@ -37,11 +39,11 @@ class StudentResource extends Resource
         return __('tutor.students.student');
     }
 
-
     public static function getPluralModelLabel(): string
     {
         return __('tutor.students._');
     }
+
     public static function form(Schema $schema): Schema
     {
         return StudentForm::configure($schema);
@@ -88,9 +90,10 @@ class StudentResource extends Resource
                 ->with('courses')
                 ->withCount('courses');
         }
+
         return parent::getEloquentQuery()
-            ->whereHas('courses', fn($q) => $q->where('tutor_id', $user->id))
-            ->with(['courses' => fn($q) => $q->where('tutor_id', $user->id)])
+            ->whereHas('courses', fn ($q) => $q->where('tutor_id', $user->id))
+            ->with(['courses' => fn ($q) => $q->where('tutor_id', $user->id)])
             ->withCount('courses');
     }
 }

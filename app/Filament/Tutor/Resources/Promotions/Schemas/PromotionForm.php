@@ -129,7 +129,7 @@ class PromotionForm
 
     protected static function previewBanner(callable $get, ?Promotion $record): ?PromotionBannerView
     {
-        $promotion = $record?->replicate() ?? new Promotion();
+        $promotion = $record?->replicate() ?? new Promotion;
 
         if (! $promotion->exists) {
             $promotion->id = 0;

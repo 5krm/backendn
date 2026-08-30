@@ -2,24 +2,29 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Panel;
-use Filament\PanelProvider;
-use App\Http\Middleware\SetLocale;
-use Filament\Widgets\AccountWidget;
+use App\Filament\Tutor\Pages\Dashboard;
+use App\Filament\Tutor\Widgets\RecentCommentsWidget;
+use App\Filament\Tutor\Widgets\RecentNotificationsWidget;
+use App\Filament\Tutor\Widgets\TutorStatsOverview;
 use App\Http\Middleware\EnsureTutor;
-use Filament\Navigation\NavigationGroup;
+use App\Http\Middleware\SetLocale;
+use App\Providers\Filament\Navigation\UserMenuActions;
+use EslamRedaDiv\TimezoneDetector\TimezoneDetectorPlugin;
+use Filament\AvatarProviders\UiAvatarsProvider;
 use Filament\Http\Middleware\Authenticate;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
+use Filament\Panel;
+use Filament\PanelProvider;
+use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Providers\Filament\Navigation\UserMenuActions;
-use EslamRedaDiv\TimezoneDetector\TimezoneDetectorPlugin;
 
 class TutorPanelProvider extends PanelProvider
 {
@@ -37,7 +42,7 @@ class TutorPanelProvider extends PanelProvider
             ->brandLogoHeight('2rem')
             ->favicon(asset('ngo-academy-icon.svg'))
             ->darkMode(false)
-            ->defaultAvatarProvider(\Filament\AvatarProviders\UiAvatarsProvider::class)
+            ->defaultAvatarProvider(UiAvatarsProvider::class)
             ->globalSearch(false)
             ->plugin(TimezoneDetectorPlugin::make())
             ->colors([
@@ -49,42 +54,42 @@ class TutorPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->navigationGroups([
                 NavigationGroup::make('Content Management')
-                    ->label(fn() => __('tutor.nav.content_management'))
+                    ->label(fn () => __('tutor.nav.content_management'))
                     ->icon('heroicon-o-academic-cap')
                     ->collapsible(),
                 NavigationGroup::make('Reports and Analytics')
-                    ->label(fn() => __('tutor.nav.reports_analytics'))
+                    ->label(fn () => __('tutor.nav.reports_analytics'))
                     ->icon('heroicon-o-chart-bar')
                     ->collapsible(),
                 NavigationGroup::make('Settings')
-                    ->label(fn() => __('tutor.nav.settings'))
+                    ->label(fn () => __('tutor.nav.settings'))
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsible(),
             ])
             ->discoverResources(in: app_path('Filament/Tutor/Resources'), for: 'App\Filament\Tutor\Resources')
             ->discoverPages(in: app_path('Filament/Tutor/Pages'), for: 'App\Filament\Tutor\Pages')
             ->pages([
-                \App\Filament\Tutor\Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Tutor/Widgets'), for: 'App\Filament\Tutor\Widgets')
             ->widgets([
-                \App\Filament\Tutor\Widgets\TutorStatsOverview::class,
-                \App\Filament\Tutor\Widgets\RecentNotificationsWidget::class,
-                \App\Filament\Tutor\Widgets\RecentCommentsWidget::class,
+                TutorStatsOverview::class,
+                RecentNotificationsWidget::class,
+                RecentCommentsWidget::class,
                 AccountWidget::class,
             ])
             ->databaseNotificationsPolling('30s')
             ->renderHook(
                 'panels::global-search.after',
-                fn() => view('filament.tutor.components.impersonation-banner')
+                fn () => view('filament.tutor.components.impersonation-banner')
             )
             ->renderHook(
                 'panels::global-search.after',
-                fn() => view('filament.tutor.components.language-switcher')
+                fn () => view('filament.tutor.components.language-switcher')
             )
             ->renderHook(
                 'panels::head.end',
-                fn() => view('filament.tutor.components.dashboard-styles')
+                fn () => view('filament.tutor.components.dashboard-styles')
             )
             ->authMiddleware([
                 Authenticate::class,

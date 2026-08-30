@@ -16,7 +16,7 @@ class QuizStatsOverview extends StatsOverviewWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return [];
         }
 
@@ -56,12 +56,12 @@ class QuizStatsOverview extends StatsOverviewWidget
                 ->descriptionIcon('heroicon-m-question-mark-circle')
                 ->color('primary'),
 
-            Stat::make(__('tutor.stats.pass_rate'), $passRate . '%')
+            Stat::make(__('tutor.stats.pass_rate'), $passRate.'%')
                 ->description(__('tutor.stats.passed_of_attempted', ['passed' => $passedStudents, 'attempted' => $attemptedStudents]))
                 ->descriptionIcon('heroicon-m-check-badge')
                 ->color($passRate >= 70 ? 'success' : ($passRate >= 50 ? 'warning' : 'danger')),
 
-            Stat::make(__('tutor.stats.avg_score'), number_format($avgScore, 1) . '%')
+            Stat::make(__('tutor.stats.avg_score'), number_format($avgScore, 1).'%')
                 ->description(__('tutor.stats.across_all_attempts'))
                 ->descriptionIcon('heroicon-m-chart-bar')
                 ->color('info'),

@@ -5,8 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-
-enum CourseEmailType: string implements HasLabel, HasColor
+enum CourseEmailType: string implements HasColor, HasLabel
 {
     case welcome = 'welcome';
     case completion = 'completion';

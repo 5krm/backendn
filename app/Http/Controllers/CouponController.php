@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Coupon;
+use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
     public function verify(Request $request)
     {
         $request->validate(['code' => 'required|string']);
-        
+
         $coupon = Coupon::valid()->where('code', strtoupper(trim($request->code)))->first();
 
-        if (!$coupon) {
+        if (! $coupon) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid or expired coupon code.',
@@ -31,9 +31,9 @@ class CouponController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'code'    => $coupon->code,
-                'type'    => $coupon->type,   // 'percent' | 'fixed'
-                'value'   => $coupon->value,
+                'code' => $coupon->code,
+                'type' => $coupon->type,   // 'percent' | 'fixed'
+                'value' => $coupon->value,
                 'expires_at' => $coupon->expires_at?->toIso8601String(),
             ],
         ]);

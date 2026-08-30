@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\App\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class VerifyEmailController extends Controller
 {
@@ -18,6 +16,7 @@ class VerifyEmailController extends Controller
     {
 
         $request->fulfill();
-        return redirect()->intended("/");
+
+        return redirect()->intended('/');
     }
 }

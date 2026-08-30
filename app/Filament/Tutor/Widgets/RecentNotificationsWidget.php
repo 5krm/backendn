@@ -2,11 +2,10 @@
 
 namespace App\Filament\Tutor\Widgets;
 
+use Filament\Actions\Action;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions\Action;
 use Filament\Widgets\TableWidget as BaseWidget;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\DatabaseNotification;
 
 class RecentNotificationsWidget extends BaseWidget
@@ -35,15 +34,15 @@ class RecentNotificationsWidget extends BaseWidget
             ->columns([
                 Tables\Columns\IconColumn::make('icon')
                     ->label('')
-                    ->icon(fn($record) => $record->data['icon'] ?? 'heroicon-o-bell')
-                    ->color(fn($record) => $record->data['color'] ?? 'gray')
+                    ->icon(fn ($record) => $record->data['icon'] ?? 'heroicon-o-bell')
+                    ->color(fn ($record) => $record->data['color'] ?? 'gray')
                     ->size('lg'),
 
                 Tables\Columns\TextColumn::make('data.title')
                     ->label(__('tutor.notifications.notification'))
                     ->weight('bold')
-                    ->color(fn($record) => $record->read_at ? 'gray' : 'primary')
-                     ->formatStateUsing(function (string $state): string  {
+                    ->color(fn ($record) => $record->read_at ? 'gray' : 'primary')
+                    ->formatStateUsing(function (string $state): string {
                         $titles = [
                             'new_enrollment' => __('notifications.titles.new_enrollment'),
                             'course_completed' => __('notifications.titles.course_completed'),
@@ -54,9 +53,9 @@ class RecentNotificationsWidget extends BaseWidget
                         return $titles[$state] ?? $state;
                     }),
 
-                    Tables\Columns\TextColumn::make('data.message')
+                Tables\Columns\TextColumn::make('data.message')
                     ->label(__('notifications.message'))
-                    ->formatStateUsing(function(string $state, $record){
+                    ->formatStateUsing(function (string $state, $record) {
                         $messages = [
                             'new_enrollment' => __('notifications.messages.new_enrollment', [
                                 'student_name' => $record->data['student_name'] ?? __('notifications.student'),
@@ -82,7 +81,6 @@ class RecentNotificationsWidget extends BaseWidget
                     ->limit(60)
                     ->wrap(),
 
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('tutor.notifications.time'))
                     ->since()
@@ -90,7 +88,7 @@ class RecentNotificationsWidget extends BaseWidget
 
                 Tables\Columns\IconColumn::make('read_at')
                     ->label(__('notifications.read'))
-                    ->getStateUsing(fn ($record) => !is_null($record->read_at))
+                    ->getStateUsing(fn ($record) => ! is_null($record->read_at))
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-clock')
@@ -103,7 +101,7 @@ class RecentNotificationsWidget extends BaseWidget
                     ->label(__('tutor.notifications.mark_read'))
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn($record) => is_null($record->read_at))
+                    ->visible(fn ($record) => is_null($record->read_at))
                     ->action(function (DatabaseNotification $record) {
                         $record->markAsRead();
                     }),

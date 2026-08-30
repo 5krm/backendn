@@ -5,10 +5,7 @@ namespace App\Jobs\Stripe;
 use App\Models\Courses\Course;
 use App\Models\Courses\CoursePrice;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Stripe\StripeClient;
 
 class CreateStripeProduct implements ShouldQueue
@@ -21,7 +18,7 @@ class CreateStripeProduct implements ShouldQueue
     {
         $coursePrice = CoursePrice::create([
             'course_id' => $this->course->id,
-            'price' => $this->course->price
+            'price' => $this->course->price,
         ]);
 
         $product = $stripe->products->create([
@@ -32,12 +29,12 @@ class CreateStripeProduct implements ShouldQueue
                 'currency' => 'usd',
                 'metadata' => [
                     'course_id' => $this->course->id,
-                    'course_price_id' => $coursePrice->id
-                ]
+                    'course_price_id' => $coursePrice->id,
+                ],
             ],
             'metadata' => [
-                'course_id' => $this->course->id
-            ]
+                'course_id' => $this->course->id,
+            ],
         ]);
 
         $this->course->stripe_product_id = $product->id;

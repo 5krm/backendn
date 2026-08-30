@@ -11,7 +11,7 @@ class GeneratePDF
     {
         $html = view($view, $data)->render();
 
-        $Arabic = new Arabic();
+        $Arabic = new Arabic;
         $arabicSegments = $Arabic->arIdentify($html);
         for ($i = count($arabicSegments) - 1; $i >= 0; $i -= 2) {
             $utf8ar = $Arabic->utf8Glyphs(substr($html, $arabicSegments[$i - 1], $arabicSegments[$i] - $arabicSegments[$i - 1]));

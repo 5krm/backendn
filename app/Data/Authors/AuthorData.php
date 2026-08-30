@@ -2,8 +2,8 @@
 
 namespace App\Data\Authors;
 
-use Spatie\LaravelData\Data;
 use Illuminate\Http\UploadedFile;
+use Spatie\LaravelData\Data;
 
 class AuthorData extends Data
 {

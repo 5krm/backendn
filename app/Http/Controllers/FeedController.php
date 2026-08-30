@@ -13,9 +13,10 @@ class FeedController extends Controller
     public function index()
     {
         $feeds = Feed::where('is_published', true)->latest()->get();
+
         return response()->json([
             'success' => true,
-            'data' => $feeds
+            'data' => $feeds,
         ]);
     }
 

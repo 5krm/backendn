@@ -19,7 +19,7 @@ class CourseSectionResource extends JsonResource
             'formatted_duration' => $this->textDuration,
             'lesson_count' => $this->lessons_count ?? 0,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
-            'lessons' => LessonResource::collection($this->whenLoaded('lessons'))
+            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),
         ];
     }
 }

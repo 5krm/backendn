@@ -19,7 +19,7 @@ class CourseSurveyResource extends JsonResource
             'id' => $this->id,
             'course_id' => $this->course_id,
             'username' => $this->user->name,
-            'satisfaction' => ['key' => $this->satisfaction, 'value' =>  SatisfactionCase::names()[$this->satisfaction]],
+            'satisfaction' => ['key' => $this->satisfaction, 'value' => SatisfactionCase::names()[$this->satisfaction]],
             'comment' => $this->comment,
             'as_expected' => $this->as_expected,
             'suggestions' => $this->suggestions,

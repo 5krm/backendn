@@ -3,10 +3,10 @@
 namespace App\Console\Commands\Backup;
 
 use Carbon\Carbon;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Console\Attributes\Signature;
-use Illuminate\Console\Attributes\Description;
 
 #[Signature('app:backup:cleanup')]
 #[Description('Cleans up old database backups')]
@@ -51,7 +51,7 @@ class CleanupOldDBbackups extends Command
                 continue;
             }
 
-            $fileTimestamp = (int)$fileTimestamp;
+            $fileTimestamp = (int) $fileTimestamp;
             if ($fileTimestamp <= $cutoffTS) {
                 $result[$fileTimestamp] = $file;
             }
@@ -59,16 +59,18 @@ class CleanupOldDBbackups extends Command
 
         // oldest timestamps first, newest at the end
         ksort($result);
+
         return $result;
     }
 
     private function isValidTimestamp(string $timestamp): bool
     {
-        if (!ctype_digit($timestamp)) {
+        if (! ctype_digit($timestamp)) {
             return false;
         }
 
-        $timestamp = (int)$timestamp;
-        return ($timestamp >= 1_000_000_000 && $timestamp <= 2147483647);
+        $timestamp = (int) $timestamp;
+
+        return $timestamp >= 1_000_000_000 && $timestamp <= 2147483647;
     }
 }

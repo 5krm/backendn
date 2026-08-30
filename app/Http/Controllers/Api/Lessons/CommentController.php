@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\Lessons;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Lessons\LessonComment\Comment;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -18,26 +18,26 @@ class CommentController extends Controller
             ->map(function ($comment) {
                 return [
                     ...$this->mapComment($comment),
-                    'replies' => $comment->children->map(fn ($c) => $this->mapComment($c))
+                    'replies' => $comment->children->map(fn ($c) => $this->mapComment($c)),
                 ];
             });
 
         return response()->json([
-            'data' => $comments
+            'data' => $comments,
         ]);
     }
 
     public function reply(int $lessonId, Comment $comment, Request $request)
     {
         $data = $request->validate([
-            'content' => 'required|string'
+            'content' => 'required|string',
         ]);
 
         $data['lesson_id'] = $lessonId;
         $reply = $comment->children()->create($data);
 
         return response()->json([
-            'data' => $this->mapComment($reply)
+            'data' => $this->mapComment($reply),
         ]);
     }
 

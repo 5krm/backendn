@@ -19,7 +19,7 @@ class AchievementController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $achievements,
+            'data' => $achievements,
         ]);
     }
 

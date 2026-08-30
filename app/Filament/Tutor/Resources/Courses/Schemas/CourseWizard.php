@@ -2,12 +2,7 @@
 
 namespace App\Filament\Tutor\Resources\Courses\Schemas;
 
-use App\Filament\Tutor\Resources\Courses\Schemas\CourseInfoForm;
-use App\Filament\Tutor\Resources\Courses\Schemas\CoursePricingForm;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 
@@ -32,7 +27,7 @@ class CourseWizard
             ])
                 ->columnSpanFull(),
             Hidden::make('tutor_id')
-                ->default(fn() => auth()->user()->id),
+                ->default(fn () => auth()->user()->id),
         ];
     }
 }

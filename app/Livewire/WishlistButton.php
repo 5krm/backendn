@@ -63,6 +63,7 @@ class WishlistButton extends Component
         if (isset($this->course['data'])) {
             return (int) $this->course['data']->id;
         }
-        return (int)$this->course['id'];
+
+        return (int) $this->course['id'];
     }
 }

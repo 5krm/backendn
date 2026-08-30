@@ -18,21 +18,22 @@ class Language
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !is_null($userLanguage = UserPreference::where('key', PreferenceKey::DisplayLanguage)->where('user_id', auth()->user()->id)->first()?->value)) {
+        if (Auth::check() && ! is_null($userLanguage = UserPreference::where('key', PreferenceKey::DisplayLanguage)->where('user_id', auth()->user()->id)->first()?->value)) {
             $this->set_locale($userLanguage);
-        } else if (Session::has('locale') && array_key_exists(Session::get('locale'), config('languages'))) {
+        } elseif (Session::has('locale') && array_key_exists(Session::get('locale'), config('languages'))) {
             $this->set_locale(Session::get('locale'));
         } else {
             $this->set_locale(config('app.fallback_locale'));
         }
+
         return $next($request);
     }
 
-    function set_locale($locale)
+    public function set_locale($locale)
     {
         App::setLocale($locale);
         Carbon::setlocale($locale);

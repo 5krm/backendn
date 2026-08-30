@@ -6,8 +6,8 @@ use App\Models\Courses\CourseRating;
 use App\Models\Courses\CourseTestimonial;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\File;
 class RatingsRelationManager extends RelationManager
 {
     protected static string $relationship = 'ratings';
-    
+
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
         return __('tutor.resources.ratings');
@@ -75,25 +75,25 @@ class RatingsRelationManager extends RelationManager
             ])
             ->recordActions([
                 Action::make('copy_testimonial')
-                        ->label(__('tutor.comments.copy_testimonial'))
-                        ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                        ->action(function (CourseRating $record): void {
-                            $testimonial =  CourseTestimonial::create([
-                                "name" => $record->user->name,
-                                "content" => $record->review,
-                                "course_id" => $record->course_id,
-                                "job_title" => ""
-                            ]);
-                            
-                            $profile = $record->user->getMedia('avatars')->last();
-                            $isFileExists = $profile ? File::exists($profile->getPath()) : false;
-                            
-                            if ($profile && $isFileExists) {
-                                $testimonial->addMedia($profile->getPath())
-                                    ->preservingOriginal()
-                                    ->toMediaCollection('authors');
-                            }
-                        })->requiresConfirmation(),
+                    ->label(__('tutor.comments.copy_testimonial'))
+                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                    ->action(function (CourseRating $record): void {
+                        $testimonial = CourseTestimonial::create([
+                            'name' => $record->user->name,
+                            'content' => $record->review,
+                            'course_id' => $record->course_id,
+                            'job_title' => '',
+                        ]);
+
+                        $profile = $record->user->getMedia('avatars')->last();
+                        $isFileExists = $profile ? File::exists($profile->getPath()) : false;
+
+                        if ($profile && $isFileExists) {
+                            $testimonial->addMedia($profile->getPath())
+                                ->preservingOriginal()
+                                ->toMediaCollection('authors');
+                        }
+                    })->requiresConfirmation(),
             ]);
     }
 }

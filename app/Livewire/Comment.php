@@ -3,30 +3,32 @@
 namespace App\Livewire;
 
 use App\Events\NewReplyPosted;
-use Livewire\Component;
+use App\Models\Lessons\LessonComment\Comment as CommentModel;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Rule;
-use App\Models\Lessons\LessonComment\Comment as CommentModel;
-
+use Livewire\Component;
 
 class Comment extends Component
 {
     public CommentModel $comment;
-    public $isReplying = false;
-    public $hasReplies = false;
-    public $isEditing = false;
-    public $readonly = false;
 
+    public $isReplying = false;
+
+    public $hasReplies = false;
+
+    public $isEditing = false;
+
+    public $readonly = false;
 
     #[Rule('required')]
     public string $reply;
 
     public function render()
     {
-        if (!$this->comment->relationLoaded('lesson')) {
+        if (! $this->comment->relationLoaded('lesson')) {
             $this->comment->load('lesson');
         }
-        if (!$this->comment->relationLoaded('user')) {
+        if (! $this->comment->relationLoaded('user')) {
             $this->comment->load('user');
         }
 
@@ -36,7 +38,7 @@ class Comment extends Component
     #[On('refresh')]
     public function postReply(): void
     {
-        if (!$this->comment->isParent()) {
+        if (! $this->comment->isParent()) {
             return;
         }
 
@@ -57,7 +59,7 @@ class Comment extends Component
 
     public function updatedIsEditing($isEditing): void
     {
-        if (!$isEditing) {
+        if (! $isEditing) {
             return;
         }
         $this->reply = $this->comment->content;
@@ -76,7 +78,6 @@ class Comment extends Component
         $this->dispatch('comment-form-reset');
         $this->dispatch('refresh')->self();
     }
-
 
     public function deleteComment($id): void
     {

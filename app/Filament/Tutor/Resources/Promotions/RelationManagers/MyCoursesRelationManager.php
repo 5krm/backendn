@@ -5,10 +5,8 @@ namespace App\Filament\Tutor\Resources\Promotions\RelationManagers;
 use App\Filament\Tutor\Resources\Courses\Tables\CoursesTable;
 use App\Models\Courses\Course;
 use Filament\Actions\AttachAction;
-use Filament\Actions\CreateAction;
 use Filament\Actions\DetachAction;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
@@ -26,20 +24,19 @@ class MyCoursesRelationManager extends RelationManager
         return __('tutor.promotions.my_courses');
     }
 
-
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Select::make('course_id')
-                    ->options(Course::query()->where("tutor_id", auth()->id())->get()->pluck('title', 'id'))
+                    ->options(Course::query()->where('tutor_id', auth()->id())->get()->pluck('title', 'id')),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn($query) => $query->where('tutor_id', auth()->id()))
+            ->modifyQueryUsing(fn ($query) => $query->where('tutor_id', auth()->id()))
             ->headerActions([
                 AttachAction::make()
                     ->label(__('tutor.promotions.add_course'))

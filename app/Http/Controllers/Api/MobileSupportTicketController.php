@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\SupportTicket;
+use Illuminate\Http\Request;
 
 class MobileSupportTicketController extends Controller
 {
@@ -14,7 +14,7 @@ class MobileSupportTicketController extends Controller
     public function store(Request $request)
     {
         $user = $request->user();
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
@@ -39,7 +39,7 @@ class MobileSupportTicketController extends Controller
 
         return response()->json([
             'message' => 'Support ticket created successfully',
-            'ticket' => $ticket
+            'ticket' => $ticket,
         ], 201);
     }
 }

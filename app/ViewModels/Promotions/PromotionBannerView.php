@@ -39,7 +39,7 @@ class PromotionBannerView implements Arrayable
 
         // The storage key uniquely identifies if this promotion/variant was dismissed by the user.
         // Format: "promo-{suffix}-dismissed-{promotion_id}"
-        return 'promo-' . $suffix . '-dismissed-' . $this->promotion->id;
+        return 'promo-'.$suffix.'-dismissed-'.$this->promotion->id;
     }
 
     public function discountPercent(): int
@@ -71,7 +71,7 @@ class PromotionBannerView implements Arrayable
 
     public function promoCode(): string
     {
-        return 'SAVE' . $this->discountPercent();
+        return 'SAVE'.$this->discountPercent();
     }
 
     public function endsAtLabel(): string

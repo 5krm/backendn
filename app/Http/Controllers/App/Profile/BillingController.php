@@ -13,7 +13,7 @@ class BillingController extends Controller
 {
     public function index(): View
     {
-        /** @var User **/
+        /** @var User * */
         $user = auth()->user();
         $courses = $user->courses()
             ->where('is_free', false)
@@ -27,13 +27,13 @@ class BillingController extends Controller
 
     public function courseInvoice(Course $course)
     {
-        /** @var Invoice **/
+        /** @var Invoice * */
         $invoice = Invoice::where('user_id', auth()->id())
-            ->where("invoiceable_id", $course->id)
-            ->where("invoiceable_type", "App\Models\Courses\Course")
+            ->where('invoiceable_id', $course->id)
+            ->where('invoiceable_type', "App\Models\Courses\Course")
             ->first();
 
-        $filename = 'inv-' . $invoice->id . '.pdf';
+        $filename = 'inv-'.$invoice->id.'.pdf';
         // if ($invoice->hasMedia('invoices')) {
         //     return response()->file($invoice->getMedia('invoices')[0]->getPath(), [
         //         'Content-Type' => 'application/pdf',
@@ -44,11 +44,12 @@ class BillingController extends Controller
         $pdf = (new GeneratePDF)->execute('app.pdf.invoice', [
             'invoice' => $invoice,
             'data' => $course,
-            'user' => auth()->user()
+            'user' => auth()->user(),
         ]);
 
         $stream = $pdf->stream($filename);
         $invoice->addMediaFromStream($stream)->usingFileName($filename)->toMediaCollection('invoices', 'private');
+
         return $stream;
     }
 }

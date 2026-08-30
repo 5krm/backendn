@@ -50,7 +50,7 @@ class AtRiskStudentsTable extends BaseWidget
                     ->limit(20),
                 Tables\Columns\TextColumn::make('progress')
                     ->label(__('tutor.tables.progress'))
-                    ->formatStateUsing(fn($state) => $state . '%')
+                    ->formatStateUsing(fn ($state) => $state.'%')
                     ->badge()
                     ->color('danger'),
                 Tables\Columns\TextColumn::make('updated_at')

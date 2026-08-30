@@ -2,10 +2,12 @@
 
 namespace App\Filament\Tutor\Pages;
 
+use App\Filament\Tutor\Widgets\QuizPassRateChart;
+use App\Filament\Tutor\Widgets\QuizStatsOverview;
+use App\Filament\Tutor\Widgets\QuizzesPerCourseTable;
+use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
-use BackedEnum;
-use UnitEnum;
 
 class QuizReports extends Page
 {
@@ -19,6 +21,7 @@ class QuizReports extends Page
     {
         return __('tutor.nav.reports_analytics');
     }
+
     public static function getNavigationLabel(): string
     {
         return __('tutor.reports.quiz_reports');
@@ -36,15 +39,15 @@ class QuizReports extends Page
     public function getHeaderWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\QuizStatsOverview::class,
+            QuizStatsOverview::class,
         ];
     }
 
     public function getFooterWidgets(): array
     {
         return [
-            \App\Filament\Tutor\Widgets\QuizPassRateChart::class,
-            \App\Filament\Tutor\Widgets\QuizzesPerCourseTable::class,
+            QuizPassRateChart::class,
+            QuizzesPerCourseTable::class,
         ];
     }
 

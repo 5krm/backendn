@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Lessons;
 
-use App\Models\Quizzes\Quiz;
-use Illuminate\Http\Request;
 use App\Data\Lessons\QuizData;
-use App\Models\Lessons\Lesson;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Lessons\QuizResource;
+use App\Models\Lessons\Lesson;
+use App\Models\Quizzes\Quiz;
+use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
@@ -19,6 +19,7 @@ class QuizController extends Controller
     public function index(Lesson $lesson)
     {
         $data = $lesson->quizzes()->with('quizOptions')->get();
+
         return QuizResource::collection($data);
     }
 
@@ -50,6 +51,7 @@ class QuizController extends Controller
             ->each(fn (Quiz $quiz) => $quiz->update(['order' => $data[$quiz->id]['index']]));
 
         $result = $lesson->quizzes->sortBy('order')->values();
+
         return QuizResource::collection($result);
     }
 

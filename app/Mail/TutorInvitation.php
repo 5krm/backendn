@@ -6,10 +6,9 @@ use App\Enums\PreferenceKey;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\Courses\Course;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
 
 class TutorInvitation extends Mailable
@@ -17,6 +16,7 @@ class TutorInvitation extends Mailable
     use Queueable, SerializesModels;
 
     public $direction = 'ltr';
+
     private $type = PreferenceKey::FollowupEmail;
 
     public function __construct(public User $user, public string $plainToken)
@@ -36,6 +36,7 @@ class TutorInvitation extends Mailable
     public function content(): Content
     {
         $link = route('email.setup_tutor', ['token' => $this->plainToken]);
+
         return new Content(
             markdown: 'emails.accounts.tutor-invitation',
             with: ['setup_link' => $link]

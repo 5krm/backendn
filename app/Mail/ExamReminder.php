@@ -3,20 +3,20 @@
 namespace App\Mail;
 
 use App\Enums\PreferenceKey;
+use App\Models\Courses\Course;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\Courses\Course;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Support\Facades\App;
+use Illuminate\Queue\SerializesModels;
 
 class ExamReminder extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $direction = 'ltr';
+
     private $type = PreferenceKey::FollowupEmail;
 
     public function __construct(public User $user, public Course $course)
@@ -36,6 +36,7 @@ class ExamReminder extends Mailable
     public function content(): Content
     {
         $unsubscribe_link = route('email.unsubscribe', ['token' => encrypt($this->user->email), 'type' => $this->type]);
+
         return new Content(
             markdown: 'emails.courses.exam-reminder',
             with: ['unsubscribe_link' => $unsubscribe_link, 'direction' => $this->direction]

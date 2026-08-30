@@ -15,15 +15,12 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -75,17 +72,17 @@ class TutorsTable
                     //     ),
                     EditAction::make(),
                     ActionsAction::make('impersonate')
-                        ->label(fn($record) => __('tutor.tutors.impersonate', ['user' =>$record->name]))
+                        ->label(fn ($record) => __('tutor.tutors.impersonate', ['user' => $record->name]))
                         ->icon('heroicon-m-user-plus')
                         ->color('warning')
                         ->requiresConfirmation()
-                        ->visible(fn(\App\Models\User $record) => auth()->user()->is_admin && auth()->user()->id != $record->id && !session()->has('impersonator_id') && $record->admin_access)
-                        ->url(fn(\App\Models\User $record) => route('impersonation.start', $record->id)),
+                        ->visible(fn (User $record) => auth()->user()->is_admin && auth()->user()->id != $record->id && ! session()->has('impersonator_id') && $record->admin_access)
+                        ->url(fn (User $record) => route('impersonation.start', $record->id)),
                     ActionsAction::make('resend_invitation')
                         ->label(__('tutor.tutors.resend_invitation'))
                         ->icon('heroicon-o-envelope')
                         ->color('warning')
-                        ->visible(fn(User $record): bool => is_null($record->email_verified_at))
+                        ->visible(fn (User $record): bool => is_null($record->email_verified_at))
                         ->requiresConfirmation()
                         ->action(function (User $record) {
                             try {
@@ -112,7 +109,7 @@ class TutorsTable
                                     ->title(__('tutor.tutors.resend_invitation_sent'))
                                     ->send();
                             } catch (Exception $e) {
-                                Log::error('Resend tutor invitation error: ' . $e->getMessage());
+                                Log::error('Resend tutor invitation error: '.$e->getMessage());
                                 Notification::make()
                                     ->danger()
                                     ->title(__('tutor.tutors.resend_invitation_failed'))
@@ -122,7 +119,7 @@ class TutorsTable
                 ])
                     ->color('grey')
                     ->icon('heroicon-o-ellipsis-vertical')
-                    ->iconButton()
+                    ->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api\Lessons;
 
-use App\Enums\CourseStatus;
-use Illuminate\Support\Str;
-use App\Enums\PreferenceKey;
-use Illuminate\Http\Request;
-use App\Mail\PublishedLesson;
-use App\Models\Lessons\Lesson;
-use App\Data\Lessons\LessonData;
 use App\Actions\UpdateLessonAction;
+use App\Data\Lessons\LessonData;
+use App\Enums\CourseStatus;
+use App\Enums\PreferenceKey;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use App\Models\Courses\CourseSection;
 use App\Http\Resources\Lessons\LessonResource;
+use App\Mail\PublishedLesson;
+use App\Models\Courses\CourseSection;
+use App\Models\Lessons\Lesson;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class LessonController extends Controller
 {
@@ -25,6 +25,7 @@ class LessonController extends Controller
     public function index(CourseSection $section)
     {
         $lessons = $section->lessons()->get();
+
         return LessonResource::collection($lessons);
     }
 
@@ -33,7 +34,7 @@ class LessonController extends Controller
         $lesson = $lesson->load([
             'course',
             'resources',
-            'quizzes.quizOptions'
+            'quizzes.quizOptions',
         ]);
 
         return LessonResource::make($lesson);
@@ -53,10 +54,10 @@ class LessonController extends Controller
 
     public function update(Lesson $lesson, LessonData $data)
     {
-        $lesson = (new UpdateLessonAction())->execute($lesson, $data);
-        if (!$lesson) {
+        $lesson = (new UpdateLessonAction)->execute($lesson, $data);
+        if (! $lesson) {
             return LessonResource::make($lesson)->additional([
-                'error' => 'Video was not found!'
+                'error' => 'Video was not found!',
             ]);
         }
 
@@ -71,15 +72,15 @@ class LessonController extends Controller
         if ($lesson->quizzes->count() == 0) {
             $warnings[] = 'This lesson should contain at least one quiz.';
         }
-        if (!isset($lesson->content)) {
+        if (! isset($lesson->content)) {
             $warnings[] = 'This lesson should contain a description content.';
         }
-        if (!isset($lesson->video_id)) {
+        if (! isset($lesson->video_id)) {
             $warnings[] = 'This lesson should contain a video.';
         }
         if (count($warnings) > 0) {
             return response([
-                'errors' => $warnings
+                'errors' => $warnings,
             ], 422);
         }
 
@@ -128,9 +129,10 @@ class LessonController extends Controller
         $data = collect($data['data'])->keyBy('id')->toArray();
         $section
             ->lessons
-            ->each(fn(Lesson $lesson) => $lesson->update(['lesson_order' => $data[$lesson->id]['index']]));
+            ->each(fn (Lesson $lesson) => $lesson->update(['lesson_order' => $data[$lesson->id]['index']]));
 
         $result = $section->lessons->sortBy('order')->values();
+
         return LessonResource::collection($result);
     }
 

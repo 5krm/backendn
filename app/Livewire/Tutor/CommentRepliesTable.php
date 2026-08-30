@@ -18,13 +18,12 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\View\View;
 use Livewire\Component;
-use Override;
 
-class CommentRepliesTable extends Component implements HasTable, HasSchemas, HasActions
+class CommentRepliesTable extends Component implements HasActions, HasSchemas, HasTable
 {
-    use InteractsWithTable;
-    use InteractsWithSchemas;
     use InteractsWithActions;
+    use InteractsWithSchemas;
+    use InteractsWithTable;
 
     public int $commentId;
 
@@ -73,8 +72,8 @@ class CommentRepliesTable extends Component implements HasTable, HasSchemas, Has
                     ->action(function (array $data): void {
                         $parent = Comment::find($this->commentId);
                         Comment::create([
-                            'content'   => $data['content'],
-                            'user_id'   => auth()->id(),
+                            'content' => $data['content'],
+                            'user_id' => auth()->id(),
                             'lesson_id' => $parent->lesson_id,
                             'parent_id' => $this->commentId,
                         ]);
@@ -82,8 +81,8 @@ class CommentRepliesTable extends Component implements HasTable, HasSchemas, Has
             ])
             ->recordActions([
                 EditAction::make()
-                ->modalHeading(__('tutor.comments.edit'))
-                    ->visible(fn(Comment $record) => $record->user_id === auth()->id())
+                    ->modalHeading(__('tutor.comments.edit'))
+                    ->visible(fn (Comment $record) => $record->user_id === auth()->id())
                     ->form([
                         Textarea::make('content')
                             ->label(__('tutor.comments.comment'))
@@ -102,5 +101,4 @@ class CommentRepliesTable extends Component implements HasTable, HasSchemas, Has
     {
         return view('livewire.tutor.comment-replies-table');
     }
-
 }

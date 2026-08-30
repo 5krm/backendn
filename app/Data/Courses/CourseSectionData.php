@@ -2,8 +2,8 @@
 
 namespace App\Data\Courses;
 
-use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Data;
 
 class CourseSectionData extends Data
 {
@@ -12,6 +12,5 @@ class CourseSectionData extends Data
         public string $title,
         public string $description,
         public int $order = 1,
-    ) {
-    }
+    ) {}
 }

@@ -16,6 +16,7 @@ class CoursesRelationManager extends RelationManager
     {
         return __('tutor.promotions.courses');
     }
+
     public function table(Table $table): Table
     {
         return $table

@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
@@ -40,7 +39,7 @@ class OtpMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            htmlString: '<p>Your OTP code is: <strong>' . $this->otpCode . '</strong></p>',
+            htmlString: '<p>Your OTP code is: <strong>'.$this->otpCode.'</strong></p>',
         );
     }
 

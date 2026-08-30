@@ -29,18 +29,18 @@ class TopStudentsTable extends BaseWidget
             ->heading(__('tutor.widgets.top_students'))
             ->query(
                 User::query()
-                    ->whereHas('courses', fn(Builder $q) => $q->whereIn('courses.id', $courseIds))
+                    ->whereHas('courses', fn (Builder $q) => $q->whereIn('courses.id', $courseIds))
                     ->withCount([
-                        'courses as completed_courses' => fn($q) => $q
+                        'courses as completed_courses' => fn ($q) => $q
                             ->whereIn('courses.id', $courseIds)
-                            ->whereNotNull('enrollments.passed_at')
+                            ->whereNotNull('enrollments.passed_at'),
                     ])
-                    ->whereHas('courses', fn(Builder $q) => $q
+                    ->whereHas('courses', fn (Builder $q) => $q
                         ->whereIn('courses.id', $courseIds)
                         ->whereNotNull('enrollments.passed_at')
                     )
-                    ->withCount(['courses as enrolled_courses' => fn($q) => $q->whereIn('courses.id', $courseIds)])
-                    ->withAvg(['courses as avg_score' => fn($q) => $q->whereIn('courses.id', $courseIds)], 'enrollments.score')
+                    ->withCount(['courses as enrolled_courses' => fn ($q) => $q->whereIn('courses.id', $courseIds)])
+                    ->withAvg(['courses as avg_score' => fn ($q) => $q->whereIn('courses.id', $courseIds)], 'enrollments.score')
                     ->orderByDesc('completed_courses')
                     ->orderByDesc('avg_score')
                     ->limit(10)
@@ -64,7 +64,7 @@ class TopStudentsTable extends BaseWidget
                     ->color('success'),
                 Tables\Columns\TextColumn::make('avg_score')
                     ->label(__('tutor.tables.avg_score'))
-                    ->formatStateUsing(fn($state) => $state ? number_format($state, 1) . '%' : 'N/A'),
+                    ->formatStateUsing(fn ($state) => $state ? number_format($state, 1).'%' : 'N/A'),
             ])
             ->emptyStateHeading(__('tutor.empty.no_data'))
             ->emptyStateIcon('heroicon-o-academic-cap')

@@ -4,10 +4,10 @@ namespace App\Filament\Tutor\Widgets;
 
 use App\Models\Lessons\LessonComment\Comment;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
-use Filament\Actions\DeleteAction;
 
 class RecentCommentsWidget extends BaseWidget
 {
@@ -55,12 +55,12 @@ class RecentCommentsWidget extends BaseWidget
                     ->searchable()
                     ->sortable()
                     ->limit(35)
-                    ->tooltip(fn($record) => $record->lesson->title),
+                    ->tooltip(fn ($record) => $record->lesson->title),
 
                 Tables\Columns\TextColumn::make('content')
                     ->label(__('tutor.comments.comment'))
                     ->limit(50)
-                    ->tooltip(fn($record) => $record->content)
+                    ->tooltip(fn ($record) => $record->content)
                     ->wrap()
                     ->searchable(),
 
@@ -76,7 +76,7 @@ class RecentCommentsWidget extends BaseWidget
                     ->label(__('tutor.comments.view_lesson'))
                     ->icon('heroicon-o-eye')
                     ->size('sm')
-                    ->url(fn(Comment $record): string => route('app.lessons.lesson', ['lesson' => $record->lesson->public_key]))
+                    ->url(fn (Comment $record): string => route('app.lessons.lesson', ['lesson' => $record->lesson->public_key]))
                     ->openUrlInNewTab(),
                 DeleteAction::make()
                     ->size('sm'),

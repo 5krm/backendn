@@ -2,27 +2,27 @@
 
 namespace App\Filament\Tutor\Pages;
 
+use App\Models\Organization as OrganizationModel;
 use BackedEnum;
-use Filament\Forms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Actions\Action;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
-use Filament\Actions\Action;
-use App\Models\Organization as OrganizationModel;
-use Illuminate\Support\HtmlString;
 
 class Organization extends Page implements HasForms
 {
     use InteractsWithForms;
+
     protected static ?string $slug = 'organization';
+
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-building-office';
 
     protected string $view = 'filament.tutor.pages.organization';
@@ -30,6 +30,7 @@ class Organization extends Page implements HasForms
     protected static ?int $navigationSort = 1;
 
     public OrganizationModel $organization;
+
     public ?array $data = [];
 
     public static function getNavigationGroup(): string
@@ -113,7 +114,7 @@ class Organization extends Page implements HasForms
                             ->unique(
                                 table: 'organizations',
                                 column: 'slug',
-                                ignorable: fn() => $this->organization,
+                                ignorable: fn () => $this->organization,
                             ),
 
                         Textarea::make('description')

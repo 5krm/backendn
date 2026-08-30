@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Mobile\Tutor;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Courses\Course;
+use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 

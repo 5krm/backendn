@@ -4,7 +4,6 @@ namespace App\Filament\Tutor\Widgets;
 
 use App\Models\Courses\Course;
 use App\Models\Courses\Enrollment;
-use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -16,7 +15,7 @@ class StudentStatsOverview extends StatsOverviewWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return [];
         }
 
@@ -39,7 +38,7 @@ class StudentStatsOverview extends StatsOverviewWidget
             ->distinct('user_id')
             ->count('user_id');
 
-        $weekChange = $lastWeek > 0 
+        $weekChange = $lastWeek > 0
             ? round((($newThisWeek - $lastWeek) / $lastWeek) * 100, 1)
             : ($newThisWeek > 0 ? 100 : 0);
 
@@ -75,7 +74,7 @@ class StudentStatsOverview extends StatsOverviewWidget
                 ->color('primary'),
 
             Stat::make(__('tutor.stats.new_this_week'), number_format($newThisWeek))
-                ->description(($weekChange >= 0 ? "+{$weekChange}% " : "{$weekChange}% ") . __('tutor.stats.vs_last_week'))
+                ->description(($weekChange >= 0 ? "+{$weekChange}% " : "{$weekChange}% ").__('tutor.stats.vs_last_week'))
                 ->descriptionIcon($weekChange >= 0 ? 'heroicon-m-arrow-trending-up' : 'heroicon-m-arrow-trending-down')
                 ->color($weekChange >= 0 ? 'success' : 'danger'),
 

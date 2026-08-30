@@ -4,8 +4,8 @@ namespace App\Livewire;
 
 use App\Enums\PreferenceKey;
 use App\Models\User;
-use Livewire\Component;
 use Illuminate\Support\Facades\Session;
+use Livewire\Component;
 
 class LanguageSwitcher extends Component
 {
@@ -13,7 +13,7 @@ class LanguageSwitcher extends Component
     {
         $currentLocale = app()->getLocale();
         $newLocale = $currentLocale === 'ar' ? 'en' : 'ar';
-        
+
         // Update user preference if authenticated
         if (auth()->check()) {
             /** @var User $user */
@@ -23,10 +23,10 @@ class LanguageSwitcher extends Component
                 ['value' => $newLocale]
             );
         }
-        
+
         Session::put('locale', $newLocale);
         app()->setLocale($newLocale);
-        
+
         // Use full page redirect to ensure locale is properly applied
         $this->redirect(request()->header('Referer', '/tutor'), navigate: false);
     }

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Mobile\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MobileNotesController extends Controller
 {
@@ -15,7 +15,7 @@ class MobileNotesController extends Controller
     public function index($lessonId)
     {
         $userId = Auth::id();
-        
+
         $notes = DB::table('lesson_notes')
             ->where('user_id', $userId)
             ->where('lesson_id', $lessonId)
@@ -38,10 +38,10 @@ class MobileNotesController extends Controller
                     'updated_at' => $note->updated_at,
                 ];
             });
-            
+
         return response()->json([
             'success' => true,
-            'data' => $notes
+            'data' => $notes,
         ]);
     }
 
@@ -63,7 +63,7 @@ class MobileNotesController extends Controller
         $content = $request->input('content') ?? $request->input('note', '');
         $title = $request->input('title');
         if (empty($title)) {
-            $title = mb_strlen($content) > 35 ? mb_substr($content, 0, 35) . '...' : ($content ?: 'Note');
+            $title = mb_strlen($content) > 35 ? mb_substr($content, 0, 35).'...' : ($content ?: 'Note');
         }
         $seconds = $request->input('video_timestamp', $request->input('seconds', 0));
         $color = $request->input('color', '#00CC99');
@@ -98,7 +98,7 @@ class MobileNotesController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Note created successfully',
-            'data' => $formatted
+            'data' => $formatted,
         ], 201);
     }
 
@@ -124,10 +124,10 @@ class MobileNotesController extends Controller
             ->whereNull('deleted_at')
             ->first();
 
-        if (!$note) {
+        if (! $note) {
             return response()->json([
                 'success' => false,
-                'message' => 'Note not found or unauthorized'
+                'message' => 'Note not found or unauthorized',
             ], 404);
         }
 
@@ -165,7 +165,7 @@ class MobileNotesController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Note updated successfully',
-            'data' => $formatted
+            'data' => $formatted,
         ]);
     }
 
@@ -181,16 +181,16 @@ class MobileNotesController extends Controller
             ->where('user_id', $userId)
             ->delete();
 
-        if (!$deleted) {
+        if (! $deleted) {
             return response()->json([
                 'success' => false,
-                'message' => 'Note not found or unauthorized'
+                'message' => 'Note not found or unauthorized',
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Note deleted successfully'
+            'message' => 'Note deleted successfully',
         ]);
     }
 }

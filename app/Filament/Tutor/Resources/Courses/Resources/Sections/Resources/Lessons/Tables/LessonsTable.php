@@ -35,11 +35,11 @@ class LessonsTable
                     ->with(['course', 'courseSection']);
             })
             ->recordActions([
-                Action::make("upload_video")
-                    ->label(__("tutor.form.upload_video"))
+                Action::make('upload_video')
+                    ->label(__('tutor.form.upload_video'))
                     ->schema([
                         UppyUpload::make('video_path')
-                            ->label(__("tutor.form.video"))
+                            ->label(__('tutor.form.video'))
                             // NOTE: for the video we always use the public disk.
                             ->disk('public')
                             ->directory('LessonVideos')
@@ -48,22 +48,23 @@ class LessonsTable
                             ->audio(false)
                             ->webcam(false)
                             ->multiple(false)
-                            ->note(__("tutor.form.video_note")),
+                            ->note(__('tutor.form.video_note')),
                     ])->action(function (Lesson $record, array $data) {
-                        $record->video_path = $data["video_path"];
+                        $record->video_path = $data['video_path'];
                         $record->is_ready = false;
                         $record->status = CourseStatus::draft;
                         $record->save();
                         UploadLessonToYoutube::dispatch($record);
                     })
                     ->button()
-                    ->color("youtube")
+                    ->color('youtube')
                     ->icon(Heroicon::Play),
                 Action::make('tutor.form.section_title')
                     ->label(__('tutor.table.manage_quiz'))
                     ->color('success')
                     ->url(function ($record) {
                         $record->load(['course', 'courseSection']);
+
                         return QuizResource::getUrl('index', [
                             'course' => $record->course->slug,
                             'course_section' => $record->section_id,
@@ -77,6 +78,7 @@ class LessonsTable
                         ->mutateRecordDataUsing(function (array $data): array {
                             $data['status'] = $data['status'] === CourseStatus::published->value
                                 || $data['status'] === CourseStatus::published;
+
                             return $data;
                         })
                         ->modalWidth('4xl')
@@ -102,17 +104,17 @@ class LessonsTable
                     ->counts('trackings'),
                 TextColumn::make('duration')
                     ->label(__('tutor.form.duration'))
-                    ->formatStateUsing(fn($state) => $state ? $state . ' ' . __('tutor.form.duration_minutes') : '-')
+                    ->formatStateUsing(fn ($state) => $state ? $state.' '.__('tutor.form.duration_minutes') : '-')
                     ->sortable(),
 
                 IconColumn::make('is_ready')
                     ->label(__('tutor.table.video_status'))
-                    ->icon(fn(Lesson $record): string => $record->is_ready ? 'heroicon-o-check-circle' : 'heroicon-o-arrow-path')
-                    ->color(fn(Lesson $record): string => $record->is_ready ? 'success' : 'warning')
-                    ->extraAttributes(fn(Lesson $record): array => [
+                    ->icon(fn (Lesson $record): string => $record->is_ready ? 'heroicon-o-check-circle' : 'heroicon-o-arrow-path')
+                    ->color(fn (Lesson $record): string => $record->is_ready ? 'success' : 'warning')
+                    ->extraAttributes(fn (Lesson $record): array => [
                         'class' => $record->is_ready ? '' : '[&_svg]:animate-spin',
                     ])
-                    ->tooltip(fn(Lesson $record): string => $record->is_ready
+                    ->tooltip(fn (Lesson $record): string => $record->is_ready
                         ? __('tutor.table.video_ready')
                         : __('tutor.table.video_uploading')),
 
@@ -124,21 +126,22 @@ class LessonsTable
                         ]);
                     })
                     ->badge()
-                    ->size("lg")
-                    ->color(fn(Lesson $record): string => self::getToggleStatus($record)->getColor())
-                    ->extraAttributes(fn(Lesson $record): array => [
-                        'class' => 'lesson-status-toggle ' . ($record->is_ready ? 'is-ready' : 'is-disabled'),
+                    ->size('lg')
+                    ->color(fn (Lesson $record): string => self::getToggleStatus($record)->getColor())
+                    ->extraAttributes(fn (Lesson $record): array => [
+                        'class' => 'lesson-status-toggle '.($record->is_ready ? 'is-ready' : 'is-disabled'),
                     ])
                     ->action(function (Lesson $record): void {
-                        if (!$record->is_ready) return;
+                        if (! $record->is_ready) {
+                            return;
+                        }
                         $record->status = self::getToggleStatus($record);
                         $record->save();
                         if ($record->status == CourseStatus::published) {
                             event(new LessonPublished($record));
                         }
                     })
-                    ->tooltip(fn($record) => $record->is_ready ? false : __("tutor.table.status_toggle_note")),
-
+                    ->tooltip(fn ($record) => $record->is_ready ? false : __('tutor.table.status_toggle_note')),
 
                 TextColumn::make('created_at')
                     ->label(__('tutor.table.created_at'))
@@ -161,12 +164,12 @@ class LessonsTable
                     DeleteBulkAction::make()
                         ->after(function ($selectedRecords) {
                             event(new CourseLessonsUpdatedEvent($selectedRecords[0]->course_id));
-                        })
+                        }),
                 ]),
             ])
             ->reorderable('lesson_order')
             ->defaultSort('lesson_order', 'asc')
-            ->poll(fn(Table $table) => $table->getRecords()->contains('is_ready', false) ? '10s' : null);
+            ->poll(fn (Table $table) => $table->getRecords()->contains('is_ready', false) ? '10s' : null);
     }
 
     private static function getToggleStatus(Lesson $lesson): CourseStatus

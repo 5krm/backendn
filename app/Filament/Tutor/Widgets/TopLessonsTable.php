@@ -2,7 +2,6 @@
 
 namespace App\Filament\Tutor\Widgets;
 
-use App\Models\Courses\Course;
 use App\Models\Lessons\Lesson;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -28,9 +27,9 @@ class TopLessonsTable extends BaseWidget
             ->heading(__('tutor.widgets.top_lessons'))
             ->query(
                 Lesson::query()
-                    ->whereHas('course', fn(Builder $query) => $query->where('tutor_id', $tutorId))
+                    ->whereHas('course', fn (Builder $query) => $query->where('tutor_id', $tutorId))
                     ->withCount('trackings')
-                    ->withCount(['trackings as completions_count' => fn($q) => $q->whereNotNull('completed_at')])
+                    ->withCount(['trackings as completions_count' => fn ($q) => $q->whereNotNull('completed_at')])
                     ->orderByDesc('trackings_count')
                     ->limit(10)
             )
@@ -55,11 +54,14 @@ class TopLessonsTable extends BaseWidget
                 Tables\Columns\TextColumn::make('completion_rate')
                     ->label(__('tutor.tables.completion_rate'))
                     ->getStateUsing(function ($record) {
-                        if ($record->trackings_count === 0) return '0%';
-                        return round(($record->completions_count / $record->trackings_count) * 100, 1) . '%';
+                        if ($record->trackings_count === 0) {
+                            return '0%';
+                        }
+
+                        return round(($record->completions_count / $record->trackings_count) * 100, 1).'%';
                     })
                     ->badge()
-                    ->color(fn($state) => (float)$state >= 70 ? 'success' : ((float)$state >= 40 ? 'warning' : 'danger')),
+                    ->color(fn ($state) => (float) $state >= 70 ? 'success' : ((float) $state >= 40 ? 'warning' : 'danger')),
             ])
             ->emptyStateHeading(__('tutor.empty.no_lessons'))
             ->emptyStateIcon('heroicon-o-book-open')

@@ -2,13 +2,13 @@
 
 namespace App\Actions;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Carbon\CarbonInterval;
 use App\Models\Certificate;
 use App\Models\Courses\Course;
-use Illuminate\Support\Facades\App;
 use App\Models\Lessons\LessonTracking;
+use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use Illuminate\Support\Facades\App;
 
 class GenerateCertificate
 {
@@ -27,7 +27,7 @@ class GenerateCertificate
             ->firstOrFail();
 
         $interval = CarbonInterval::minutes($totalDuration)->cascade();
-        $hours = (int)$interval->totalHours;
+        $hours = (int) $interval->totalHours;
 
         $currentLocale = App::getLocale();
         $currentCarbonLocale = Carbon::getLocale();
@@ -44,13 +44,13 @@ class GenerateCertificate
                 'tutor' => [
                     'name' => $course->tutor->tutorProfile->localized_name,
                     'org_logo' => $course->tutor->organization?->logo_path,
-                    'stamp' => $course->tutor->organization?->stamp_path ?? public_path('assets/images/signature.png')
+                    'stamp' => $course->tutor->organization?->stamp_path ?? public_path('assets/images/signature.png'),
                 ],
                 'user' => $user,
                 'date' => Carbon::create($certificate->issued_at)->translatedFormat('M d, Y'),
                 'credentialId' => $certificate->certificate_number,
                 'verificationUrl' => $certificate->verificationUrl(),
-                'hours' => $hours
+                'hours' => $hours,
             ];
             $pdf = (new GeneratePDF)->execute('app.pdf.certificate', $data, 'landscape');
 

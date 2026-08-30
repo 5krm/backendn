@@ -16,8 +16,8 @@ class CompleteProfileController extends Controller
         $language = app()->getLocale();
         $countries = Country::all();
         $countryItems = $countries
-            ->map(fn($c) => new ListItemData($c->id, $language == 'ar' ? $c->name_ar : $c->name))
-            ->sort(fn($a, $b) => $a->text <=> $b->text);
+            ->map(fn ($c) => new ListItemData($c->id, $language == 'ar' ? $c->name_ar : $c->name))
+            ->sort(fn ($a, $b) => $a->text <=> $b->text);
 
         return view('auth.complete-profile', compact('countries', 'countryItems'));
     }
@@ -26,7 +26,7 @@ class CompleteProfileController extends Controller
     {
         $validated = $request->validate([
             'country_id' => ['required', 'integer', 'exists:countries,id'],
-            'phone'      => ['required', 'string', 'max:50'],
+            'phone' => ['required', 'string', 'max:50'],
         ]);
 
         $request->user()->update($validated);

@@ -15,15 +15,14 @@ enum SatisfactionCase: int
         return array_column(self::cases(), 'value');
     }
 
-
     public static function names(): array
     {
         return [
-            static::happy->value => 'happy',
-            static::satisfied->value => 'satisfied',
-            static::neutral->value => 'neutral',
-            static::unsatisfied->value => 'unsatisfied',
-            static::angry->value => 'angry',
+            self::happy->value => 'happy',
+            self::satisfied->value => 'satisfied',
+            self::neutral->value => 'neutral',
+            self::unsatisfied->value => 'unsatisfied',
+            self::angry->value => 'angry',
         ];
     }
 }

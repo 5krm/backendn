@@ -2,12 +2,10 @@
 
 namespace App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\Pages;
 
-use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\LessonResource;
-use Filament\Resources\Pages\ListRecords;
-use Filament\Actions\CreateAction;
 use App\Events\CourseLessonsUpdatedEvent;
-use App\Jobs\UploadLessonToYoutube;
-use Illuminate\Database\Eloquent\Model;
+use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\LessonResource;
+use Filament\Actions\CreateAction;
+use Filament\Resources\Pages\ListRecords;
 
 class ListLessons extends ListRecords
 {
@@ -27,6 +25,7 @@ class ListLessons extends ListRecords
                 ->icon('heroicon-o-plus')
                 ->fillForm(function () {
                     $parent = $this->getParentRecord();
+
                     return [
                         'section_id' => $parent?->id,
                         'course_id' => $parent?->course_id,
@@ -36,6 +35,7 @@ class ListLessons extends ListRecords
                     $parent = $this->getParentRecord();
                     $data['section_id'] ??= $parent?->id;
                     $data['course_id'] ??= $parent?->course_id;
+
                     return $data;
                 })->after(function ($record) {
                     event(new CourseLessonsUpdatedEvent($this->getParentRecord()->course_id));

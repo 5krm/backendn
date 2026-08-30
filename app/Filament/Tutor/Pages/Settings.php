@@ -3,15 +3,14 @@
 namespace App\Filament\Tutor\Pages;
 
 use App\Enums\SocialPlatform;
-use App\Models\SocialLink;
 use BackedEnum;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Pages\Page;
 use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 
 class Settings extends Page implements HasForms

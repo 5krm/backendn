@@ -3,12 +3,9 @@
 namespace App\Filament\Tutor\Resources\Organizations\RelationManagers;
 
 use App\Filament\Tutor\Resources\Organizations\OrganizationResource;
-use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
- use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
 class CoursesRelationManager extends RelationManager
@@ -19,11 +16,9 @@ class CoursesRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-         return $table
+        return $table
             ->heading(__('tutor.tables.organization_courses'))
-
             ->modifyQueryUsing(fn (Builder $query) => $query)
-
             ->columns([
                 TextColumn::make('title')
                     ->label(__('tutor.table.title'))
@@ -32,7 +27,7 @@ class CoursesRelationManager extends RelationManager
 
                 TextColumn::make('created_at')
                     ->label(__('tutor.table.created_at'))
-                    ->dateTime()                    ->dateTime()
+                    ->dateTime()->dateTime()
                     ->sortable(),
 
                 // TextColumn::make('updated_at')

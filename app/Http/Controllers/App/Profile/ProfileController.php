@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\App\Profile;
 
 use App\Data\ListItemData;
-use App\Enums\SocialPlatform;
-use App\Models\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
-use App\Data\Profile\UpdateProfileData;
 use App\Data\Profile\ChangePasswordData;
+use App\Data\Profile\UpdateProfileData;
+use App\Enums\SocialPlatform;
+use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -21,7 +21,7 @@ class ProfileController extends Controller
     {
         $language = app()->getLocale();
         $countries = Country::all();
-        $countryItems = $countries->map(fn($c) => new ListItemData($c->id,  $language == 'ar' ? $c->name_ar : $c->name))->sort(fn($a, $b) => $a->text <=> $b->text);
+        $countryItems = $countries->map(fn ($c) => new ListItemData($c->id, $language == 'ar' ? $c->name_ar : $c->name))->sort(fn ($a, $b) => $a->text <=> $b->text);
 
         /** @var User $user */
         $user = auth()->user();
@@ -99,7 +99,7 @@ class ProfileController extends Controller
             'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
         ]);
 
-        /** @var User **/
+        /** @var User * */
         $user = auth()->user();
         $user->clearMediaCollection('avatars');
         $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
@@ -107,12 +107,12 @@ class ProfileController extends Controller
         return redirect()->route('app.profile');
     }
 
-    public function changePassword(ChangePasswordData  $data): RedirectResponse
+    public function changePassword(ChangePasswordData $data): RedirectResponse
     {
-        /** @var User **/
+        /** @var User * */
         $user = auth()->user();
 
-        if (!Hash::check($data->current_password,  $user->password)) {
+        if (! Hash::check($data->current_password, $user->password)) {
             throw ValidationException::withMessages([
                 'current_password' => trans('auth.wrong_password'),
             ]);

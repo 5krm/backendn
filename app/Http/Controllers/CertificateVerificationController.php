@@ -70,13 +70,13 @@ class CertificateVerificationController extends Controller
         return null;
     }
 
-
     public function download(Certificate $certificate)
     {
         /** @var User $user */
         $user = auth()->user();
 
         $course = $certificate->load('course')->course;
-        return (new GenerateCertificate())->execute($user, $course);
+
+        return (new GenerateCertificate)->execute($user, $course);
     }
 }

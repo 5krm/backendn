@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\Courses;
 
-use App\Enums\CourseStatus;
-use Illuminate\Http\Request;
-use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
-use App\Data\Courses\PriceData;
-use App\Events\CoursePublished;
 use App\Data\Courses\CourseData;
+use App\Data\Courses\PriceData;
+use App\Enums\CourseStatus;
+use App\Events\CoursePublished;
 use App\Http\Controllers\Controller;
-use App\Models\Courses\CourseSection;
 use App\Http\Resources\Courses\CourseResource;
+use App\Models\Courses\Course;
+use App\Models\Courses\CourseSection;
+use App\Models\Lessons\Lesson;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class CourseController extends Controller
@@ -52,12 +52,14 @@ class CourseController extends Controller
     public function update(Course $course, CourseData $data)
     {
         $course->update($data->toArray());
+
         return CourseResource::make($course->load(['sections.lessons', 'tutor', 'category']));
     }
 
     public function updatePrice(Course $course, PriceData $data)
     {
         $course->update($data->toArray());
+
         return CourseResource::make($course->load(['sections.lessons', 'tutor', 'category']));
     }
 
@@ -74,7 +76,8 @@ class CourseController extends Controller
             ->where('lang', $lang)
             ->get();
 
-        $courses->each(fn(Course $course) => $course->update(['order' => $data[$course->id]['index']]));
+        $courses->each(fn (Course $course) => $course->update(['order' => $data[$course->id]['index']]));
+
         return CourseResource::collection($courses);
     }
 
@@ -90,10 +93,10 @@ class CourseController extends Controller
     public function publish(Course $course)
     {
         $warnings = [];
-        if (!CourseSection::where('course_id', $course->id)->exists()) {
+        if (! CourseSection::where('course_id', $course->id)->exists()) {
             $warnings[] = 'This course should contain at least one section.';
         }
-        if (!Lesson::where(['course_id' => $course->id, 'status' => CourseStatus::published])->exists()) {
+        if (! Lesson::where(['course_id' => $course->id, 'status' => CourseStatus::published])->exists()) {
             $warnings[] = 'This course should contain at least one published lesson.';
         }
         if (is_null($course->stripe_price_id) && $course->is_free == false) {
@@ -119,7 +122,6 @@ class CourseController extends Controller
 
         return CourseResource::make($course->load(['tutor', 'category']));
     }
-
 
     public function delete(Course $course)
     {

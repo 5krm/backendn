@@ -9,10 +9,10 @@ trait PushNotificationTrait
     /**
      * Dispatch FCM Push Notification
      *
-     * @param string $deviceToken
-     * @param string $title
-     * @param string $body
-     * @param array $data
+     * @param  string  $deviceToken
+     * @param  string  $title
+     * @param  string  $body
+     * @param  array  $data
      * @return bool
      */
     public function dispatchPushNotification($deviceToken, $title, $body, $data = [])
@@ -33,7 +33,7 @@ trait PushNotificationTrait
         ];
 
         $headers = [
-            'Authorization: key=' . $fcmKey,
+            'Authorization: key='.$fcmKey,
             'Content-Type: application/json',
         ];
 
@@ -46,15 +46,16 @@ trait PushNotificationTrait
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmData));
 
         $result = curl_exec($ch);
-        
+
         if ($result === false) {
-            Log::error('FCM Send Error: ' . curl_error($ch));
+            Log::error('FCM Send Error: '.curl_error($ch));
             curl_close($ch);
+
             return false;
         }
 
         curl_close($ch);
-        Log::info('FCM Send Success: ' . $result);
+        Log::info('FCM Send Success: '.$result);
 
         return true;
     }

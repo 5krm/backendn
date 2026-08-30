@@ -14,7 +14,6 @@ use Livewire\Component;
 class CompleteLesson extends Component
 {
     public $lesson;
-    
 
     public function render()
     {
@@ -57,12 +56,12 @@ class CompleteLesson extends Component
 
         $this->lesson['completed_at'] = Carbon::now();
         $course = Course::find($this->lesson['course_id']);
-        $courseHasExam = Quiz::whereHas('lesson', fn($q) =>  $q->where('course_id', $course->id))->exists();
+        $courseHasExam = Quiz::whereHas('lesson', fn ($q) => $q->where('course_id', $course->id))->exists();
         $LastLesson = Lesson::where('course_id', $this->lesson['course_id'])
             ->orderByDesc('section_order')->orderByDesc('lesson_order')->first();
-            
-        if (!$courseHasExam && $LastLesson->id == $this->lesson['id']) {
-            (new CourseCompletionService())->finish_course($course, 100);
+
+        if (! $courseHasExam && $LastLesson->id == $this->lesson['id']) {
+            (new CourseCompletionService)->finish_course($course, 100);
         }
     }
 }

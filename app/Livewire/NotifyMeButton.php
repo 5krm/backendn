@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Wishlist;
+use Livewire\Component;
 
 class NotifyMeButton extends Component
 {
@@ -24,11 +24,12 @@ class NotifyMeButton extends Component
     }
 
     public function addToWishlist(): void
-    {     
+    {
         if (! auth()->check()) {
             session()->put('url.intended', url()->current());
 
             $this->redirect(route('auth.login'));
+
             return;
         }
         $wishlist = Wishlist::query()

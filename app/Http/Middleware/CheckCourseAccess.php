@@ -8,14 +8,12 @@ use App\Models\Courses\Enrollment;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
-
 
 class CheckCourseAccess
 {
     public function handle(Request $request, Closure $next): Response
     {
-         
+
         $course = is_object($request->route('course')) ? $request->route('course') : Course::where('slug', $request->route('course'))->first();
         if ($request->routeIs('app.courses.certificate')) {
             $user = auth()->user();
@@ -35,6 +33,7 @@ class CheckCourseAccess
         ])->contains($course?->status)) {
             return redirect()->route('app.courses');
         }
+
         return $next($request);
     }
 }

@@ -2,19 +2,19 @@
 
 namespace App\Filament\Tutor\Resources\Courses\Resources\Sections\Tables;
 
+use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\LessonResource;
+use App\Models\Lessons\Lesson;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\LessonResource;
-use Filament\Actions\Action;
-use App\Models\Lessons\Lesson;
 
 class SectionsTable
 {
@@ -40,6 +40,7 @@ class SectionsTable
                     ->color('success')
                     ->url(function ($record) {
                         $record->load('course');
+
                         return LessonResource::getUrl('index', [
                             'course' => $record->course->slug,         // Parameter 1: {course}
                             'course_section' => $record->getKey(),

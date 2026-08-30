@@ -2,25 +2,28 @@
 
 namespace App\Filament\Tutor\Resources\Students\Tables;
 
+use App\Mail\VerifyEmail;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use pxlrbt\FilamentExcel\Actions\ExportAction;
-use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class StudentsTable
@@ -44,7 +47,7 @@ class StudentsTable
                     ->sortable(),
                 IconColumn::make('email_verified_at')
                     ->label(__('tutor.students.email_verified'))
-                    ->getStateUsing(fn($record) => !is_null($record->email_verified_at))
+                    ->getStateUsing(fn ($record) => ! is_null($record->email_verified_at))
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle')
@@ -70,11 +73,11 @@ class StudentsTable
                     ->sortable(),
                 TextColumn::make('courses_count')
                     ->label(__('tutor.resources.courses'))
-                    ->formatStateUsing(fn($record) => __('tutor.students.courses_no', ['count' => $record->courses_count]))
+                    ->formatStateUsing(fn ($record) => __('tutor.students.courses_no', ['count' => $record->courses_count]))
                     ->action(
                         Action::make('viewCourses')
-                            ->modalHeading(fn($record) => __('tutor.students.courses_for', ['student' => $record->name]))
-                            ->modalContent(fn($record) => view('filament.tables.modals.student-courses', ['courses' => $record->courses]))
+                            ->modalHeading(fn ($record) => __('tutor.students.courses_for', ['student' => $record->name]))
+                            ->modalContent(fn ($record) => view('filament.tables.modals.student-courses', ['courses' => $record->courses]))
                             ->modalCancelActionLabel(__('base.cancel'))
                     ),
             ])
@@ -86,7 +89,7 @@ class StudentsTable
                     ->label(__('tutor.filter.course'))
                     ->relationship('courses', 'title', function (Builder $query) {
                         $user = auth()->user();
-                        if (!$user->isAdmin()) {
+                        if (! $user->isAdmin()) {
                             $query->where('tutor_id', $user->tutorProfile?->id);
                         }
                     })
@@ -107,11 +110,11 @@ class StudentsTable
                         return $query
                             ->when(
                                 $data['courses_min'] !== null && $data['courses_min'] !== '',
-                                fn(Builder $query): Builder => $query->has('courses', '>=', intval($data['courses_min'])),
+                                fn (Builder $query): Builder => $query->has('courses', '>=', intval($data['courses_min'])),
                             )
                             ->when(
                                 $data['courses_max'] !== null && $data['courses_max'] !== '',
-                                fn(Builder $query): Builder => $query->has('courses', '<=', intval($data['courses_max'])),
+                                fn (Builder $query): Builder => $query->has('courses', '<=', intval($data['courses_max'])),
                             );
                     })
                     ->indicateUsing(function (array $data): array {
@@ -122,6 +125,7 @@ class StudentsTable
                         if ($data['courses_max'] !== null && $data['courses_max'] !== '') {
                             $indicators[] = __('tutor.students.courses_max_indicator', ['count' => $data['courses_max']]);
                         }
+
                         return $indicators;
                     }),
                 TernaryFilter::make('email_verified_at')
@@ -134,22 +138,22 @@ class StudentsTable
             ])
             ->recordActions([
                 // EditAction::make(),
-                \Filament\Actions\Action::make('resend_verification')
+                Action::make('resend_verification')
                     ->label(__('tutor.students.resend_verification'))
                     ->icon('heroicon-o-envelope')
                     ->color('success')
-                    ->visible(fn($record): bool => is_null($record->email_verified_at))
+                    ->visible(fn ($record): bool => is_null($record->email_verified_at))
                     ->requiresConfirmation()
                     ->action(function ($record) {
                         try {
-                            \Illuminate\Support\Facades\Mail::to($record->email)->send(new \App\Mail\VerifyEmail($record));
-                            \Filament\Notifications\Notification::make()
+                            Mail::to($record->email)->send(new VerifyEmail($record));
+                            Notification::make()
                                 ->success()
                                 ->title(__('tutor.students.verification_sent'))
                                 ->send();
                         } catch (\Exception $e) {
-                            \Illuminate\Support\Facades\Log::error('Resend student verification email error: ' . $e->getMessage());
-                            \Filament\Notifications\Notification::make()
+                            Log::error('Resend student verification email error: '.$e->getMessage());
+                            Notification::make()
                                 ->danger()
                                 ->title(__('tutor.students.verification_failed'))
                                 ->send();
@@ -159,7 +163,7 @@ class StudentsTable
 
             ->toolbarActions([
                 ExportAction::make()->exports([
-                    ExcelExport::make('table')->fromTable()
+                    ExcelExport::make('table')->fromTable(),
                 ]),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

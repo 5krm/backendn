@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Events\NewCommentPosted;
 use App\Models\Lessons\LessonComment\Comment;
+use Livewire\Component;
 
 class Comments extends Component
 {
     public int $lesson_id;
+
     public $content = '';
 
     public function mount(int $lesson_id)
@@ -41,7 +42,7 @@ class Comments extends Component
         $comment = Comment::create([
             'content' => $this->content,
             'user_id' => auth()->id(),
-            'lesson_id' => $this->lesson_id
+            'lesson_id' => $this->lesson_id,
         ]);
 
         $this->content = '';

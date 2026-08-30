@@ -2,10 +2,9 @@
 
 namespace App\Data\Lessons;
 
-use Spatie\LaravelData\Data;
 use Illuminate\Http\UploadedFile;
 use Spatie\LaravelData\Attributes\Validation\Max;
-use Spatie\LaravelData\Attributes\Validation\MimeTypes;
+use Spatie\LaravelData\Data;
 
 class LessonResourceData extends Data
 {

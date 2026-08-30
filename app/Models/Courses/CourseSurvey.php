@@ -10,18 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CourseSurvey extends Model
 {
     use HasFactory;
+
     protected $casts = [
-        'suggestions' => 'array'
+        'suggestions' => 'array',
     ];
 
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }
-    
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    
 }

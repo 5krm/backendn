@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\App\Profile;
 
-use App\Models\User;
-use App\Enums\PreferenceKey;
-use Illuminate\Contracts\View\View;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use App\Data\Profile\DisplaySettingData;
 use App\Data\Profile\EmailPreferencesData;
+use App\Enums\PreferenceKey;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\ViewModels\Settings\PreferenceView;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class SettingController extends Controller
 {
     public function index(): View
     {
-        /** @var User **/
+        /** @var User * */
         $user = auth()->user();
 
         return view('app.profile.settings', new PreferenceView($user));
@@ -23,7 +23,7 @@ class SettingController extends Controller
 
     public function updateDisplayLanguage(DisplaySettingData $data): RedirectResponse
     {
-        /** @var User **/
+        /** @var User * */
         $user = auth()->user();
         $user->preferences()->updateOrCreate(
             ['key' => PreferenceKey::DisplayLanguage],
@@ -40,7 +40,7 @@ class SettingController extends Controller
 
     public function updateEmailPreferences(EmailPreferencesData $data): RedirectResponse
     {
-        /** @var User **/
+        /** @var User * */
         $user = auth()->user();
         $user->preferences()->updateOrCreate(
             ['key' => PreferenceKey::FollowupEmail],

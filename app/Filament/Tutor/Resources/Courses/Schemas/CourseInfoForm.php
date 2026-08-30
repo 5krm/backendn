@@ -4,14 +4,12 @@ namespace App\Filament\Tutor\Resources\Courses\Schemas;
 
 use App\Enums\CourseStatus;
 use App\Enums\Level;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\RichEditor;
-use Symfony\Contracts\Service\Attribute\Required;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 
 class CourseInfoForm
 {

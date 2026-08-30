@@ -2,50 +2,45 @@
 
 namespace App\Models\Courses;
 
-use Override;
-use App\Models\User;
-use App\Enums\Level;
-use App\Models\Tutor;
-use App\Models\Invoice;
-use App\Models\Category;
 use App\Enums\CourseStatus;
-
-use Spatie\Image\Enums\Fit;
-use App\Traits\HasDuration;
-use Illuminate\Support\Str;
-use App\Models\Organization;
+use App\Enums\Level;
+use App\Models\Category;
+use App\Models\Invoice;
 use App\Models\Lessons\Lesson;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Courses\CourseTestimonial;
-use App\Models\Courses\Enrollment;
-use App\Models\Courses\CourseSection;
-use App\Models\Courses\CourseMail;
-use App\Models\Courses\CourseSurvey;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Lessons\LessonComment\Comment;
+use App\Models\Organization;
 use App\Models\Promotion;
+use App\Models\Quizzes\Quiz;
+use App\Models\User;
+use App\Models\Wishlist;
+use App\Traits\HasDuration;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use Override;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Course extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes, HasDuration;
+    use HasDuration, HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $casts = [
         'status' => CourseStatus::class,
         'level' => Level::class,
-        'is_free' => 'boolean'
+        'is_free' => 'boolean',
     ];
 
     protected static function booted(): void
@@ -57,7 +52,7 @@ class Course extends Model implements HasMedia
 
             $title = $course->title;
             if (Course::where('slug', Str::slug($title))->exists()) {
-                $title .= '-' . Str::random(5);
+                $title .= '-'.Str::random(5);
             }
 
             $course->slug = Str::slug($title);
@@ -81,7 +76,7 @@ class Course extends Model implements HasMedia
 
     public function tutor(): BelongsTo
     {
-        return $this->belongsTo(User::class, "tutor_id");
+        return $this->belongsTo(User::class, 'tutor_id');
     }
 
     public function lessons(): HasMany
@@ -122,17 +117,17 @@ class Course extends Model implements HasMedia
 
     public function wishlists(): HasMany
     {
-        return $this->hasMany(\App\Models\Wishlist::class);
+        return $this->hasMany(Wishlist::class);
     }
 
     public function userWishlists(): HasMany
     {
-        if (!auth()->check()) {
-            return $this->hasMany(\App\Models\Wishlist::class);
+        if (! auth()->check()) {
+            return $this->hasMany(Wishlist::class);
         }
 
         return $this
-            ->hasMany(\App\Models\Wishlist::class)
+            ->hasMany(Wishlist::class)
             ->where('user_id', auth()->id());
     }
 
@@ -153,7 +148,7 @@ class Course extends Model implements HasMedia
 
     public function quizzes(): HasMany
     {
-        return $this->hasMany(\App\Models\Quizzes\Quiz::class);
+        return $this->hasMany(Quiz::class);
     }
 
     public function organization(): BelongsTo
@@ -180,10 +175,11 @@ class Course extends Model implements HasMedia
     public function activePromotions(): BelongsToMany
     {
         return $this->belongsToMany(Promotion::class)
-            ->where("status", true)
-            ->where("start", '<=', Carbon::now())
-            ->where("end", '>=', Carbon::now());
+            ->where('status', true)
+            ->where('start', '<=', Carbon::now())
+            ->where('end', '>=', Carbon::now());
     }
+
     /**
      * @return Attribute<string, never>
      */
@@ -191,8 +187,8 @@ class Course extends Model implements HasMedia
     {
         return Attribute::get(function () {
             $media = $this->getMedia('covers')->last();
-            if (!$media) {
-                return URL::to('/') . '/assets/images/default-course.png';
+            if (! $media) {
+                return URL::to('/').'/assets/images/default-course.png';
             }
 
             return $media->hasGeneratedConversion('covers')
@@ -224,19 +220,21 @@ class Course extends Model implements HasMedia
     {
         return Attribute::get(function () {
             $avg = round((float) $this->ratings()->avg('rating'), 1);
-            return sprintf('%.1f',$avg !== null ? (float) round((float) $avg, 1) : 0);
+
+            return sprintf('%.1f', $avg !== null ? (float) round((float) $avg, 1) : 0);
 
         });
     }
-        
+
     public function scopeSearchCourse($query, $search)
     {
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%");
             });
         }
+
         return $query;
     }
 
@@ -251,7 +249,7 @@ class Course extends Model implements HasMedia
                 break;
             case 'price_asc':
                 $query->orderBy(
-                    \App\Models\Courses\CoursePrice::select('amount')
+                    CoursePrice::select('amount')
                         ->whereColumn('course_id', 'courses.id')
                         ->where('is_active', true)
                         ->limit(1),
@@ -260,7 +258,7 @@ class Course extends Model implements HasMedia
                 break;
             case 'price_desc':
                 $query->orderBy(
-                    \App\Models\Courses\CoursePrice::select('amount')
+                    CoursePrice::select('amount')
                         ->whereColumn('course_id', 'courses.id')
                         ->where('is_active', true)
                         ->limit(1),
@@ -272,6 +270,7 @@ class Course extends Model implements HasMedia
                 $query->orderBy('created_at', 'desc');
                 break;
         }
+
         return $query;
     }
 }

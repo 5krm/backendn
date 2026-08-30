@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Enums\FollowupEmailType;
-
 use App\Mail\CourseRatingMail;
 use App\Models\Courses\CourseRating;
 use App\Models\User;
@@ -33,6 +32,7 @@ class SendCourseRatingReminder extends Command
             $msg = Mail::to($user)->send(new CourseRatingMail($user, $course));
             if (! $msg) {
                 $this->error('Failed to send course-rating reminder email');
+
                 continue;
             }
 
@@ -50,8 +50,8 @@ class SendCourseRatingReminder extends Command
     {
         // getting students who have passed courses &  not rated their courses
         return User::forFollowupEmails($this->followupEmailType)
-            ->whereHas('courses', fn($q) => $q->where('progress', 100)->whereNotNull('passed_at'))
-            ->with('courses', fn($q) => $q->where('progress', 100)->whereNotNull('passed_at'))
+            ->whereHas('courses', fn ($q) => $q->where('progress', 100)->whereNotNull('passed_at'))
+            ->with('courses', fn ($q) => $q->where('progress', 100)->whereNotNull('passed_at'))
             ->get()
             ->flatMap(function (User $user) {
                 return $user->courses->map(function ($course) use ($user) {
@@ -59,13 +59,14 @@ class SendCourseRatingReminder extends Command
                         ->where('course_id', $course->id)
                         ->where('email_type', FollowupEmailType::CourseRating)
                         ->exists();
-                        if($course)
+                    if ($course) {
 
-                    return [
-                        $user,
-                        $course,
-                        $hasBeenSent,
-                    ];
+                        return [
+                            $user,
+                            $course,
+                            $hasBeenSent,
+                        ];
+                    }
                 });
             });
     }

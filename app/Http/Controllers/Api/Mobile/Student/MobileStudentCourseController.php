@@ -8,10 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\SetApiLocale;
 use App\Models\Category;
 use App\Models\Courses\Course;
-use App\Models\Courses\CourseSection;
 use App\Models\Courses\Enrollment;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,13 +39,13 @@ class MobileStudentCourseController extends Controller
     {
         $request->validate([
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
-            'category'    => ['nullable', 'string', 'max:100'],
-            'level'       => ['nullable', 'string', 'in:beginner,intermediate,advanced,preview'],
-            'is_free'     => ['nullable', 'boolean'],
-            'search'      => ['nullable', 'string', 'max:100'],
-            'per_page'    => ['nullable', 'integer', 'min:5', 'max:50'],
-            'sort_by'     => ['nullable', 'string', 'in:popular,rating,price_asc,price_desc,newest'],
-            'lang'        => ['nullable', 'string', 'max:5'],
+            'category' => ['nullable', 'string', 'max:100'],
+            'level' => ['nullable', 'string', 'in:beginner,intermediate,advanced,preview'],
+            'is_free' => ['nullable', 'boolean'],
+            'search' => ['nullable', 'string', 'max:100'],
+            'per_page' => ['nullable', 'integer', 'min:5', 'max:50'],
+            'sort_by' => ['nullable', 'string', 'in:popular,rating,price_asc,price_desc,newest'],
+            'lang' => ['nullable', 'string', 'max:5'],
         ]);
 
         $query = $this->publishedCourses($request)
@@ -105,7 +105,7 @@ class MobileStudentCourseController extends Controller
             'lang' => ['nullable', 'string', 'max:5'],
         ]);
 
-        $term    = $request->q;
+        $term = $request->q;
         $courses = $this->publishedCourses($request)
             ->searchCourse($term)
             ->sortByOption($request->sort_by)
@@ -156,7 +156,7 @@ class MobileStudentCourseController extends Controller
                 ->unique()
                 ->toArray();
 
-            if (!empty($enrolledCategoryIds)) {
+            if (! empty($enrolledCategoryIds)) {
                 $query->whereIn('category_id', $enrolledCategoryIds);
                 $query->orderBy('created_at', 'desc');
             } else {
@@ -183,59 +183,59 @@ class MobileStudentCourseController extends Controller
                 'category:id,name,name_ar,slug',
                 'activePrice',
                 'sections' => fn ($q) => $q->where('status', 'published')
-                                            ->orderBy('order')
-                                            ->with(['lessons' => fn ($lq) => $lq->orderBy('lesson_order')]),
+                    ->orderBy('order')
+                    ->with(['lessons' => fn ($lq) => $lq->orderBy('lesson_order')]),
             ])
             ->withCount(['students', 'lessons'])
             ->firstOrFail();
 
-        $isEnrolled       = false;
-        $progressPercent  = 0;
-        $enrollment       = null;
-        $user             = $request->user('sanctum') ?? auth('sanctum')->user() ?? $request->user();
+        $isEnrolled = false;
+        $progressPercent = 0;
+        $enrollment = null;
+        $user = $request->user('sanctum') ?? auth('sanctum')->user() ?? $request->user();
 
         if ($user) {
             $enrollment = Enrollment::where('user_id', $user->id)
                 ->where('course_id', $course->id)
                 ->first();
-            $isEnrolled      = $enrollment !== null;
+            $isEnrolled = $enrollment !== null;
             $progressPercent = $enrollment?->progress ?? 0;
         }
 
         return $this->success([
-            'id'              => $course->id,
-            'slug'            => $course->slug,
-            'title'           => $course->title,
-            'description'     => $course->description,
-            'objectives'      => $course->objectives,
-            'cover_image'     => $course->cover_image,
-            'level'           => $this->levelKey($course->level),
-            'is_free'         => (bool) $course->is_free,
-            'price'           => $course->activePrice?->amount ?? 0,
-            'duration_minutes'=> $course->duration ?? 0,
-            'students_count'  => $course->students_count,
-            'lessons_count'   => $course->lessons_count,
-            'average_rating'  => (float) $course->average_rating,
-            'language'        => $course->lang,
-            'is_enrolled'     => $isEnrolled,
+            'id' => $course->id,
+            'slug' => $course->slug,
+            'title' => $course->title,
+            'description' => $course->description,
+            'objectives' => $course->objectives,
+            'cover_image' => $course->cover_image,
+            'level' => $this->levelKey($course->level),
+            'is_free' => (bool) $course->is_free,
+            'price' => $course->activePrice?->amount ?? 0,
+            'duration_minutes' => $course->duration ?? 0,
+            'students_count' => $course->students_count,
+            'lessons_count' => $course->lessons_count,
+            'average_rating' => (float) $course->average_rating,
+            'language' => $course->lang,
+            'is_enrolled' => $isEnrolled,
             'completion_percent' => $progressPercent,
-            'tutor'           => $course->tutor ? [
-                'id'     => $course->tutor->id,
-                'name'   => $course->tutor->name,
-                'bio'    => $course->tutor->bio ?? null,
+            'tutor' => $course->tutor ? [
+                'id' => $course->tutor->id,
+                'name' => $course->tutor->name,
+                'bio' => $course->tutor->bio ?? null,
                 'avatar' => $course->tutor->profile,
             ] : null,
-            'category'        => $this->formatCategory($course->category),
-            'sections'        => $course->sections->map(fn ($section) => [
-                'id'      => $section->id,
-                'title'   => $section->title,
-                'order'   => $section->order,
+            'category' => $this->formatCategory($course->category),
+            'sections' => $course->sections->map(fn ($section) => [
+                'id' => $section->id,
+                'title' => $section->title,
+                'order' => $section->order,
                 'lessons' => $section->lessons->map(fn ($lesson) => [
-                    'id'          => $lesson->id,
-                    'title'       => $lesson->title,
-                    'duration'    => $lesson->duration ?? 0,
-                    'is_preview'  => (bool) ($lesson->is_preview ?? false),
-                    'is_completed'=> ($isEnrolled && $user)
+                    'id' => $lesson->id,
+                    'title' => $lesson->title,
+                    'duration' => $lesson->duration ?? 0,
+                    'is_preview' => (bool) ($lesson->is_preview ?? false),
+                    'is_completed' => ($isEnrolled && $user)
                         ? $lesson->completed($user->id)
                         : false,
                 ]),
@@ -256,7 +256,7 @@ class MobileStudentCourseController extends Controller
     public function categories(Request $request): JsonResponse
     {
         $locale = $this->locale();
-        $lang   = $this->langFilter($request);
+        $lang = $this->langFilter($request);
 
         $categories = Category::query()
             ->forLocale($locale)
@@ -270,11 +270,11 @@ class MobileStudentCourseController extends Controller
             ])
             ->get()
             ->map(fn (Category $c) => [
-                'id'            => $c->id,
-                'name'          => $c->localized_name,
-                'name_en'       => $c->name,
-                'name_ar'       => $c->name_ar ?: $c->name,
-                'slug'          => $c->slug,
+                'id' => $c->id,
+                'name' => $c->localized_name,
+                'name_en' => $c->name,
+                'name_ar' => $c->name_ar ?: $c->name,
+                'slug' => $c->slug,
                 'courses_count' => (int) $c->courses_count,
             ])
             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
@@ -362,10 +362,10 @@ class MobileStudentCourseController extends Controller
         }
 
         return match (strtolower($level)) {
-            'beginner'     => Level::Beginner->value,
+            'beginner' => Level::Beginner->value,
             'intermediate' => Level::Intermediate->value,
             'advanced', 'preview' => Level::Advanced->value,
-            default        => null,
+            default => null,
         };
     }
 
@@ -375,10 +375,10 @@ class MobileStudentCourseController extends Controller
         $value = $level instanceof Level ? $level->value : (string) $level;
 
         return match ($value) {
-            Level::Advanced->value     => 'advanced',
+            Level::Advanced->value => 'advanced',
             Level::Intermediate->value => 'intermediate',
-            '', null                   => 'beginner',
-            default                    => $value,
+            '', null => 'beginner',
+            default => $value,
         };
     }
 
@@ -390,59 +390,59 @@ class MobileStudentCourseController extends Controller
         }
 
         return [
-            'id'      => $category->id,
-            'name'    => $category->localized_name,
+            'id' => $category->id,
+            'name' => $category->localized_name,
             'name_en' => $category->name,
             'name_ar' => $category->name_ar ?: $category->name,
-            'slug'    => $category->slug,
+            'slug' => $category->slug,
         ];
     }
 
     private function formatCourseList(array $courses, Request $request): array
     {
-        $user   = $request->user('sanctum') ?? auth('sanctum')->user() ?? $request->user();
+        $user = $request->user('sanctum') ?? auth('sanctum')->user() ?? $request->user();
         $userId = $user?->id;
 
         // Batch-load enrollment data if authenticated
         $enrolledCourseIds = [];
         if ($userId && count($courses) > 0) {
-            $courseIds          = array_column($courses, null, 'id');
-            $enrolledCourseIds  = Enrollment::where('user_id', $userId)
+            $courseIds = array_column($courses, null, 'id');
+            $enrolledCourseIds = Enrollment::where('user_id', $userId)
                 ->whereIn('course_id', array_keys($courseIds))
                 ->pluck('progress', 'course_id')
                 ->toArray();
         }
 
         return array_map(function ($course) use ($enrolledCourseIds) {
-            $courseId = $course instanceof \Illuminate\Database\Eloquent\Model
+            $courseId = $course instanceof Model
                 ? $course->id
                 : $course['id'];
 
-            $course = $course instanceof \Illuminate\Database\Eloquent\Model
+            $course = $course instanceof Model
                 ? $course
                 : (object) $course;
 
             return [
-                'id'              => $course->id,
-                'slug'            => $course->slug,
-                'title'           => $course->title,
-                'cover_image'     => $course->cover_image,
-                'level'           => $this->levelKey($course->level),
-                'is_free'         => (bool) $course->is_free,
-                'price'           => $course->activePrice?->amount ?? 0,
-                'duration_minutes'=> $course->duration ?? 0,
-                'students_count'  => $course->students_count ?? 0,
-                'lessons_count'   => $course->lessons_count ?? 0,
-                'average_rating'  => (float) ($course->average_rating ?? 0),
-                'language'        => $course->lang ?? null,
-                'is_enrolled'     => array_key_exists($courseId, $enrolledCourseIds),
+                'id' => $course->id,
+                'slug' => $course->slug,
+                'title' => $course->title,
+                'cover_image' => $course->cover_image,
+                'level' => $this->levelKey($course->level),
+                'is_free' => (bool) $course->is_free,
+                'price' => $course->activePrice?->amount ?? 0,
+                'duration_minutes' => $course->duration ?? 0,
+                'students_count' => $course->students_count ?? 0,
+                'lessons_count' => $course->lessons_count ?? 0,
+                'average_rating' => (float) ($course->average_rating ?? 0),
+                'language' => $course->lang ?? null,
+                'is_enrolled' => array_key_exists($courseId, $enrolledCourseIds),
                 'completion_percent' => $enrolledCourseIds[$courseId] ?? 0,
-                'tutor'           => $course->tutor ? [
-                    'id'     => $course->tutor->id,
-                    'name'   => $course->tutor->name,
+                'tutor' => $course->tutor ? [
+                    'id' => $course->tutor->id,
+                    'name' => $course->tutor->name,
                     'avatar' => $course->tutor->profile ?? null,
                 ] : null,
-                'category'        => $this->formatCategory($course->category),
+                'category' => $this->formatCategory($course->category),
             ];
         }, $courses);
     }

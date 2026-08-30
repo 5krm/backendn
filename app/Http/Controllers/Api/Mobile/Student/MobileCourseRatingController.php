@@ -46,41 +46,41 @@ class MobileCourseRatingController extends Controller
             $avatar = $user?->profile;
 
             return [
-                'id'                  => $r->id,
-                'rating'              => (int) $r->rating,
-                'instructor_rating'   => (int) $r->rating,
-                'content_rating'      => (int) $r->rating,
-                'review'              => $r->review ?? '',
-                'comment'             => $r->review ?? '',
-                'created_at'          => $r->created_at?->toISOString(),
+                'id' => $r->id,
+                'rating' => (int) $r->rating,
+                'instructor_rating' => (int) $r->rating,
+                'content_rating' => (int) $r->rating,
+                'review' => $r->review ?? '',
+                'comment' => $r->review ?? '',
+                'created_at' => $r->created_at?->toISOString(),
                 'is_verified_student' => true,
-                'likes_count'         => 0,
+                'likes_count' => 0,
                 'user' => $user ? [
-                    'id'     => $user->id,
-                    'name'   => $user->name,
+                    'id' => $user->id,
+                    'name' => $user->name,
                     'avatar' => $avatar,
                 ] : null,
-                'user_name'   => $user?->name ?? 'Student',
+                'user_name' => $user?->name ?? 'Student',
                 'user_avatar' => $avatar,
             ];
         })->values();
 
         return $this->success([
-            'average_rating'      => $averageRating,
-            'total_reviews'       => $totalReviews,
+            'average_rating' => $averageRating,
+            'total_reviews' => $totalReviews,
             'rating_distribution' => $distribution,
-            'distribution'        => $distribution,
-            'instructor_average'  => $averageRating,
-            'content_average'     => $averageRating,
-            'reviews'             => $reviews,
+            'distribution' => $distribution,
+            'instructor_average' => $averageRating,
+            'content_average' => $averageRating,
+            'reviews' => $reviews,
         ]);
     }
 
     public function store(Request $request, Course $course): JsonResponse
     {
         $request->validate([
-            'rating'  => ['required', 'integer', 'min:1', 'max:5'],
-            'review'  => ['nullable', 'string', 'max:2000'],
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'review' => ['nullable', 'string', 'max:2000'],
         ]);
 
         $user = $request->user();
@@ -104,9 +104,9 @@ class MobileCourseRatingController extends Controller
         );
 
         return $this->success([
-            'id'         => $rating->id,
-            'rating'     => $rating->rating,
-            'review'     => $rating->review,
+            'id' => $rating->id,
+            'rating' => $rating->rating,
+            'review' => $rating->review,
             'created_at' => $rating->created_at->toISOString(),
         ], 'Rating submitted');
     }

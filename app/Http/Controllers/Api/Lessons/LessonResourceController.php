@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Api\Lessons;
 
-use App\Enums\FileType;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\Lessons\Lesson;
-use App\Http\Controllers\Controller;
-use App\Models\Lessons\LessonResource;
 use App\Data\Lessons\LessonResourceData;
+use App\Enums\FileType;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Lessons\LessonResourceResource;
+use App\Models\Lessons\Lesson;
+use App\Models\Lessons\LessonResource;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LessonResourceController extends Controller
 {
-
     public function __construct()
     {
         LessonResourceResource::withoutWrapping();

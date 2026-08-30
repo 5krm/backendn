@@ -2,18 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
-use App\Models\User;
-
 
 class VerifyEmail extends Mailable
 {
@@ -25,7 +23,9 @@ class VerifyEmail extends Mailable
      * Create a new message instance.
      */
     private User $user;
+
     public static $createUrlCallback;
+
     public function __construct(User $user)
     {
         $this->user = $user;
@@ -41,10 +41,10 @@ class VerifyEmail extends Mailable
         );
     }
 
-
     public function content(): Content
     {
         $verificationUrl = $this->verificationUrl();
+
         return new Content(
             markdown: 'emails.verify-email',
             with: ['user' => $this->user, 'url' => $verificationUrl]
@@ -66,7 +66,6 @@ class VerifyEmail extends Mailable
             ]
         );
     }
-
 
     public function attachments(): array
     {

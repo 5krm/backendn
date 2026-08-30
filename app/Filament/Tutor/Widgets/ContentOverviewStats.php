@@ -17,7 +17,7 @@ class ContentOverviewStats extends StatsOverviewWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return [];
         }
 
@@ -32,12 +32,12 @@ class ContentOverviewStats extends StatsOverviewWidget
             ->count();
 
         // Draft lessons
-        $draftLessons = Lesson::whereHas('course', fn(Builder $q) => $q->where('tutor_id', $tutorId))
+        $draftLessons = Lesson::whereHas('course', fn (Builder $q) => $q->where('tutor_id', $tutorId))
             ->where('status', CourseStatus::draft)
             ->count();
 
         // Published lessons
-        $publishedLessons = Lesson::whereHas('course', fn(Builder $q) => $q->where('tutor_id', $tutorId))
+        $publishedLessons = Lesson::whereHas('course', fn (Builder $q) => $q->where('tutor_id', $tutorId))
             ->where('status', CourseStatus::published)
             ->count();
 
@@ -52,7 +52,7 @@ class ContentOverviewStats extends StatsOverviewWidget
             ->count();
 
         // Recently updated (last 7 days)
-        $recentlyUpdated = Lesson::whereHas('course', fn(Builder $q) => $q->where('tutor_id', $tutorId))
+        $recentlyUpdated = Lesson::whereHas('course', fn (Builder $q) => $q->where('tutor_id', $tutorId))
             ->where('updated_at', '>=', now()->subDays(7))
             ->count();
 

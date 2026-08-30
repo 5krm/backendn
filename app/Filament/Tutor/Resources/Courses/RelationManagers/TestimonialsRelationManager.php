@@ -2,9 +2,14 @@
 
 namespace App\Filament\Tutor\Resources\Courses\RelationManagers;
 
+use App\Models\Courses\CourseRating;
+use App\Models\Courses\CourseTestimonial;
+use App\Models\Lessons\LessonComment\Comment;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -14,9 +19,6 @@ use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Actions\Action;
-use App\Models\Lessons\LessonComment\Comment;
-use App\Models\Courses\CourseTestimonial;
 
 class TestimonialsRelationManager extends RelationManager
 {
@@ -84,36 +86,37 @@ class TestimonialsRelationManager extends RelationManager
                     ->label(__('tutor.testimonials.create_from_resource'))
                     ->icon('heroicon-o-chat-bubble-left-ellipsis')
                     ->form([
-                        \Filament\Forms\Components\Select::make('source_id')
+                        Select::make('source_id')
                             ->options([
                                 'course_ratings' => __('tutor.testimonials.from_course_ratings'),
                                 'lesson_comments' => __('tutor.testimonials.from_lesson_comments'),
                             ])->live()
                             ->label(__('tutor.testimonials.select_source'))
-                            ->afterStateUpdated(fn($set) => $set('comment_id', null)),
-                        \Filament\Forms\Components\Select::make('comment_id')
+                            ->afterStateUpdated(fn ($set) => $set('comment_id', null)),
+                        Select::make('comment_id')
                             ->label(__('tutor.form.select_comment'))
                             ->searchable()
                             ->required()
                             ->options(
                                 function ($get, $set, $state) {
                                     if ($get('source_id') === 'course_ratings') {
-                                        return \App\Models\Courses\CourseRating::query()
+                                        return CourseRating::query()
                                             ->with('user')
                                             ->latest()
                                             ->limit(50)
                                             ->get()
-                                            ->mapWithKeys(fn($rating) => [
-                                                $rating->id => $rating->review . ' - ' . $rating->user?->name
+                                            ->mapWithKeys(fn ($rating) => [
+                                                $rating->id => $rating->review.' - '.$rating->user?->name,
                                             ]);
                                     }
+
                                     return Comment::query()
                                         ->with('user')
                                         ->latest()
                                         ->limit(50)
                                         ->get()
-                                        ->mapWithKeys(fn($comment) => [
-                                            $comment->id => $comment->content . ' - ' . $comment->user?->name
+                                        ->mapWithKeys(fn ($comment) => [
+                                            $comment->id => $comment->content.' - '.$comment->user?->name,
                                         ]);
                                 }
                             ),
@@ -122,7 +125,7 @@ class TestimonialsRelationManager extends RelationManager
                         $user = null;
                         $content = '';
                         if ($data['source_id'] === 'course_ratings') {
-                            $rating = \App\Models\Courses\CourseRating::with('user')->findOrFail($data['comment_id']);
+                            $rating = CourseRating::with('user')->findOrFail($data['comment_id']);
                             $user = $rating->user;
                             $content = $rating->review;
                         } else {
@@ -137,8 +140,7 @@ class TestimonialsRelationManager extends RelationManager
                             'content' => $content,
                         ]);
                     })
-                    ->modalHeading(__('tutor.form.create_testimonial_from_comment'))
-
+                    ->modalHeading(__('tutor.form.create_testimonial_from_comment')),
 
             ])
             ->actions([

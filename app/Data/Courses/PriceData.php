@@ -11,6 +11,5 @@ class PriceData extends Data
         public int $price,
         public bool $is_free,
         public ?string $stripe_price_id,
-    ) {
-    }
+    ) {}
 }

@@ -6,9 +6,8 @@ use Spatie\LaravelData\Data;
 
 class ListItemData extends Data
 {
-  public function __construct(
-    public string $value,
-    public string $text
-  ) {
-  }
+    public function __construct(
+        public string $value,
+        public string $text
+    ) {}
 }

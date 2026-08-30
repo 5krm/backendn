@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Coupon extends Model
@@ -17,9 +17,9 @@ class Coupon extends Model
 
     protected $casts = [
         'expires_at' => 'datetime',
-        'starts_at'  => 'datetime',
-        'value'      => 'decimal:2',
-        'is_active'  => 'boolean',
+        'starts_at' => 'datetime',
+        'value' => 'decimal:2',
+        'is_active' => 'boolean',
     ];
 
     /**

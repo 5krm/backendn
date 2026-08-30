@@ -16,13 +16,12 @@ use Illuminate\Support\Facades\Mail;
 #[Description('Command description')]
 class SendCourseSuggestion extends Command
 {
-
     protected FollowupEmailType $followupEmailType = FollowupEmailType::CourseSuggestion;
 
     public function handle()
     {
         $users = $this->getUnrolledTrainers();
-        $course  = $this->getSuggestedCourse();
+        $course = $this->getSuggestedCourse();
         foreach ($users as $user) {
 
             $this->info("Sending followup email to {$user->name} to suggest the course {$course->title}");
@@ -30,6 +29,7 @@ class SendCourseSuggestion extends Command
                 Mail::send(new CourseSuggestion($user, $course));
             } catch (\Exception $e) {
                 $this->error("Failed to send followup email: {$e->getMessage()}");
+
                 continue;
             }
 
@@ -44,6 +44,7 @@ class SendCourseSuggestion extends Command
             ]);
         }
     }
+
     private function getUnrolledTrainers(): Collection
     {
         return User::forFollowupEmails($this->followupEmailType)
@@ -58,9 +59,10 @@ class SendCourseSuggestion extends Command
     private function getSuggestedCourse(): Course
     {
         $course = Course::where('title', 'كتابة مقترحات المشاريع الانسانية')->first();
-        if (!$course) {
+        if (! $course) {
             $course = Course::where('is_free', true)->inRandomOrder()->first();
         }
+
         return $course;
     }
 }

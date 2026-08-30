@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Country extends Model
 {
@@ -12,7 +13,7 @@ class Country extends Model
         'phone_code',
     ];
 
-    public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function users(): HasMany
     {
         return $this->hasMany(User::class);
     }

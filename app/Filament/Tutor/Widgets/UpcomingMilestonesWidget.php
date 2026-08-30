@@ -2,7 +2,6 @@
 
 namespace App\Filament\Tutor\Widgets;
 
-use App\Models\Courses\Course;
 use App\Models\Courses\Enrollment;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -41,33 +40,33 @@ class UpcomingMilestonesWidget extends BaseWidget
                     ->circular()
                     ->size(36)
                     ->defaultImageUrl(asset('assets/images/Logo_Icon.png')),
-                    
+
                 Tables\Columns\TextColumn::make('user.name')
                     ->label(__('tutor.tables.student'))
                     ->searchable()
                     ->sortable()
                     ->weight('medium')
                     ->limit(25),
-                    
+
                 Tables\Columns\TextColumn::make('course.title')
                     ->label(__('tutor.tables.course'))
                     ->limit(30)
-                    ->tooltip(fn($record) => $record->course->title)
+                    ->tooltip(fn ($record) => $record->course->title)
                     ->color('secondary'),
-                    
+
                 Tables\Columns\TextColumn::make('progress')
                     ->label(__('tutor.tables.progress'))
-                    ->formatStateUsing(fn($state) => round($state) . '%')
+                    ->formatStateUsing(fn ($state) => round($state).'%')
                     ->badge()
-                    ->color(fn($state) => match(true) {
+                    ->color(fn ($state) => match (true) {
                         $state >= 95 => 'primary',
                         $state >= 90 => 'primary',
                         default => 'primary'
                     }),
-                    
+
                 Tables\Columns\TextColumn::make('remaining')
                     ->label(__('tutor.tables.to_go'))
-                    ->getStateUsing(fn($record) => round(100 - $record->progress) . '%')
+                    ->getStateUsing(fn ($record) => round(100 - $record->progress).'%')
                     ->badge()
                     ->color('secondary'),
             ])

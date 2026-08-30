@@ -19,17 +19,16 @@ enum FileType: int
         return array_column(self::cases(), 'value');
     }
 
-
     public static function names(): array
     {
         return [
-            static::pdf->value => 'pdf',
-            static::docx->value => 'docx',
-            static::ppt->value => 'pptx',
-            static::xlsx->value => 'xlsx',
-            static::zip->value => 'zip',
-            static::video->value => 'video',
-            static::image->value => 'image',
+            self::pdf->value => 'pdf',
+            self::docx->value => 'docx',
+            self::ppt->value => 'pptx',
+            self::xlsx->value => 'xlsx',
+            self::zip->value => 'zip',
+            self::video->value => 'video',
+            self::image->value => 'image',
         ];
     }
 
@@ -44,10 +43,16 @@ enum FileType: int
             default => null,
         };
 
-        if ($matched) return $matched;
+        if ($matched) {
+            return $matched;
+        }
 
-        if (Str::startsWith($mimeType, 'video/')) return FileType::video;
-        if (Str::startsWith($mimeType, 'image/')) return FileType::image;
+        if (Str::startsWith($mimeType, 'video/')) {
+            return FileType::video;
+        }
+        if (Str::startsWith($mimeType, 'image/')) {
+            return FileType::image;
+        }
 
         return FileType::pdf;
     }

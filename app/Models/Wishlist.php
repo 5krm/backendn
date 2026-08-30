@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Courses\Enrollment;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Wishlist extends Model

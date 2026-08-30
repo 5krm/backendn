@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Certificate extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     public const STATUS_VALID = 'valid';
 
@@ -72,7 +72,7 @@ class Certificate extends Model implements HasMedia
 
     public function shareLink(): string
     {
-        return 'https://www.linkedin.com/sharing/share-offsite/?url=' . urlencode($this->verificationUrl());
+        return 'https://www.linkedin.com/sharing/share-offsite/?url='.urlencode($this->verificationUrl());
     }
 
     public function addToLinkedin(): string
@@ -91,20 +91,20 @@ class Certificate extends Model implements HasMedia
         $skills = $course->category?->localizedName ?? '';
 
         $linkedInAddUrl =
-            'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME' .
-            '&name=' .
-            urlencode($certificationName) .
-            '&organizationId=' .
-            urlencode($organizationId) .
-            '&issueYear=' .
-            $issueYear .
-            '&issueMonth=' .
-            $issueMonth .
-            '&certUrl=' .
-            urlencode($certUrl) .
-            '&certId=' .
-            urlencode($certificate->certificate_number) .
-            ($skills ? '&skills=' . urlencode($skills) : '');
+            'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME'.
+            '&name='.
+            urlencode($certificationName).
+            '&organizationId='.
+            urlencode($organizationId).
+            '&issueYear='.
+            $issueYear.
+            '&issueMonth='.
+            $issueMonth.
+            '&certUrl='.
+            urlencode($certUrl).
+            '&certId='.
+            urlencode($certificate->certificate_number).
+            ($skills ? '&skills='.urlencode($skills) : '');
 
         return $linkedInAddUrl;
     }

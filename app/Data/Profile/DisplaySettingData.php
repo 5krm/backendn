@@ -7,9 +7,8 @@ use Spatie\LaravelData\Data;
 
 class DisplaySettingData extends Data
 {
-  public function __construct(
-    public Language $displayLanguage,
-    public Language $learningLanguage,
-  ) {
-  }
+    public function __construct(
+        public Language $displayLanguage,
+        public Language $learningLanguage,
+    ) {}
 }

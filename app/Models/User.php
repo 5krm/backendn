@@ -2,39 +2,38 @@
 
 namespace App\Models;
 
+use App\Enums\FollowupEmailType;
 use App\Enums\PreferenceKey;
 use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
-use App\Enums\FollowupEmailType;
-use Spatie\MediaLibrary\HasMedia;
 use App\Models\Courses\Enrollment;
+use App\Models\Lessons\Lesson;
 use App\Models\Lessons\LessonComment\Comment;
 use App\Models\Lessons\LessonNote;
-use App\Models\Tutor;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 use App\Models\Lessons\LessonTracking;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements MustVerifyEmail, HasMedia, FilamentUser, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasMedia, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, SoftDeletes;
+    use HasApiTokens, HasFactory, InteractsWithMedia, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -52,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
         'organization_id',
     ];
 
-    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
@@ -68,8 +67,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
         'is_admin' => 'boolean',
         'admin_access' => 'boolean',
     ];
-
-
 
     public function tutorCourses(): HasMany
     {
@@ -95,6 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
     {
         return $this->hasMany(LessonNote::class);
     }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
@@ -154,8 +152,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
     public function scopeForFollowupEmails(Builder $query, FollowupEmailType $followupEmailType): Builder
     {
         return $query
-            ->with(['courses', 'followupEmails' => fn($q) => $q->where('email_type', $followupEmailType)])
-            ->whereHas('preferences', fn($q) => $q->where('key', PreferenceKey::FollowupEmail)->where('value', true));
+            ->with(['courses', 'followupEmails' => fn ($q) => $q->where('email_type', $followupEmailType)])
+            ->whereHas('preferences', fn ($q) => $q->where('key', PreferenceKey::FollowupEmail)->where('value', true));
     }
 
     /**
@@ -163,7 +161,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
      */
     public function completedLessons(int $course): Collection
     {
-        if (!$this->relationLoaded('lessons')) {
+        if (! $this->relationLoaded('lessons')) {
             $this->load('lessons');
         }
 
@@ -209,12 +207,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
     public function displayLang(): string
     {
         $preference = $this->getPreference(PreferenceKey::DisplayLanguage);
+
         return $preference?->value ?? 'ar';
     }
 
     public function learningLang(): string
     {
         $preference = $this->getPreference(PreferenceKey::LearningLanguage);
+
         return $preference?->value ?? 'ar';
     }
 
@@ -225,6 +225,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
         }
 
         $this->load('preferences');
+
         return $this->preferences->where('key', $key)->first();
     }
 
@@ -236,10 +237,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
         $file = $this->getMedia('avatars')
             ->last()
             ?->getUrl() ??
-            URL::to('/') . '/assets/images/default-user.png';
+            URL::to('/').'/assets/images/default-user.png';
 
         return Attribute::make(
-            get: fn() => $file
+            get: fn () => $file
         );
     }
 
@@ -274,8 +275,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Filamen
     public static function findByToken($token): User
     {
         $email = decrypt($token);
+
         return static::where('email', $email)->first();
     }
+
     public function hasCompleteProfile(): bool
     {
         return ! empty($this->country)

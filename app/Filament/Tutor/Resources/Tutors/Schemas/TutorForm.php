@@ -102,7 +102,7 @@ class TutorForm
                             ->collection('avatars')
                             ->avatar()
                             ->image()
-                            ->imageEditor()
+                            ->imageEditor(),
                     ]),
             ]);
     }

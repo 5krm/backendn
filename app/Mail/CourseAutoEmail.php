@@ -6,13 +6,11 @@ use App\Enums\PreferenceKey;
 use App\Models\Courses\CourseMail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -21,7 +19,9 @@ class CourseAutoEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $direction = 'ltr';
+
     private $type = PreferenceKey::FollowupEmail;
+
     /**
      * Create a new message instance.
      */
@@ -47,12 +47,12 @@ class CourseAutoEmail extends Mailable
      */
     public function content(): Content
     {
-        if (!$this->courseMail->relationLoaded('course')) {
+        if (! $this->courseMail->relationLoaded('course')) {
             $this->courseMail->load('course');
         }
         $content = $this->mapTags($this->courseMail, $this->user);
         $unsubscribe_link = route('email.unsubscribe', ['token' => encrypt($this->user->email), 'type' => $this->type]);
-        Log::info('content:' . $content);
+        Log::info('content:'.$content);
 
         return new Content(
             markdown: 'emails.courses.dynamic',
@@ -60,7 +60,7 @@ class CourseAutoEmail extends Mailable
                 'user' => $this->user,
                 'mail' => $this->courseMail,
                 'content' => $content,
-                'unsubscribe_link' => $unsubscribe_link
+                'unsubscribe_link' => $unsubscribe_link,
             ],
         );
     }
@@ -76,7 +76,6 @@ class CourseAutoEmail extends Mailable
         ];
     }
 
-
     public function mapTags($mail, $user): string
     {
         return Str::swap([
@@ -84,7 +83,7 @@ class CourseAutoEmail extends Mailable
             '{tutor_name}' => $user->name,
             '{tutor_email}' => $user->email,
             '{course_url}' => route('app.courses.details', $mail->course),
-            '{student_name}' => $user->name
+            '{student_name}' => $user->name,
         ], $mail->body);
     }
 

@@ -3,16 +3,9 @@
 namespace App\Filament\Tutor\Resources\Courses\RelationManagers;
 
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\SectionResource;
-use App\Models\Courses\Course;
-use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
-use Filament\Schemas\Schema; // Import Schema
+use Filament\Schemas\Schema;
+use Filament\Tables\Table; // Import Schema
 
 class SectionsRelationManager extends RelationManager
 {

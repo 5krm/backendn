@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Enums\PreferenceKey;
 use App\Events\NewCommentPosted;
 use App\Mail\Comments\NewComment;
 use App\Models\Courses\Course;
@@ -24,7 +23,7 @@ class SendNewCommentEmail
      */
     public function handle(NewCommentPosted $event): void
     {
-        $course = Course::whereHas('lessons', fn($q) => $q->where('id', $event->comment->lesson_id))
+        $course = Course::whereHas('lessons', fn ($q) => $q->where('id', $event->comment->lesson_id))
             ->first();
 
         $user = User::query()

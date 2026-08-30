@@ -7,30 +7,31 @@ use App\Enums\CourseStatus;
 use App\Events\CoursePublished;
 use App\Filament\Tutor\Resources\Courses\CourseResource;
 use App\Jobs\Stripe\UpdateStripeProduct;
-use App\Models\Courses\CoursePrice;
-use App\Models\Organization;
+use App\Models\Courses\Course;
 use App\Models\OrganizationFollower;
 use App\Models\Wishlist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Support\Exceptions\Halt;
-use Throwable;
 
 class EditCourse extends EditRecord
 {
     protected static string $resource = CourseResource::class;
 
     protected const PRICING_FIELDS = ['is_free', 'price', 'old_price'];
+
     protected ?CourseStatus $oldStatus = null;
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         return $data;
     }
+
     protected function beforeSave(): void
     {
         // Capture the TRUE original value before the DB write happens
         $this->oldStatus = $this->getRecord()->getOriginal('status');
     }
+
     protected function mutateFormDataBeforeSave(array $data): array
     {
         foreach (self::PRICING_FIELDS as $field) {
@@ -43,7 +44,7 @@ class EditCourse extends EditRecord
     protected function afterSave()
     {
         UpdateStripeProduct::dispatch($this->record);
-        /** @var \App\Models\Courses\Course $record */
+        /** @var Course $record */
         $record = $this->getRecord();
 
         $isPublishedToWaiters = ($this->oldStatus == CourseStatus::preview && $record->status == CourseStatus::published);
@@ -69,7 +70,7 @@ class EditCourse extends EditRecord
             ->title(__('filament-panels::resources/pages/edit-record.notifications.saved.title'))
             ->send();
 
-        (new UpdateCoursePrice())->execute($this->record);
+        (new UpdateCoursePrice)->execute($this->record);
     }
 
     public function getTitle(): string

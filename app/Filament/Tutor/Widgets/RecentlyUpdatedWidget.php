@@ -2,9 +2,8 @@
 
 namespace App\Filament\Tutor\Widgets;
 
-use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
 use App\Filament\Tutor\Resources\Courses\Resources\Sections\Resources\Lessons\LessonResource;
+use App\Models\Lessons\Lesson;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -29,7 +28,7 @@ class RecentlyUpdatedWidget extends BaseWidget
             ->query(
                 Lesson::query()
                     ->with('course')
-                    ->whereHas('course', fn(Builder $q) => $q->where('tutor_id', $tutorId))
+                    ->whereHas('course', fn (Builder $q) => $q->where('tutor_id', $tutorId))
                     ->orderByDesc('updated_at')
                     ->limit(8)
             )
@@ -38,7 +37,7 @@ class RecentlyUpdatedWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('tutor.tables.lesson'))
                     ->limit(30)
-                    ->url(fn($record) => LessonResource::getUrl('index', [
+                    ->url(fn ($record) => LessonResource::getUrl('index', [
                         'course' => $record->course->slug,
                         'course_section' => $record->section_id,
                         'lesson' => $record->getKey(), // Ensure 'section_id' exists on Lesson model
@@ -51,7 +50,7 @@ class RecentlyUpdatedWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('tutor.tables.status'))
                     ->badge()
-                    ->color(fn($state) => $state->getColor()),
+                    ->color(fn ($state) => $state->getColor()),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('tutor.tables.updated'))
                     ->since()
@@ -59,7 +58,7 @@ class RecentlyUpdatedWidget extends BaseWidget
             ])
             ->paginated(false)
             ->emptyStateHeading(__('tutor.empty.no_lessons'))
-            ->emptyStateIcon('heroicon-o-book-open')->recordUrl(fn($record) => LessonResource::getUrl('index', [
+            ->emptyStateIcon('heroicon-o-book-open')->recordUrl(fn ($record) => LessonResource::getUrl('index', [
                 'course' => $record->course->slug,
                 'course_section' => $record->section_id,
                 'lesson' => $record->getKey(),

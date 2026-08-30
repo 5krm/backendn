@@ -3,9 +3,8 @@
 namespace App\Filament\Tutor\Resources\Organizations\Tables;
 
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -22,7 +21,7 @@ class OrganizationsTable
                     ->label(__('tutor.form.name'))
                     ->searchable(),
                 TextColumn::make('slug')
-                     ->label(__('tutor.form.slug'))
+                    ->label(__('tutor.form.slug'))
                     ->searchable(),
                 TextColumn::make('category')
                     ->label(__('tutor.form.category'))

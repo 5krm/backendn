@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\App;
 
-use Illuminate\Http\Request;
 use App\Youtube\YoutubeClient;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class YoutubeController
@@ -29,7 +29,7 @@ class YoutubeController
     public function callback(Request $request)
     {
         $valid = YoutubeClient::verify($request);
-        if (!$valid) {
+        if (! $valid) {
             return response('Invalid request', 401);
         }
 

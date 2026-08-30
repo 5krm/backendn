@@ -2,20 +2,19 @@
 
 namespace App\Models\Lessons\LessonComment;
 
+use App\Models\Lessons\Lesson;
 use App\Models\User;
 use App\Scopes\CommentScopes;
-use App\Models\Lessons\Lesson;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Lessons\LessonComment\CommentPresenter;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\Lessons\LessonComment\CommentFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-    use CommentScopes, SoftDeletes, HasFactory;
+    use CommentScopes, HasFactory, SoftDeletes;
 
     protected $fillable = [
         'content',
@@ -58,10 +57,12 @@ class Comment extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
+
     public function scopeReplies($query)
     {
         return $query->whereNotNull('parent_id');
     }
+
     public function scopeParents($query)
     {
         return $query->whereNull('parent_id');

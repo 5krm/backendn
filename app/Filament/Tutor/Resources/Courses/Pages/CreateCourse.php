@@ -8,12 +8,14 @@ use App\Filament\Tutor\Resources\Courses\CourseResource;
 use App\Jobs\Stripe\CreateStripeProduct;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
-use App\Models\Courses\Course;
+use Illuminate\Support\Str;
 
 class CreateCourse extends CreateRecord
 {
     protected static string $resource = CourseResource::class;
+
     protected static bool $canCreateAnother = false;
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('edit', ['record' => $this->record]);
@@ -38,7 +40,7 @@ class CreateCourse extends CreateRecord
 
         // Generate slug if not provided
         if (empty($data['slug'])) {
-            $data['slug'] = \Illuminate\Support\Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title']);
         }
 
         return $data;
@@ -95,7 +97,7 @@ class CreateCourse extends CreateRecord
         }
 
         // Check pricing
-        if (!isset($data['is_free']) || $data['is_free'] === false) {
+        if (! isset($data['is_free']) || $data['is_free'] === false) {
             if (empty($data['price']) || $data['price'] <= 0) {
                 Notification::make()
                     ->danger()
@@ -121,7 +123,7 @@ class CreateCourse extends CreateRecord
         }
 
         // Show all warnings in one notification
-        if (!empty($warnings)) {
+        if (! empty($warnings)) {
             Notification::make()
                 ->warning()
                 ->title(__('tutor.validation.missing_optional_fields'))
@@ -135,8 +137,8 @@ class CreateCourse extends CreateRecord
     {
 
         CreateStripeProduct::dispatch($this->record);
-        if($this->record->status == CourseStatus::published){
-            event(new CoursePublished($this->record));        
+        if ($this->record->status == CourseStatus::published) {
+            event(new CoursePublished($this->record));
         }
         // Show success notification with next steps
         Notification::make()

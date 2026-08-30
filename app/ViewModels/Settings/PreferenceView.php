@@ -2,8 +2,8 @@
 
 namespace App\ViewModels\Settings;
 
-use App\Models\User;
 use App\Enums\PreferenceKey;
+use App\Models\User;
 use Illuminate\Contracts\Support\Arrayable;
 
 class PreferenceView implements Arrayable
@@ -12,7 +12,7 @@ class PreferenceView implements Arrayable
 
     public function __construct(public User $user)
     {
-        if (!$user->relationLoaded('preferences')) {
+        if (! $user->relationLoaded('preferences')) {
             $user->load('preferences');
         }
 

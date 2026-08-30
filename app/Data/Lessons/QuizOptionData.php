@@ -6,10 +6,9 @@ use Spatie\LaravelData\Data;
 
 class QuizOptionData extends Data
 {
-	public function __construct(
-		public int $order,
-		public string $value,
-		public bool $is_correct
-	) {
-	}
+    public function __construct(
+        public int $order,
+        public string $value,
+        public bool $is_correct
+    ) {}
 }

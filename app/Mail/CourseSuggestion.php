@@ -6,20 +6,20 @@ use App\Enums\PreferenceKey;
 use App\Models\Courses\Course;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\App;
 
 class CourseSuggestion extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $direction = 'ltr';
+
     private $type = PreferenceKey::FollowupEmail;
+
     /**
      * Create a new message instance.
      */
@@ -45,8 +45,8 @@ class CourseSuggestion extends Mailable
      */
     public function content(): Content
     {
-         $unsubscribe_link = route('email.unsubscribe', ['token' => encrypt($this->user->email), 'type' => $this->type]);
-         
+        $unsubscribe_link = route('email.unsubscribe', ['token' => encrypt($this->user->email), 'type' => $this->type]);
+
         return new Content(
             markdown: 'emails.courses.suggestion',
             with: ['unsubscribe_link' => $unsubscribe_link, 'course' => $this->course]

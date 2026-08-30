@@ -14,7 +14,7 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'name_ar' => $this->name_ar,
             'slug' => $this->slug,
-            'courses_count' => $this->courses_count ?? 0
+            'courses_count' => $this->courses_count ?? 0,
         ];
     }
 }

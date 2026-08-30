@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -26,6 +26,7 @@ class MoveMediaToAzure extends Command
 
         if ($medias->isEmpty()) {
             $this->info('No media found to move.');
+
             return self::SUCCESS;
         }
 

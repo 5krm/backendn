@@ -19,17 +19,17 @@ class UpdateCoursePrice
             ->where('course_id', $course->id)
             ->first();
 
-
         if ($coursePrice != null) {
             $coursePrice->is_active = true;
             $coursePrice->save();
+
             return;
         }
 
-        $coursePrice =  CoursePrice::create([
-            "course_id" => $course->id,
-            "price" => $course->price,
-            "is_active" => true
+        $coursePrice = CoursePrice::create([
+            'course_id' => $course->id,
+            'price' => $course->price,
+            'is_active' => true,
         ]);
 
         CreateStripePrice::dispatch($coursePrice);

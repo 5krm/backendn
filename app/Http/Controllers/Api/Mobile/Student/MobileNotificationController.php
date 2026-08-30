@@ -70,12 +70,12 @@ class MobileNotificationController extends Controller
     private function format(DatabaseNotification $n): array
     {
         return [
-            'id'         => $n->id,
-            'type'       => class_basename($n->type),
-            'title'      => $n->data['title'] ?? null,
-            'body'       => $n->data['body'] ?? $n->data['message'] ?? null,
-            'data'       => $n->data,
-            'read_at'    => $n->read_at?->toISOString(),
+            'id' => $n->id,
+            'type' => class_basename($n->type),
+            'title' => $n->data['title'] ?? null,
+            'body' => $n->data['body'] ?? $n->data['message'] ?? null,
+            'data' => $n->data,
+            'read_at' => $n->read_at?->toISOString(),
             'created_at' => $n->created_at->toISOString(),
         ];
     }

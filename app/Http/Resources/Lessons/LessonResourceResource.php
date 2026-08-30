@@ -16,7 +16,7 @@ class LessonResourceResource extends JsonResource
             'title' => $this->title,
             'file_type' => [
                 'key' => $this->file_type,
-                'value' => FileType::names()[$this->file_type->value]
+                'value' => FileType::names()[$this->file_type->value],
             ],
             'file' => $this->file,
         ];

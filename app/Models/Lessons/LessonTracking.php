@@ -3,11 +3,10 @@
 namespace App\Models\Lessons;
 
 use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LessonTracking extends Model
 {
@@ -31,7 +30,7 @@ class LessonTracking extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
-    
+
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

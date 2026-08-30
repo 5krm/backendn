@@ -6,9 +6,6 @@ use App\Enums\CourseStatus;
 use App\Events\CourseLessonsUpdatedEvent;
 use App\Models\Courses\Course;
 use App\Models\Lessons\Lesson;
-use App\Models\Lessons\LessonTracking;
-use Carbon\Carbon;
-use SebastianBergmann\CodeCoverage\Report\Xml\Totals;
 
 class UpdateCourseDuration
 {

@@ -42,7 +42,7 @@ class ProviderController extends Controller
 
             $user = User::where('email', $socialUser->email)->first();
 
-            if ($user != null && $user->provider !=  $provider) {
+            if ($user != null && $user->provider != $provider) {
                 return redirect()
                     ->route('auth.login')
                     ->withInput(['email' => $socialUser->email])
@@ -59,7 +59,6 @@ class ProviderController extends Controller
                         'email' => __('auth.socialite_account_issue'),
                     ]);
             }
-
 
             if ($user == null) {
                 $user = $this->createUser($socialUser, $provider);
@@ -78,6 +77,7 @@ class ProviderController extends Controller
         } catch (\Exception $e) {
             dd($e);
             \Sentry\captureException($e);
+
             return redirect()
                 ->route('auth.login')
                 ->withErrors(['email' => __('auth.socialite_failed')]);

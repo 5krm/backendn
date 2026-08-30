@@ -3,18 +3,18 @@
 namespace App\Models\Lessons;
 
 use App\Enums\FileType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LessonResource extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
         'public_key',
@@ -36,14 +36,14 @@ class LessonResource extends Model implements HasMedia
             if (is_null($resource->file_type) && $resource->file_path) {
                 $ext = strtolower(pathinfo($resource->file_path, PATHINFO_EXTENSION));
                 $resource->file_type = match ($ext) {
-                    'pdf'                   => FileType::pdf,
-                    'doc', 'docx'           => FileType::docx,
-                    'ppt', 'pptx'           => FileType::ppt,
-                    'xls', 'xlsx'           => FileType::xlsx,
-                    'zip'                   => FileType::zip,
+                    'pdf' => FileType::pdf,
+                    'doc', 'docx' => FileType::docx,
+                    'ppt', 'pptx' => FileType::ppt,
+                    'xls', 'xlsx' => FileType::xlsx,
+                    'zip' => FileType::zip,
                     'mp4', 'avi', 'mov', 'wmv' => FileType::video,
                     'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp' => FileType::image,
-                    default                 => FileType::pdf,
+                    default => FileType::pdf,
                 };
             }
 

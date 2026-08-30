@@ -4,21 +4,18 @@ namespace App\Filament\Tutor\Resources\Tutors\Pages;
 
 use App\Filament\Tutor\Resources\Tutors\TutorResource;
 use App\Mail\TutorInvitation;
-use App\Models\PasswordResetModel;
 use App\Models\PasswordResetToken;
-use Illuminate\Support\Str;
 use App\Models\User;
-use App\Models\UserToken;
 use Carbon\Carbon;
 use Exception;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Filament\Notifications\Notification;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class CreateTutor extends CreateRecord
 {
@@ -32,7 +29,7 @@ class CreateTutor extends CreateRecord
             DB::beginTransaction();
 
             $user = User::where('email', $data['email'])->first();
-            if($user?->is_tutor) {
+            if ($user?->is_tutor) {
                 throw ValidationException::withMessages([
                     'email' => __('tutor.tutors.duplicated_email'),
                 ]);
@@ -59,15 +56,17 @@ class CreateTutor extends CreateRecord
             $this->sendTutorInvitation($user);
 
             DB::commit();
+
             return $user;
         } catch (Exception $e) {
-            Log::error(__('tutor.tutors.invitation_error') . $e->getMessage());
+            Log::error(__('tutor.tutors.invitation_error').$e->getMessage());
             $user = User::withTrashed()->where('email', $data['email'])->first();
             if ($user && ($user->is_tutor == false || $user->trashed())) {
                 $user->is_tutor = true;
                 $user->restore();
                 $this->sendTutorInvitation($user);
                 DB::commit();
+
                 return $user;
             }
             DB::rollBack();
@@ -90,7 +89,7 @@ class CreateTutor extends CreateRecord
             $existingToken->update([
                 'token' => hash('sha256', $plainToken),
                 'type' => 'invitation',
-                'expired_at' => null
+                'expired_at' => null,
             ]);
         } else {
             PasswordResetToken::create([

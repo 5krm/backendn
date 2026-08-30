@@ -24,7 +24,7 @@ class EnrollmentTrendsChart extends ChartWidget
     {
         $tutorId = auth()->user()->id;
 
-        if (!$tutorId) {
+        if (! $tutorId) {
             return ['datasets' => [], 'labels' => []];
         }
 
@@ -53,7 +53,7 @@ class EnrollmentTrendsChart extends ChartWidget
             $date = now()->subDays($i)->format('Y-m-d');
             $count = $enrollments[$date] ?? 0;
             $runningTotal += $count;
-            
+
             $dates->push(now()->subDays($i)->format('M d'));
             $counts->push($count);
             $cumulative->push($runningTotal);
