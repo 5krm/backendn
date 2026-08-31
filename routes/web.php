@@ -28,6 +28,7 @@ use App\Models\Certificate;
 use App\Models\Courses\Course;
 use App\Models\Promotion;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -157,11 +158,10 @@ Route::get('/artisan/migrate/{key}', function (string $key) {
     }
 
     try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('migrate', ['--force' => true]);
 
-        return response('<pre>Migration Output:\n'.\Illuminate\Support\Facades\Artisan::output().'</pre>');
-    } catch (\Throwable $e) {
+        return response('<pre>Migration Output:\n'.Artisan::output().'</pre>');
+    } catch (Throwable $e) {
         return response('<pre>Migration Failed:\n'.$e->getMessage().'\n'.$e->getTraceAsString().'</pre>', 500);
     }
 });
-
