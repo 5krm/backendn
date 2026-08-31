@@ -28,7 +28,6 @@ use App\Models\Certificate;
 use App\Models\Courses\Course;
 use App\Models\Promotion;
 use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -150,18 +149,4 @@ Route::get('/preview-promotion-mail', function () {
         user: $user,
         promotion: $promotion
     );
-});
-
-Route::get('/artisan/migrate/{key}', function (string $key) {
-    if ($key !== config('app.key') && $key !== env('MIGRATION_KEY', 'migrate123')) {
-        abort(403, 'Unauthorized');
-    }
-
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-
-        return response('<pre>Migration Output:\n'.Artisan::output().'</pre>');
-    } catch (Throwable $e) {
-        return response('<pre>Migration Failed:\n'.$e->getMessage().'\n'.$e->getTraceAsString().'</pre>', 500);
-    }
 });
