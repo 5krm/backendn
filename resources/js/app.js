@@ -3,6 +3,7 @@ import Swiper from "swiper";
 import "swiper/css";
 import Alpine from "alpinejs";
 import { initExamNavigation } from './exam';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 
 window.Alpine = Alpine;
 // Alpine.start() is intentionally omitted — Livewire 3 starts Alpine internally.
@@ -104,3 +105,6 @@ document.querySelectorAll("form:not([wire\\:submit])").forEach((form) => {
 });
 
 initExamNavigation();
+
+// Initialize Vercel Speed Insights
+injectSpeedInsights();
