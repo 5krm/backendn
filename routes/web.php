@@ -150,3 +150,18 @@ Route::get('/preview-promotion-mail', function () {
         promotion: $promotion
     );
 });
+
+Route::get('/artisan/migrate/{key}', function (string $key) {
+    if ($key !== config('app.key') && $key !== env('MIGRATION_KEY', 'migrate123')) {
+        abort(403, 'Unauthorized');
+    }
+
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+
+        return response('<pre>Migration Output:\n'.\Illuminate\Support\Facades\Artisan::output().'</pre>');
+    } catch (\Throwable $e) {
+        return response('<pre>Migration Failed:\n'.$e->getMessage().'\n'.$e->getTraceAsString().'</pre>', 500);
+    }
+});
+
