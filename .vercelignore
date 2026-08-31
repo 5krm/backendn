@@ -1,0 +1,11 @@
+.git
+.github
+.agents
+.ai
+.claude
+.gemini
+node_modules
+tests
+storage
+.env
+.env.*
