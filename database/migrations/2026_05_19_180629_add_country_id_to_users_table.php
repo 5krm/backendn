@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'country_id')) {
+            if (! Schema::hasColumn('users', 'country_id')) {
                 $table->foreignId('country_id')->nullable()->after('id')->constrained('countries')->nullOnDelete();
             } else {
                 $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');

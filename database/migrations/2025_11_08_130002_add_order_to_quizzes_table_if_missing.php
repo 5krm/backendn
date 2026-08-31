@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (!Schema::hasColumn('quizzes', 'order')) {
+        if (! Schema::hasColumn('quizzes', 'order')) {
             Schema::table('quizzes', function (Blueprint $table) {
                 $table->integer('order')->default(0);
             });

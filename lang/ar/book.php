@@ -1,22 +1,23 @@
 <?php
+
 return [
-    "our_curriculum" => "منهجنا",
-    "orderNow" => "اطلب الآن",
-    "orderNowFor" => "اطلب <b>:price</b>",
-    "descriptionTitle" => "لمن هذا الكتاب?",
-    "descriptionSubTitle" => "استكشف اذا ما كان هذا كتابك التالي ",
-    "bookIndex" => "فهرس الكتاب",
-    "bookIndexTitle" => "ماذا يوجد داخل هذا الكتاب",
-    "checkoutSuccess" => 'لقد قمت بطلب الكتاب بنجاح ويمكنك العثور على فاتورتك في  <a class="text-primary underline" href=":link">صفحة الفوترة</a> في الإعدادات',
-    "downloadBook" => "تحميل الكتاب",
-    "backToBook" => "العودة الى صفحة التفاصيل",
+    'our_curriculum' => 'منهجنا',
+    'orderNow' => 'اطلب الآن',
+    'orderNowFor' => 'اطلب <b>:price</b>',
+    'descriptionTitle' => 'لمن هذا الكتاب?',
+    'descriptionSubTitle' => 'استكشف اذا ما كان هذا كتابك التالي ',
+    'bookIndex' => 'فهرس الكتاب',
+    'bookIndexTitle' => 'ماذا يوجد داخل هذا الكتاب',
+    'checkoutSuccess' => 'لقد قمت بطلب الكتاب بنجاح ويمكنك العثور على فاتورتك في  <a class="text-primary underline" href=":link">صفحة الفوترة</a> في الإعدادات',
+    'downloadBook' => 'تحميل الكتاب',
+    'backToBook' => 'العودة الى صفحة التفاصيل',
     'status' => [
         'draft' => 'مسودّة',
-        'published' => 'نُشر'
+        'published' => 'نُشر',
     ],
     'explore_books' => 'استكشف كتبنا',
     'meet_authors' => 'تعرّف على المؤلفين',
-    'no_books' => "لا توجد كتب متاحة حالياً. تحقق مرة أخرى قريباً.",
+    'no_books' => 'لا توجد كتب متاحة حالياً. تحقق مرة أخرى قريباً.',
     'no_sections_available' => 'أقسام الكتاب ستكون متاحة قريباً.',
     'hero_badge' => 'إصدار جديد',
     'hero_title' => 'أتقن العمل غير الربحي',
@@ -68,7 +69,6 @@ return [
     'amazon' => 'أمازون',
     'kindle' => 'كندل',
     'jarir' => 'جرير',
-    
 
     'books' => [
         'pm20' => [

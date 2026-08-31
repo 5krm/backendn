@@ -7,7 +7,7 @@ return [
         'afternoon' => 'Good afternoon',
         'evening' => 'Good evening',
         'encouragement' => "You've got :courses courses on the go — keep it up! ",
-        'learning_space' => 'Your learning space'
+        'learning_space' => 'Your learning space',
     ],
     'totals' => [
         'in_progress' => 'In Progress',
@@ -19,7 +19,7 @@ return [
         'certificates' => 'Certificates',
         'certificates_caption' => 'Your hard-earned wins.',
         'my_reviews' => 'My Reviews',
-        'my_reviews_caption' => 'What you thought of your courses.'
+        'my_reviews_caption' => 'What you thought of your courses.',
     ],
     'course' => [
         'leftoff' => 'Where you left off',
@@ -27,7 +27,7 @@ return [
         'complete' => 'complete',
         'keepit' => 'Keep it up!',
         'done' => 'Done',
-        'soon' => ' Coming Soon'
+        'soon' => ' Coming Soon',
     ],
     'keep_going' => 'Keep going',
     'view_certificate' => 'View Certificate',
@@ -41,7 +41,7 @@ return [
         'excelent' => 'Excelent',
         'great' => 'Great',
         'good' => 'Good',
-        'your_score' => 'Your score'
+        'your_score' => 'Your score',
     ],
     'no_review_msg' => "you didn't add a review message",
     'no_certificates' => 'No earned certificates yet. Complete a course to earn your first certificate.',

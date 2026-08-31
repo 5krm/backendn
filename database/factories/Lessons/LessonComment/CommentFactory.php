@@ -2,9 +2,8 @@
 
 namespace Database\Factories\Lessons\LessonComment;
 
-
-use App\Models\User;
 use App\Models\Lessons\LessonComment\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
@@ -23,7 +22,7 @@ class CommentFactory extends Factory
             'user_id' => User::factory(),
             'lesson_id' => 1,
             'parent_id' => null,
-            'created_at' => now()
+            'created_at' => now(),
         ];
     }
 }

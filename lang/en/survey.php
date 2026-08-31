@@ -1,4 +1,5 @@
 <?php
+
 return [
     'tell' => 'Tell Us What You Think!',
     'survey_content' => 'Please take a moment to feed us what you think about the
@@ -11,17 +12,17 @@ return [
         'comment' => 'Add Your Comment',
         'comment_ex' => "ex: I'm so satisfied cuz I learned more than what I expected ..",
         'expectation' => 'Did the training meet your expectations?',
-        'suggestions' => 'How can we improve our training course?'
+        'suggestions' => 'How can we improve our training course?',
     ],
     'expectations' => [
         'yes' => 'Yes, it did.',
         'somehow' => 'Somehow, yes.',
-        'no' => 'No, I expected more.'
+        'no' => 'No, I expected more.',
     ],
     'validations' => [
         'status' => 'Please define your satisfaction about this course',
         'comment' => 'Your comment should be :count words at least',
-        'expectation' => 'Please define your expectation about this course'
+        'expectation' => 'Please define your expectation about this course',
     ],
     'satisfactions' => [
         'happy' => 'happy',
@@ -34,7 +35,7 @@ return [
         'interactive' => 'Add more interactive elements',
         'blending' => 'Use blended learning',
         'assessments' => 'Add more assessments',
-        'none' => 'Everything Was Great'
+        'none' => 'Everything Was Great',
     ],
     'question' => 'Question: :current of :total',
     'processing' => 'processing your data, please wait..',

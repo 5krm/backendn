@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('personal_access_tokens', function (Blueprint $table) {
-            if (!Schema::hasColumn('personal_access_tokens', 'fcm_token')) {
+            if (! Schema::hasColumn('personal_access_tokens', 'fcm_token')) {
                 $table->string('fcm_token')->nullable()->after('token');
             }
         });

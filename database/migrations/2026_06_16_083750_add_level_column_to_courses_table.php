@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->string('level',12)->default(Level::Beginner->value);
+            $table->string('level', 12)->default(Level::Beginner->value);
         });
     }
 

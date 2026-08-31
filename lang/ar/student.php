@@ -6,8 +6,8 @@ return [
         'morning' => 'صباح الخير',
         'afternoon' => 'مساء الخير',
         'evening' => 'مساء الخير',
-        'encouragement' => "لديك :courses دورات تدريبية لتكملها — استمر! ",
-        'learning_space' => 'مساحتك التعليمية'
+        'encouragement' => 'لديك :courses دورات تدريبية لتكملها — استمر! ',
+        'learning_space' => 'مساحتك التعليمية',
     ],
     'totals' => [
         'in_progress' => 'قيد التقدم',
@@ -20,7 +20,7 @@ return [
         'certificates_caption' => 'إنجازاتك التي عملت بجد لأجلها.',
         'my_reviews' => 'تقييماتي',
         'my_reviews_caption' => 'آراؤك وتقييماتك للدورات.',
-        
+
     ],
     'course' => [
         'leftoff' => 'حيث توقفت',
@@ -28,7 +28,7 @@ return [
         'complete' => 'مكتمل',
         'keepit' => 'استمر!',
         'done' => 'مكتمل',
-        'soon' => 'قريباً'
+        'soon' => 'قريباً',
     ],
     'keep_going' => 'متابعة',
     'view_certificate' => 'عرض الشهادة',
@@ -42,7 +42,7 @@ return [
         'excelent' => 'ممتاز',
         'great' => 'رائع',
         'good' => 'جيد',
-        'your_score' => 'درجتك'
+        'your_score' => 'درجتك',
     ],
-    'no_review_msg' => "لم تقم بإضافة ملاحظة على التقييم"
+    'no_review_msg' => 'لم تقم بإضافة ملاحظة على التقييم',
 ];

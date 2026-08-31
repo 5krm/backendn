@@ -27,5 +27,5 @@ return [
     'contact_title' => 'هل لديك استفسار؟',
     'contact_desc' => 'تواصل مباشرة مع فريق المؤسسة للحصول على المساعدة.',
     'send_message' => 'إرسال رسالة',
-    'followedBy' => 'متابع من قبل :followers طالب'
+    'followedBy' => 'متابع من قبل :followers طالب',
 ];

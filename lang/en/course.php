@@ -1,9 +1,10 @@
 <?php
+
 return [
     'status' => [
         'draft' => 'Draft',
         'published' => 'Published',
-        'preview' => 'Preview'
+        'preview' => 'Preview',
 
     ],
     'emails' => [
@@ -22,10 +23,10 @@ return [
             'type' => 'Type',
             'subject' => 'Subject',
             'body' => 'Body',
-            'active' => 'Active'
+            'active' => 'Active',
         ],
         'add_mail' => 'Add Course Mail',
-        'new_title' => 'New Course Mail'
+        'new_title' => 'New Course Mail',
     ],
     'change_to_status' => 'Change to :status',
     'author' => 'Instructor',
@@ -62,7 +63,7 @@ return [
     'notify_msg' => 'You will be notified when it becomes available.',
     'add_to_wishlist' => 'Add to Wishlist',
     'added_to_wishlist' => 'Added to Wishlist',
-    "in_wishlist" => 'In Wishlist',
+    'in_wishlist' => 'In Wishlist',
     'removeFromWishlist' => 'Remove from Wishlist',
     'removed_from_wishlist' => 'Removed from Wishlist',
     'downloadCertificate' => 'Download Your Certificate',
@@ -80,7 +81,7 @@ return [
     'getCertificate' => 'Get Your Certificate Now',
     'shareToLinkedIn' => 'Share to LinkedIn',
     'addToLinkedInProfile' => 'Add to LinkedIn Profile',
-    'linkedInShareText' => "I just completed the course \":course\" and earned my certificate! 🎓",
+    'linkedInShareText' => 'I just completed the course ":course" and earned my certificate! 🎓',
 
     'heroTitle' => 'Unveiling Your Potential',
     'heroSubtitle' => "What You'll Achieve in This Course",
@@ -88,7 +89,7 @@ return [
     'foryou' => 'Our course tailored for you',
     'testimonials' => [
         'title' => 'Testimonials',
-        'subtitle' => 'What our students say about this course'
+        'subtitle' => 'What our students say about this course',
     ],
     'continueLearning' => 'Continue Learning',
 
@@ -97,11 +98,11 @@ return [
         'subtitle' => 'You have completed <b>":course"</b> course.',
         'content' => 'Your next step towards earning your certificate is to pass the final exam.',
         'note' => "Note: You'll always have the opportunity to take the exam when ever you want",
-        'cancel_btn' => "I'll take it later"
+        'cancel_btn' => "I'll take it later",
     ],
     'survey' => [
         'title' => 'Survey',
-        'experience' => 'Could you tell us your experience to help us improve our training ?'
+        'experience' => 'Could you tell us your experience to help us improve our training ?',
     ],
     'enroll_success' => 'You have successfully enrolled to the course You can find your invoice at your <a class="text-primary underline" href=":link">billing page</a> in settings',
     'free_enroll_success' => 'You have successfully enrolled in the course. You can find it now on your  <a class="text-primary underline" href=":link">My Courses </a> page.',
@@ -171,9 +172,9 @@ return [
     'enrolled_students' => 'Enrolled Students',
     'lessons' => 'Lessons',
     'levels' => [
-        "beginner" => "Beginner",
-        "intermediate" => "Intermediate",
-        "advanced" => "Advanced"
+        'beginner' => 'Beginner',
+        'intermediate' => 'Intermediate',
+        'advanced' => 'Advanced',
     ],
-    'on_sale' => 'On Sale'
+    'on_sale' => 'On Sale',
 ];

@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -25,11 +24,11 @@ return new class extends Migration {
             ->where('EXTRA', 'like', '%auto_increment%')
             ->exists();
 
-        if (!$hasAutoIncrement && !$hasPrimary) {
+        if (! $hasAutoIncrement && ! $hasPrimary) {
             DB::statement('ALTER TABLE courses MODIFY id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY');
-        } elseif (!$hasAutoIncrement && $hasPrimary) {
+        } elseif (! $hasAutoIncrement && $hasPrimary) {
             DB::statement('ALTER TABLE courses MODIFY id BIGINT UNSIGNED AUTO_INCREMENT');
-        } elseif ($hasAutoIncrement && !$hasPrimary) {
+        } elseif ($hasAutoIncrement && ! $hasPrimary) {
             DB::statement('ALTER TABLE courses ADD PRIMARY KEY (id)');
         }
     }

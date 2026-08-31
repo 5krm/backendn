@@ -17,7 +17,7 @@ return new class extends Migration
                         : date('Y', strtotime($certificate->created_at ?? 'now'));
 
                     do {
-                        $number = 'CERT-' . $year . '-' . strtoupper(uniqid());
+                        $number = 'CERT-'.$year.'-'.strtoupper(uniqid());
                     } while (DB::table('certificates')->where('certificate_number', $number)->exists());
 
                     DB::table('certificates')->where('id', $certificate->id)->update([

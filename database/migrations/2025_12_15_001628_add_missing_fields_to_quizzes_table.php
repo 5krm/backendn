@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('quizzes', function (Blueprint $table) {
-            if (!Schema::hasColumn('quizzes', 'title')) {
+            if (! Schema::hasColumn('quizzes', 'title')) {
                 $table->string('title')->nullable()->after('id');
             }
-            if (!Schema::hasColumn('quizzes', 'description')) {
+            if (! Schema::hasColumn('quizzes', 'description')) {
                 $table->text('description')->nullable()->after('question');
             }
-            if (!Schema::hasColumn('quizzes', 'course_id')) {
+            if (! Schema::hasColumn('quizzes', 'course_id')) {
                 $table->foreignId('course_id')->nullable()->constrained()->after('lesson_id');
             }
             // Note: passing_score and time_limit_minutes removed - all quizzes require 100% with no time limit

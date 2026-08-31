@@ -3,11 +3,12 @@
 namespace Database\Factories\Lessons;
 
 use App\Enums\CourseStatus;
+use App\Models\Lessons\Lesson;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lessons\Lesson>
+ * @extends Factory<Lesson>
  */
 class LessonFactory extends Factory
 {
@@ -25,7 +26,7 @@ class LessonFactory extends Factory
             'title' => fake()->paragraph(1),
             'content' => fake()->paragraphs(5, true),
             'duration' => fake()->numberBetween(200, 1000),
-            'status' => fake()->randomElement(\App\Enums\CourseStatus::values()),
+            'status' => fake()->randomElement(CourseStatus::values()),
         ];
     }
 }

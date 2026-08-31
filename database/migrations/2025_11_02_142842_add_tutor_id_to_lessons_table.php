@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('lessons', 'tutor_id')) {
+        if (! Schema::hasColumn('lessons', 'tutor_id')) {
             Schema::table('lessons', function (Blueprint $table) {
                 $table->foreignId('tutor_id')->nullable()->constrained()->onDelete('set null');
             });

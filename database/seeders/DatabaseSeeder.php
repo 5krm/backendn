@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        \App\Models\User::updateOrCreate(['id' => 8], [
+        User::updateOrCreate(['id' => 8], [
             'name' => 'Adel Salah',
             'email' => 'adel@portal365.org',
             'password' => bcrypt('Admin@123'),

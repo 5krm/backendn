@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('lessons', 'status')) {
+        if (! Schema::hasColumn('lessons', 'status')) {
             Schema::table('lessons', function (Blueprint $table) {
                 $table->string('status')->default(CourseStatus::draft->value);
             });

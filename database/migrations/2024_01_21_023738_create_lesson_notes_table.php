@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\User;
 use App\Models\Lessons\Lesson;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('note');
             $table->foreignIdFor(Lesson::class);
             $table->foreignIdFor(User::class);
-            $table->string('color')->default('#fde68a');;
+            $table->string('color')->default('#fde68a');
             $table->integer('seconds')->nullable();
             $table->timestamps();
             $table->softDeletes();

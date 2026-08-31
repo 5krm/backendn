@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('tutors', 'user_id')) {
+        if (! Schema::hasColumn('tutors', 'user_id')) {
             Schema::table('tutors', function (Blueprint $table) {
                 $table->foreignId('user_id')->after('id')->constrained()->onDelete('cascade');
             });
@@ -40,7 +40,7 @@ return new class extends Migration
         ];
 
         foreach ($additions as [$column, $adder]) {
-            if (!Schema::hasColumn('tutors', $column)) {
+            if (! Schema::hasColumn('tutors', $column)) {
                 Schema::table('tutors', function (Blueprint $table) use ($adder) {
                     $adder($table);
                 });
@@ -59,7 +59,7 @@ return new class extends Migration
             'password' => fn (Blueprint $t) => $t->string('password')->after('email'),
             'remember_token' => fn (Blueprint $t) => $t->string('remember_token')->nullable()->after('is_active'),
         ] as $column => $adder) {
-            if (!Schema::hasColumn('tutors', $column)) {
+            if (! Schema::hasColumn('tutors', $column)) {
                 Schema::table('tutors', function (Blueprint $table) use ($adder) {
                     $adder($table);
                 });
@@ -73,7 +73,7 @@ return new class extends Migration
             });
         }
 
-        foreach (['experience_years','website','linkedin','twitter','facebook','instagram','hourly_rate','qualifications','languages','is_verified','verified_at'] as $col) {
+        foreach (['experience_years', 'website', 'linkedin', 'twitter', 'facebook', 'instagram', 'hourly_rate', 'qualifications', 'languages', 'is_verified', 'verified_at'] as $col) {
             if (Schema::hasColumn('tutors', $col)) {
                 Schema::table('tutors', function (Blueprint $table) use ($col) {
                     $table->dropColumn($col);

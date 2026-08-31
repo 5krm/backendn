@@ -83,17 +83,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'إعداد هيكل تقسيم العمل (WBS) والجدول الزمني (Gantt Chart)',
-                                'content' => "تفكيك الأنشطة إلى حزم عمل قابلة للإدارة وتحديد التبعيات والمسار الحرج (Critical Path) باستخدام مخططات غانت ومصفوفة المسؤوليات RACI.",
+                                'content' => 'تفكيك الأنشطة إلى حزم عمل قابلة للإدارة وتحديد التبعيات والمسار الحرج (Critical Path) باستخدام مخططات غانت ومصفوفة المسؤوليات RACI.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'بناء الموازنة المالية التفصيلية وتوزيع التكاليف',
-                                'content' => "كيفية إعداد موازنة متوافقة مع متطلبات المانحين تشمل التكاليف المباشرة والتشغيلية والتكاليف المشتركة وتتبع معدل الحرق المالي (Burn Rate).",
+                                'content' => 'كيفية إعداد موازنة متوافقة مع متطلبات المانحين تشمل التكاليف المباشرة والتشغيلية والتكاليف المشتركة وتتبع معدل الحرق المالي (Burn Rate).',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'إجراءات الإغلاق السليم وتوثيق الدروس المستفادة',
-                                'content' => "الإغلاق الإداري والمالي والتعاقدي للمشروع، وإعداد التقرير الختامي، وتسليم الأصول وتوثيق أفضل الممارسات وقصص النجاح.",
+                                'content' => 'الإغلاق الإداري والمالي والتعاقدي للمشروع، وإعداد التقرير الختامي، وتسليم الأصول وتوثيق أفضل الممارسات وقصص النجاح.',
                                 'duration' => 20,
                             ],
                         ],
@@ -119,12 +119,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'مقدمة في معايير حماية الطفل الدولية (CPMS)',
-                                'content' => "التعرف على المبادئ الأربعة الأساسية لمعايير حماية الطفل في حالات الطوارئ وفق دليل المعايير الدنيا للشبكة العالمية لحماية الطفل.",
+                                'content' => 'التعرف على المبادئ الأربعة الأساسية لمعايير حماية الطفل في حالات الطوارئ وفق دليل المعايير الدنيا للشبكة العالمية لحماية الطفل.',
                                 'duration' => 20,
                             ],
                             [
                                 'title' => 'تحديد وتصنيف مخاطر الحماية التي تواجه الأطفال',
-                                'content' => "تحليل مخاطر العنف، الإهمال، عمالة الأطفال، الزواج المبكر، والتجنيد الإجباري في أوقات النزاعات والنزوح وتحديد استراتيجيات الوقاية.",
+                                'content' => 'تحليل مخاطر العنف، الإهمال، عمالة الأطفال، الزواج المبكر، والتجنيد الإجباري في أوقات النزاعات والنزوح وتحديد استراتيجيات الوقاية.',
                                 'duration' => 25,
                             ],
                         ],
@@ -134,17 +134,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'سياسة صون الطفل المؤسسية ومدونة السلوك',
-                                'content' => "كيفية صياغة وتطبيق سياسة الصون على موظفي وموردي ومتطوعي المنظمة لمنع أي أذى قد يلحق بالأطفال وتطبيق فحص الخلفية الجنائية.",
+                                'content' => 'كيفية صياغة وتطبيق سياسة الصون على موظفي وموردي ومتطوعي المنظمة لمنع أي أذى قد يلحق بالأطفال وتطبيق فحص الخلفية الجنائية.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'الوقاية من الاستغلال والاعتداء الجنسي (PSEA)',
-                                'content' => "معايير اللجنة الدائمة المشتركة بين الوكالات (IASC) والتزام عدم التسامح مطلقاً مع الاستغلال والاعتداء الجنسي وإساءة استخدام السلطة.",
+                                'content' => 'معايير اللجنة الدائمة المشتركة بين الوكالات (IASC) والتزام عدم التسامح مطلقاً مع الاستغلال والاعتداء الجنسي وإساءة استخدام السلطة.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'قنوات الشكاوى والملاحظات الآمنة وسرية المعلومات',
-                                'content' => "تأسيس قنوات إبلاغ سرية وسهلة الوصول للأطفال والمجتمع المحلي، وإدارة البلاغات بحيادية وموثوقية وسرية تامة.",
+                                'content' => 'تأسيس قنوات إبلاغ سرية وسهلة الوصول للأطفال والمجتمع المحلي، وإدارة البلاغات بحيادية وموثوقية وسرية تامة.',
                                 'duration' => 20,
                             ],
                         ],
@@ -154,12 +154,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'مبادئ إدارة حالات حماية الطفل (Case Management)',
-                                'content' => "الخطوات الست لإدارة الحالات: الاستقبال والفرز، التقييم الشامل، خطة التدخل، التنفيذ، المتابعة الدورية، وإغلاق الحالة بنجاح.",
+                                'content' => 'الخطوات الست لإدارة الحالات: الاستقبال والفرز، التقييم الشامل، خطة التدخل، التنفيذ، المتابعة الدورية، وإغلاق الحالة بنجاح.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'بناء خريطة الخدمات ومسار الإحالة الآمن',
-                                'content' => "التنسيق مع الشركاء الإنسانيين لإنشاء مسار إحالة متعدد القطاعات (صحي، نفسي، تعليمي، قانوني) وضمان حماية البيانات وحفظ كرامة المستفيدين.",
+                                'content' => 'التنسيق مع الشركاء الإنسانيين لإنشاء مسار إحالة متعدد القطاعات (صحي، نفسي، تعليمي، قانوني) وضمان حماية البيانات وحفظ كرامة المستفيدين.',
                                 'duration' => 20,
                             ],
                         ],
@@ -185,17 +185,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'الركائز الأربع لمنظومة MEAL ودورها في إدارة المشاريع',
-                                'content' => "الفرق الجوهري بين المتابعة (Monitoring)، التقييم (Evaluation)، المساءلة (Accountability)، والتعلم (Learning)، وتكاملها في تعزيز كفاءة المنظمات وشفافيتها.",
+                                'content' => 'الفرق الجوهري بين المتابعة (Monitoring)، التقييم (Evaluation)، المساءلة (Accountability)، والتعلم (Learning)، وتكاملها في تعزيز كفاءة المنظمات وشفافيتها.',
                                 'duration' => 20,
                             ],
                             [
                                 'title' => 'نظرية التغيير (Theory of Change) ونماذج النتائج',
-                                'content' => "بناء سلسلة النتائج المنطقية وتحديد الفرضيات المسبقة ومسارات التحول لربط أنشطة المشروع بالأثر التنموي المستدام.",
+                                'content' => 'بناء سلسلة النتائج المنطقية وتحديد الفرضيات المسبقة ومسارات التحول لربط أنشطة المشروع بالأثر التنموي المستدام.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'تصميم جدول تتبع المؤشرات (ITT - Indicator Tracking Table)',
-                                'content' => "تحديد قيم خط الأساس (Baseline)، المستهدفات الدورية، وتعيين المسؤوليات وتكرار جمع البيانات ووسائل التحقق.",
+                                'content' => 'تحديد قيم خط الأساس (Baseline)، المستهدفات الدورية، وتعيين المسؤوليات وتكرار جمع البيانات ووسائل التحقق.',
                                 'duration' => 30,
                             ],
                         ],
@@ -205,17 +205,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'تصميم الاستبيانات الميدانية عبر KoboToolbox / ODK',
-                                'content' => "تطوير الاستمارات الرقمية، استخدام منطق التخطي (Skip Logic)، تحديد القيود والشروط، والجمع دون اتصال بالإنترنت وإدارة صلاحيات جامعي البيانات.",
+                                'content' => 'تطوير الاستمارات الرقمية، استخدام منطق التخطي (Skip Logic)، تحديد القيود والشروط، والجمع دون اتصال بالإنترنت وإدارة صلاحيات جامعي البيانات.',
                                 'duration' => 35,
                             ],
                             [
                                 'title' => 'أساليب أخذ العينات وضمان جودة البيانات (DQA)',
-                                'content' => "اختيار العينات الإحصائية الممثلة، وتطبيق فحوصات جودة البيانات الميدانية (Data Quality Assessment) وفق المعايير الخمسة للجودة.",
+                                'content' => 'اختيار العينات الإحصائية الممثلة، وتطبيق فحوصات جودة البيانات الميدانية (Data Quality Assessment) وفق المعايير الخمسة للجودة.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'أدوات البحث النوعي ومجموعات النقاش المركزة (FGDs)',
-                                'content' => "إدارة جلسات النقاش البؤرية، المقابلات المعمقة مع أصحاب المصلحة، والترميز النوعي للبيانات وتحليل السياق المجتمعي.",
+                                'content' => 'إدارة جلسات النقاش البؤرية، المقابلات المعمقة مع أصحاب المصلحة، والترميز النوعي للبيانات وتحليل السياق المجتمعي.',
                                 'duration' => 25,
                             ],
                         ],
@@ -225,12 +225,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'تحليل البيانات وإعداد التقارير التفاعلية والداشبورد',
-                                'content' => "استخدام Power BI وExcel لتحويل البيانات إلى لوحات تحكم مرئية تفاعلية تساعد صناع القرار وفريق المشروع على اتخاذ قرارات مبنية على الأدلة.",
+                                'content' => 'استخدام Power BI وExcel لتحويل البيانات إلى لوحات تحكم مرئية تفاعلية تساعد صناع القرار وفريق المشروع على اتخاذ قرارات مبنية على الأدلة.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'معايير المساءلة الإنسانية الأساسية (CHS) والتعلم المؤسسي',
-                                'content' => "تطبيق المعيار الإنساني الأساسي للجودة والمساءلة (CHS)، وإدارة التغذية الراجعة، وعقد ورش عمل استخلاص الدروس (Lessons Learned Workshops).",
+                                'content' => 'تطبيق المعيار الإنساني الأساسي للجودة والمساءلة (CHS)، وإدارة التغذية الراجعة، وعقد ورش عمل استخلاص الدروس (Lessons Learned Workshops).',
                                 'duration' => 25,
                             ],
                         ],
@@ -262,12 +262,12 @@ class NewCoursesSeeder extends Seeder
                             ],
                             [
                                 'title' => 'Executive Leadership and Strategic Board Relations',
-                                'content' => "Building effective partnerships between the CEO/Executive Director and the Board of Directors. Strategies for transparent reporting, alignment, and collaborative decision-making.",
+                                'content' => 'Building effective partnerships between the CEO/Executive Director and the Board of Directors. Strategies for transparent reporting, alignment, and collaborative decision-making.',
                                 'duration' => 20,
                             ],
                             [
                                 'title' => 'Institutional Transparency, Ethics and Anti-Corruption Policies',
-                                'content' => "Establishing integrity frameworks, whistleblower protections, code of ethics, and conflict-of-interest registers across all organizational tiers.",
+                                'content' => 'Establishing integrity frameworks, whistleblower protections, code of ethics, and conflict-of-interest registers across all organizational tiers.',
                                 'duration' => 25,
                             ],
                         ],
@@ -277,17 +277,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Strategic Environmental Scanning & Scenario Planning',
-                                'content' => "Utilizing SWOT, PESTLE, and stakeholder mapping to anticipate geopolitical, socio-economic, and donor funding shifts.",
+                                'content' => 'Utilizing SWOT, PESTLE, and stakeholder mapping to anticipate geopolitical, socio-economic, and donor funding shifts.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'Translating Strategic Vision into Measurable Key Results (OKRs)',
-                                'content' => "Aligning organizational vision with operational programs through Objectives and Key Results (OKRs) and balanced scorecards.",
+                                'content' => 'Aligning organizational vision with operational programs through Objectives and Key Results (OKRs) and balanced scorecards.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'Leading Cultural Transformation and Organizational Change',
-                                'content' => "Managing change fatigue, cultivating psychological safety, and driving continuous learning within humanitarian organizations.",
+                                'content' => 'Managing change fatigue, cultivating psychological safety, and driving continuous learning within humanitarian organizations.',
                                 'duration' => 25,
                             ],
                         ],
@@ -297,12 +297,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Crisis Preparedness and Business Continuity Planning',
-                                'content' => "Leading with resilience during acute emergencies, reputational crises, and rapid security deterioration.",
+                                'content' => 'Leading with resilience during acute emergencies, reputational crises, and rapid security deterioration.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'Financial Sustainability and Diversified Revenue Strategies',
-                                'content' => "Balancing restricted donor grants with unrestricted funding, institutional reserves, social enterprise models, and ethical private sector engagement.",
+                                'content' => 'Balancing restricted donor grants with unrestricted funding, institutional reserves, social enterprise models, and ethical private sector engagement.',
                                 'duration' => 25,
                             ],
                         ],
@@ -328,12 +328,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'The Humanitarian Supply Chain Framework & Cluster Coordination',
-                                'content' => "Introduction to emergency logistics mandates, Sphere standards for shelter and NFIs, and inter-agency coordination via the UN Global Logistics Cluster.",
+                                'content' => 'Introduction to emergency logistics mandates, Sphere standards for shelter and NFIs, and inter-agency coordination via the UN Global Logistics Cluster.',
                                 'duration' => 20,
                             ],
                             [
                                 'title' => 'Logistics Preparedness and Rapid Needs Assessment',
-                                'content' => "Assessing local infrastructure, supply corridors, port capacities, market availability, and bottleneck risks during early-stage crises.",
+                                'content' => 'Assessing local infrastructure, supply corridors, port capacities, market availability, and bottleneck risks during early-stage crises.',
                                 'duration' => 25,
                             ],
                         ],
@@ -343,12 +343,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Procurement Thresholds, Sourcing, and Vendor Vetting',
-                                'content' => "Navigating competitive bidding, simplified emergency thresholds, vendor due diligence, and anti-fraud safeguards under USAID/ECHO guidelines.",
+                                'content' => 'Navigating competitive bidding, simplified emergency thresholds, vendor due diligence, and anti-fraud safeguards under USAID/ECHO guidelines.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'Incoterms, Customs Clearance, and International Shipping',
-                                'content' => "Managing international freight documentation (Airway Bills, Bills of Lading), tax exemption waivers, and navigating customs clearance hurdles.",
+                                'content' => 'Managing international freight documentation (Airway Bills, Bills of Lading), tax exemption waivers, and navigating customs clearance hurdles.',
                                 'duration' => 25,
                             ],
                         ],
@@ -358,17 +358,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Warehouse Safety, Inventory Control & Cold Chain Storage',
-                                'content' => "Establishing temporary storage facilities, stock reconciliation, bin cards, FIFO/FEFO principles, and cold chain protocols for medical supplies.",
+                                'content' => 'Establishing temporary storage facilities, stock reconciliation, bin cards, FIFO/FEFO principles, and cold chain protocols for medical supplies.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'Fleet Management, Fuel Security and Route Optimization',
-                                'content' => "Vehicle allocation, GPS tracking systems, driver safety in volatile environments, and fuel conservation protocols.",
+                                'content' => 'Vehicle allocation, GPS tracking systems, driver safety in volatile environments, and fuel conservation protocols.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'Safe, Dignified Field Distributions and Modality Selection',
-                                'content' => "Designing distribution sites, crowd control, token/biometric verification, and deciding between in-kind items and cash & voucher assistance (CVA).",
+                                'content' => 'Designing distribution sites, crowd control, token/biometric verification, and deciding between in-kind items and cash & voucher assistance (CVA).',
                                 'duration' => 25,
                             ],
                         ],
@@ -394,12 +394,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Mapping Institutional Donors & Deciphering RFPs/Calls for Proposals',
-                                'content' => "Navigating donor portals (Grants.gov, EU Funding & Tenders, UN Partner Portal), evaluating eligibility, and conducting Go/No-Go decision analysis.",
+                                'content' => 'Navigating donor portals (Grants.gov, EU Funding & Tenders, UN Partner Portal), evaluating eligibility, and conducting Go/No-Go decision analysis.',
                                 'duration' => 25,
                             ],
                             [
                                 'title' => 'Building Strategic Consortia and Local Partner Alignment',
-                                'content' => "Structuring partner agreements, teaming memoranda of understanding (MOUs), and establishing equitable consortia governance.",
+                                'content' => 'Structuring partner agreements, teaming memoranda of understanding (MOUs), and establishing equitable consortia governance.',
                                 'duration' => 20,
                             ],
                         ],
@@ -409,17 +409,17 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Writing High-Impact Needs Statements & Problem Analyses',
-                                'content' => "Using verifiable statistical data, participatory assessments, and vulnerability criteria to substantiate urgency and relevance.",
+                                'content' => 'Using verifiable statistical data, participatory assessments, and vulnerability criteria to substantiate urgency and relevance.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'Articulating the Theory of Change & Results Framework',
-                                'content' => "Structuring clean causal pathways, linking outcomes to activities, and mainstreaming gender equality and environmental sustainability.",
+                                'content' => 'Structuring clean causal pathways, linking outcomes to activities, and mainstreaming gender equality and environmental sustainability.',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'Developing the Project Management, Staffing & Risk Plan',
-                                'content' => "Outlining organograms, key personnel qualifications, duty of care protocols, and project risk mitigation strategies.",
+                                'content' => 'Outlining organograms, key personnel qualifications, duty of care protocols, and project risk mitigation strategies.',
                                 'duration' => 25,
                             ],
                         ],
@@ -429,12 +429,12 @@ class NewCoursesSeeder extends Seeder
                         'lessons' => [
                             [
                                 'title' => 'Building the Cost Proposal and Budget Narrative',
-                                'content' => "Formulating unit-based personnel, travel, equipment, and direct operational costs alongside indirect cost recovery rates (NICRA/ICR).",
+                                'content' => 'Formulating unit-based personnel, travel, equipment, and direct operational costs alongside indirect cost recovery rates (NICRA/ICR).',
                                 'duration' => 30,
                             ],
                             [
                                 'title' => 'The Red Team Review: Scoring Proposals Against Donor Criteria',
-                                'content' => "Conducting internal peer reviews, compliance matrix checking, proofreading, and final submission packaging.",
+                                'content' => 'Conducting internal peer reviews, compliance matrix checking, proofreading, and final submission packaging.',
                                 'duration' => 25,
                             ],
                         ],
@@ -447,7 +447,7 @@ class NewCoursesSeeder extends Seeder
             $user = User::where('email', $cData['tutor_email'])->first();
             $category = Category::where('slug', $cData['category_slug'])->first();
 
-            if (!$user || !$category) {
+            if (! $user || ! $category) {
                 continue;
             }
 
@@ -592,7 +592,7 @@ class NewCoursesSeeder extends Seeder
 
         foreach ($profiles as $email => $data) {
             $user = User::where('email', $email)->first();
-            if (!$user) {
+            if (! $user) {
                 continue;
             }
 

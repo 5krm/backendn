@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (!Schema::hasColumn('courses', 'is_free')) {
+        if (! Schema::hasColumn('courses', 'is_free')) {
             Schema::table('courses', function (Blueprint $table) {
                 $table->boolean('is_free')->default(false);
             });

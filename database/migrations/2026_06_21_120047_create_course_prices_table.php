@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('course_prices', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->integer("price");
-            $table->boolean("is_active")->default(true);
-            $table->string("stripe_price_id",100)->nullable();
+            $table->integer('price');
+            $table->boolean('is_active')->default(true);
+            $table->string('stripe_price_id', 100)->nullable();
             $table->timestamps();
         });
     }

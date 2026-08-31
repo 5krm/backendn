@@ -1,19 +1,19 @@
 <?php
 
 use App\Enums\CourseStatus;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        if (!Schema::hasTable('courses')) {
+        if (! Schema::hasTable('courses')) {
             Schema::create('courses', function (Blueprint $table) {
                 $table->id();
                 $table->uuid('slug')->unique()->nullable();
-                $table->integer('duration')->default(0); //minutes
+                $table->integer('duration')->default(0); // minutes
                 $table->integer('order')->default(1);
                 $table->string('title');
                 $table->text('description');

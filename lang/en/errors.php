@@ -1,4 +1,5 @@
 <?php
+
 return [
     'not_found' => 'Page Not Found!',
     'not_found_message' => 'The page you are looking for might have been removed, had its name changed or is temporarily unavailable',

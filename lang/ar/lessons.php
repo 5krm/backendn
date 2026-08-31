@@ -1,4 +1,5 @@
 <?php
+
 return [
     'lessons' => ' :count دروس | درس واحد',
     'students' => ' :count طلاب | طالب واحد',
@@ -13,5 +14,5 @@ return [
     'nextLesson' => 'الدرس التالي',
     'continue' => 'متابعة',
     'no_video' => 'لا يوجد فيديو لهذا الدرس',
-    'mark_complete' => 'تحديد كمكتمل'
+    'mark_complete' => 'تحديد كمكتمل',
 ];

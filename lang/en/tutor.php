@@ -60,7 +60,7 @@ return [
         'unknown' => 'Unknown',
         'add_reply' => 'Add Reply',
         'edit' => 'Edit Comment',
-        'copy_testimonial' => 'Copy Testimonial'
+        'copy_testimonial' => 'Copy Testimonial',
     ],
 
     // Notifications Widget
@@ -213,7 +213,7 @@ return [
         'organizations' => 'Organizations',
         'organization_users' => 'Organization Users',
         'organization_followers' => 'Organization Followers',
-        'organization_courses' => 'Organization Courses'
+        'organization_courses' => 'Organization Courses',
 
     ],
 
@@ -515,7 +515,7 @@ return [
         'name' => 'Name',
         'email' => 'Email',
         'experience' => 'Experience',
-        'level' => "Level",
+        'level' => 'Level',
         'upload_video' => 'Upload video',
         'automated_emails' => 'Automated Emails',
         // Organization form labels
@@ -540,7 +540,7 @@ return [
         'save' => 'Save',
         'active' => 'Active',
         'position_placeholder' => 'Riyadh, Saudi Arabia',
-        "organization_stamp" => "certificate stamp"
+        'organization_stamp' => 'certificate stamp',
 
     ],
 
@@ -576,9 +576,9 @@ return [
         'manage_lessons' => 'Manage Lessons',
         'empty_sections_heading' => 'No Sections',
         'empty_sections_description' => 'Add a section to get started .',
-        "level" => "Level",
-        'status_toggle' => "status toggle",
-        'status_toggle_note' => "Upload the video to publish",
+        'level' => 'Level',
+        'status_toggle' => 'status toggle',
+        'status_toggle_note' => 'Upload the video to publish',
         'active' => 'Active',
         'video_status' => 'Video Status',
         'video_ready' => 'Video is ready',
@@ -739,16 +739,16 @@ return [
     'years' => 'Years',
     'courses_available' => 'Courses available for this tutor',
     'no_courses' => 'No courses found for this tutor',
-    'ratings' =>[
+    'ratings' => [
         '_' => 'Ratings',
         'rating' => 'Rating',
         'message' => 'Message',
         'student' => 'Student',
     ],
-    'testimonials' =>[
+    'testimonials' => [
         'from_course_ratings' => 'From Course Ratings',
         'from_lesson_comments' => 'From Lesson Comments',
         'create_from_resource' => 'Create from Source',
-        'select_source' => 'Select Source'
-    ]
+        'select_source' => 'Select Source',
+    ],
 ];

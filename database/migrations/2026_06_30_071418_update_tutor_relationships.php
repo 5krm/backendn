@@ -19,7 +19,6 @@ return new class extends Migration
     //         $table->foreignId('tutor_id')->nullable()->change()->constrained("users")->cascadeOnDelete();
     //     });
 
-
     //     Schema::table("lessons", function (Blueprint $table) {
     //         $table->dropForeign("lessons_tutor_id_foreign");
     //         $table->dropIndex("lessons_tutor_id_foreign");
@@ -44,73 +43,73 @@ return new class extends Migration
     public function up(): void
     {
         // 1. Drop constraints first
-        Schema::table("courses", function (Blueprint $table) {
-            $table->dropForeign(["tutor_id"]);
+        Schema::table('courses', function (Blueprint $table) {
+            $table->dropForeign(['tutor_id']);
         });
 
-        Schema::table("lessons", function (Blueprint $table) {
-            $table->dropForeign(["tutor_id"]);
+        Schema::table('lessons', function (Blueprint $table) {
+            $table->dropForeign(['tutor_id']);
         });
 
-        Schema::table("quizzes", function (Blueprint $table) {
-            $table->dropForeign(["tutor_id"]);
+        Schema::table('quizzes', function (Blueprint $table) {
+            $table->dropForeign(['tutor_id']);
         });
 
-        Schema::table("certificates", function (Blueprint $table) {
-            $table->dropForeign(["tutor_id"]);
+        Schema::table('certificates', function (Blueprint $table) {
+            $table->dropForeign(['tutor_id']);
         });
 
         // 2. Now safe to update data
-        DB::statement("
+        DB::statement('
             UPDATE courses
             INNER JOIN tutors ON courses.tutor_id = tutors.id
             SET courses.tutor_id = tutors.user_id
-        ");
+        ');
 
-        DB::statement("
+        DB::statement('
             UPDATE lessons
             INNER JOIN tutors ON lessons.tutor_id = tutors.id
             SET lessons.tutor_id = tutors.user_id
-        ");
+        ');
 
-        DB::statement("
+        DB::statement('
             UPDATE quizzes
             INNER JOIN tutors ON quizzes.tutor_id = tutors.id
             SET quizzes.tutor_id = tutors.user_id
-        ");
+        ');
 
-        DB::statement("
+        DB::statement('
             UPDATE certificates
             INNER JOIN tutors ON certificates.tutor_id = tutors.id
             SET certificates.tutor_id = tutors.user_id
-        ");
+        ');
 
         // 3. Re-add foreign keys to users table
-        Schema::table("courses", function (Blueprint $table) {
-            $table->foreign("tutor_id")
-                ->references("id")
-                ->on("users")
+        Schema::table('courses', function (Blueprint $table) {
+            $table->foreign('tutor_id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnDelete();
         });
 
-        Schema::table("lessons", function (Blueprint $table) {
-            $table->foreign("tutor_id")
-                ->references("id")
-                ->on("users")
+        Schema::table('lessons', function (Blueprint $table) {
+            $table->foreign('tutor_id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnDelete();
         });
 
-        Schema::table("quizzes", function (Blueprint $table) {
-            $table->foreign("tutor_id")
-                ->references("id")
-                ->on("users")
+        Schema::table('quizzes', function (Blueprint $table) {
+            $table->foreign('tutor_id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnDelete();
         });
 
-        Schema::table("certificates", function (Blueprint $table) {
-            $table->foreign("tutor_id")
-                ->references("id")
-                ->on("users")
+        Schema::table('certificates', function (Blueprint $table) {
+            $table->foreign('tutor_id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnDelete();
         });
     }

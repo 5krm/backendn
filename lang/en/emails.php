@@ -1,4 +1,5 @@
 <?php
+
 return [
     'comment' => 'comment',
     'reply' => 'reply',
@@ -8,16 +9,16 @@ return [
         'inform' => 'A new comment has been posted in the discussion for the lesson "<b>:lesson</b>" by your student <b>:student</b>.',
         'to_view' => 'To view the comment and join the discussion, click the button below.',
         'footer' => 'Supporting your students and collaborating with fellow educators is a great way to enrich the teaching experience. If you have any questions, need resources, or require assistance, please reach out to us at support@portal365.org',
-        'keepit' => 'Thank you for your dedication to our learning community!'
+        'keepit' => 'Thank you for your dedication to our learning community!',
     ],
-    'view' =>  'View :object',
+    'view' => 'View :object',
     'new_reply' => [
         'title' => 'New Reply to Your Comment Discussion!',
         'inform' => 'We hope you’re finding the course discussions enriching and thought-provoking.
                     <b>:colleague</b> replied to your comment "<b>:comment</b>" on the Lesson: <b>:lesson</b> discussion board.',
         'footer' => 'Your active participation is what makes our course community vibrant and supportive. If you have any questions or
         need further assistance, please don’t hesitate to contact us at support@portal365.org',
-        'keepit' => 'Let’s keep the conversation going and the ideas flowing!'
+        'keepit' => 'Let’s keep the conversation going and the ideas flowing!',
     ],
     'social_account' => [
         'title' => 'Welcome To NGO Academy',
@@ -29,10 +30,10 @@ return [
             'Connect with like-minded individuals, share your insights, and learn from others.',
             'Personalize Your Profile: Add a profile picture, keep tracking on your courses and get your own certificates.',
             'Stay Updated: Keep an eye on your inbox for updates, announcements, and exclusive content',
-            'Get Involved: Participate in discussions and contribute to our growing knowledge base. Your voice matters!'
+            'Get Involved: Participate in discussions and contribute to our growing knowledge base. Your voice matters!',
         ],
         'footer' => 'If you have any questions or need assistance, feel free to reach out to our support team at support@portal365.org.',
-        'footer2' => 'Once again, welcome aboard! We’re looking forward to seeing you thrive within our community.'
+        'footer2' => 'Once again, welcome aboard! We’re looking forward to seeing you thrive within our community.',
     ],
     'reset_password' => [
         'subject' => 'Reset Password',

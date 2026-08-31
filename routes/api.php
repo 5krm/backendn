@@ -15,9 +15,9 @@ use App\Http\Middleware\VerifyAppKey;
 use App\Models\Courses\Course;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test/test', function () {
+    $course = Course::with('activePromotions')->get();
 
-Route::get("/test/test", function () {
-    $course =Course::with("activePromotions")->get();
     return response()->json($course);
 });
 Route::middleware([VerifyAppKey::class])->group(function () {
@@ -106,7 +106,6 @@ Route::middleware([VerifyAppKey::class])->group(function () {
         });
     });
 
-
     Route::group(['prefix' => '/categories'], function () {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/', [CategoryController::class, 'store']);
@@ -127,5 +126,4 @@ Route::middleware([VerifyAppKey::class])->group(function () {
 | Mobile API v1 Routes
 |--------------------------------------------------------------------------
 */
-require __DIR__ . '/mobile.php';
-
+require __DIR__.'/mobile.php';

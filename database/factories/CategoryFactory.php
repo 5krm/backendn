@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends Factory<Category>
  */
 class CategoryFactory extends Factory
 {
@@ -16,10 +16,10 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         $name = fake()->words(2, true);
-        
+
         return [
             'name' => ucfirst($name),
-            'name_ar' => 'تصنيف ' . $name,
+            'name_ar' => 'تصنيف '.$name,
             'slug' => Str::slug($name),
             'created_at' => now(),
             'updated_at' => now(),

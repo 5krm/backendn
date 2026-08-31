@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('books', function (Blueprint $table) {
-           
+
             $table->bigIncrements('id')->change();
         });
     }
@@ -20,8 +20,5 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-    
-    }
+    public function down(): void {}
 };

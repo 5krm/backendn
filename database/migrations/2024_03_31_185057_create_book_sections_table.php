@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('book_sections', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->integer("order");
-            $table->text("description");
+            $table->string('title');
+            $table->integer('order');
+            $table->text('description');
             $table->foreignIdFor(Book::class);
             $table->timestamps();
             $table->softDeletesTz();

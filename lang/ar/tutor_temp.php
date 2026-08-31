@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     // Navigation Groups
@@ -427,5 +427,5 @@ return [
     ],
 
     // Validation
-    'validation' => []
+    'validation' => [],
 ];

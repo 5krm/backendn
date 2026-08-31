@@ -18,7 +18,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {        
+    {
         Schema::create('user_tokens', function (Blueprint $table) {
             $table->id();
             $table->string('email');

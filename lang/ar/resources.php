@@ -1,4 +1,5 @@
 <?php
+
 return [
     'resources' => 'المصادر',
     'type' => [
@@ -8,6 +9,6 @@ return [
         'xlsx' => 'Spreadsheet',
         'zip' => 'ZIP',
         'video' => 'فيديو',
-        'image' => 'صورة'
-    ]
+        'image' => 'صورة',
+    ],
 ];

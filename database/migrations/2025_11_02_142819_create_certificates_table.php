@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('certificates')) {
+        if (! Schema::hasTable('certificates')) {
             Schema::create('certificates', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -26,7 +26,7 @@ return new class extends Migration
                 $table->boolean('is_valid')->default(true);
                 $table->timestamps();
                 $table->softDeletes();
-                
+
                 $table->index(['user_id', 'course_id']);
                 $table->index('certificate_number');
             });

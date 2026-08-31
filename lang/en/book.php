@@ -1,18 +1,19 @@
 <?php
+
 return [
-    "our_curriculum" => "Our Curriculum",
-    "orderNow" => "Order now",
-    "orderNowFor" => "Order now <b>:price</b>",
-    "descriptionTitle" => "Who is this book for?",
-    "descriptionSubTitle" => "Discover if this book is your next read",
-    "bookIndex" => "Book Index",
-    "bookIndexTitle" => "What is inside this book",
-    "checkoutSuccess" => 'You have successfully ordered the book and you can find your invoice at your <a class="text-primary underline" href=":link">billing page</a> in settings',
-    "downloadBook" => "Download the Book",
-    "backToBook" => "back to book details",
+    'our_curriculum' => 'Our Curriculum',
+    'orderNow' => 'Order now',
+    'orderNowFor' => 'Order now <b>:price</b>',
+    'descriptionTitle' => 'Who is this book for?',
+    'descriptionSubTitle' => 'Discover if this book is your next read',
+    'bookIndex' => 'Book Index',
+    'bookIndexTitle' => 'What is inside this book',
+    'checkoutSuccess' => 'You have successfully ordered the book and you can find your invoice at your <a class="text-primary underline" href=":link">billing page</a> in settings',
+    'downloadBook' => 'Download the Book',
+    'backToBook' => 'back to book details',
     'status' => [
         'draft' => 'Draft',
-        'published' => 'Published'
+        'published' => 'Published',
     ],
     'hero_badge' => 'New Release',
     'hero_title' => 'Master Non-Profit',
@@ -66,9 +67,8 @@ return [
     'kindle' => 'Kindle',
     'jarir' => 'Jarir',
 
-    'no_books' => "No books available currently. Check back soon.",
+    'no_books' => 'No books available currently. Check back soon.',
     'no_sections_available' => 'Book sections will be available soon.',
-    
 
     'books' => [
         'pm20' => [

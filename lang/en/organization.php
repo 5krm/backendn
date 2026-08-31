@@ -26,5 +26,5 @@ return [
     'contact_title' => 'Have a question?',
     'contact_desc' => 'Reach out directly to the organization for assistance.',
     'send_message' => 'Send message',
-    'followedBy' => 'followed by :followers students'
+    'followedBy' => 'followed by :followers students',
 ];

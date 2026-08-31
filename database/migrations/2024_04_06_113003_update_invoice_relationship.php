@@ -13,7 +13,7 @@ return new class extends Migration
     {
 
         Schema::table('invoices', function (Blueprint $table) {
-            $table->morphs("invoiceable");
+            $table->morphs('invoiceable');
             $table->dropColumn('course_id');
         });
     }

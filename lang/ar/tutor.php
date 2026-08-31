@@ -61,7 +61,7 @@ return [
         'unknown' => 'غير معروف',
         'add_reply' => 'إضافة رد',
         'edit' => 'تعديل التعليق',
-        "copy_testimonial" => "نسح الى التوصيات",
+        'copy_testimonial' => 'نسح الى التوصيات',
     ],
 
     // Notifications Widget
@@ -214,7 +214,7 @@ return [
         'organizations' => 'المنظمات',
         'organization_users' => 'مستخدمو المؤسسة',
         'organization_followers' => 'متابعو المؤسسة',
-        'organization_courses' => 'دورات المؤسسة'
+        'organization_courses' => 'دورات المؤسسة',
 
     ],
 
@@ -244,7 +244,7 @@ return [
         'wishlist_appear_here' => 'المستخدمون الذين يضيفون هذه الدورة إلى قائمة الرغبات الخاصة بهم سيظهرون هنا.',
         'no_followers' => 'لا يوجد متابعون بعد',
         'followers_appear_here' => 'الطلاب الذين يتابعون هذه المؤسسة سيظهرون هنا.',
-        'organization_courses_appear_here' => 'ستظهر هنا الدورات التدريبية التي يقدمها المدربون في هذه المنظمة'
+        'organization_courses_appear_here' => 'ستظهر هنا الدورات التدريبية التي يقدمها المدربون في هذه المنظمة',
     ],
 
     // Issues
@@ -425,9 +425,6 @@ return [
         'create_testimonial_from_comment' => 'إنشاء توصية من التعليق',
         'select_comment' => 'اختر التعليق',
 
-
-
-
         'lesson_resources_help' => 'رفع ملفات للمتدربين للتحميل (PDF، Word، Excel، PowerPoint، صور، ZIP - الحد الأقصى 10 ميجابايت لكل ملف)',
 
         // Quiz
@@ -519,8 +516,8 @@ return [
         'name' => 'الاسم',
         'email' => 'البريد الإلكتروني',
         'experience' => 'الخبرة',
-        'level' => "المستوى",
-        "upload_video" => "رفع الفيديو",
+        'level' => 'المستوى',
+        'upload_video' => 'رفع الفيديو',
         'automated_emails' => 'الإيميلات التلقائية',
         // Organization form labels
         'organization_information' => 'معلومات المنظمة',
@@ -545,7 +542,7 @@ return [
         'save' => 'حفظ',
         'active' => 'نشط',
         'position_placeholder' => 'الرياض، المملكة العربية السعودية',
-        "organization_stamp" => "ختم الشهادة"
+        'organization_stamp' => 'ختم الشهادة',
 
     ],
 
@@ -581,9 +578,9 @@ return [
         'manage_lessons' => 'إدارة الدروس',
         'empty_sections_heading' => 'لايوجد اقسام',
         'empty_sections_description' => 'قم بإضافة قسم للبدء.',
-        "level" => "المستوى",
-        'status_toggle' => "تغير الحالة",
-        'status_toggle_note' => "ارفع الفيديو قبل النشر",
+        'level' => 'المستوى',
+        'status_toggle' => 'تغير الحالة',
+        'status_toggle_note' => 'ارفع الفيديو قبل النشر',
         'active' => 'نشط',
         'video_status' => 'حالة الفيديو',
         'video_ready' => 'الفيديو جاهز',
@@ -754,6 +751,6 @@ return [
         'from_course_ratings' => 'من تقييمات الدورات',
         'from_lesson_comments' => 'من تعليقات الدروس',
         'create_from_resource' => 'إنشاء من مصدر',
-        'select_source' => 'اختر المصدر'
-    ]
+        'select_source' => 'اختر المصدر',
+    ],
 ];

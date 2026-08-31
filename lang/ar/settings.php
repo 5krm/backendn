@@ -1,11 +1,11 @@
 <?php
 
 return [
-    "display_settings" => [
-        "title" => "إعدادات العرض",
-        "subtitle" => "تحكم في كيفية عرض العناصر",
-        "select_display_language" => "اختر لغة العرض المفضلة لديك",
-        "select_learning_language" => "اختر لغة التعلم المفضلة لديك",
+    'display_settings' => [
+        'title' => 'إعدادات العرض',
+        'subtitle' => 'تحكم في كيفية عرض العناصر',
+        'select_display_language' => 'اختر لغة العرض المفضلة لديك',
+        'select_learning_language' => 'اختر لغة التعلم المفضلة لديك',
     ],
     'email_preferences' => [
         'title' => 'تفضيلات البريد الإلكتروني',
@@ -16,5 +16,5 @@ return [
     ],
     'followup_email' => 'رسائل المتابعة',
     'notification_email' => 'رسائل الإشعارات',
-    'update_email' => 'رسائل التحديثات' 
+    'update_email' => 'رسائل التحديثات',
 ];

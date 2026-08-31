@@ -1,4 +1,5 @@
 <?php
+
 return [
     'lessons' => 'One Lesson| :count Lessons',
     'students' => 'One Student| :count Students',
@@ -13,5 +14,5 @@ return [
     'nextLesson' => 'Next Lesson',
     'continue' => 'Continue',
     'no_video' => 'No video available for this lesson',
-    'mark_complete' => 'Mark As Complete'
+    'mark_complete' => 'Mark As Complete',
 ];

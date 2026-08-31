@@ -1,11 +1,11 @@
 <?php
 
 return [
-    "display_settings" => [
-        "title" => "Display settings",
-        "subtitle" => "control how things are displayed",
-        "select_display_language" => "Select your preferred display language",
-        "select_learning_language" => "Select your preferred learning language",
+    'display_settings' => [
+        'title' => 'Display settings',
+        'subtitle' => 'control how things are displayed',
+        'select_display_language' => 'Select your preferred display language',
+        'select_learning_language' => 'Select your preferred learning language',
     ],
     'email_preferences' => [
         'title' => 'Email preferences',

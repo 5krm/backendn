@@ -34,7 +34,7 @@ function createCertificateRecord(array $overrides = []): Certificate
     $course = new Course;
     $course->forceFill([
         'title' => 'Laravel Masterclass',
-        'slug' => 'laravel-masterclass-' . Str::random(6),
+        'slug' => 'laravel-masterclass-'.Str::random(6),
         'description' => 'Test course description',
         'tutor_id' => $tutor->id,
         'status' => CourseStatus::published,
@@ -67,7 +67,7 @@ it('assigns CERT-style certificate number and verification code', function () {
     $certificate = createCertificateRecord();
 
     expect($certificate->certificate_number)
-        ->toStartWith('CERT-' . date('Y') . '-')
+        ->toStartWith('CERT-'.date('Y').'-')
         ->and($certificate->verification_code)->toHaveLength(12)
         ->and($certificate->status)->toBe(Certificate::STATUS_VALID);
 });
@@ -116,7 +116,7 @@ it('builds linkedin urls with verification url and credential id', function () {
 
     expect($addUrl)
         ->toContain(urlencode($certificate->verificationUrl()))
-        ->toContain('certId=' . urlencode($certificate->certificate_number))
+        ->toContain('certId='.urlencode($certificate->certificate_number))
         ->and($shareUrl)->toContain(urlencode($certificate->verificationUrl()));
 });
 
@@ -127,7 +127,7 @@ it('issues certificates through the service with both identifiers', function () 
     $course = new Course;
     $course->forceFill([
         'title' => 'Service Issued Course',
-        'slug' => 'service-issued-' . Str::random(6),
+        'slug' => 'service-issued-'.Str::random(6),
         'description' => 'Test course description',
         'tutor_id' => $tutor->id,
         'status' => CourseStatus::published,
@@ -143,6 +143,6 @@ it('issues certificates through the service with both identifiers', function () 
     $certificate = app(CertificateService::class)->issueCertificate($student, $course, 88.5);
 
     expect($certificate->verification_code)->toHaveLength(12)
-        ->and($certificate->certificate_number)->toStartWith('CERT-' . date('Y') . '-')
+        ->and($certificate->certificate_number)->toStartWith('CERT-'.date('Y').'-')
         ->and($certificate->status)->toBe(Certificate::STATUS_VALID);
 });

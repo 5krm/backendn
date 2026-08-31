@@ -1,9 +1,10 @@
 <?php
+
 return [
     'status' => [
         'draft' => 'مسودّة',
         'published' => 'نُشر',
-        'preview' => 'معاينة'
+        'preview' => 'معاينة',
     ],
     'emails' => [
         '_' => 'الإيميلات التلقائية',
@@ -22,7 +23,7 @@ return [
             'type' => 'النوع',
             'subject' => 'الموضوع',
             'body' => 'النص',
-            'active' => 'نشط'
+            'active' => 'نشط',
         ],
         'add_mail' => 'إضافة بريد للدورة',
         'new_title' => 'بريد دورة جديد',
@@ -36,7 +37,7 @@ return [
         'enrollNow' => 'سجّل الآن',
         'for_free' => ' انضم الآن مجانا',
         'for' => ' انضم الآن <b>:price</b>',
-        'discount' => ':percent% خصم'
+        'discount' => ':percent% خصم',
     ],
     'courses' => 'تدريبات|تدريب',
     'students' => 'الطلاب المسجلون|الطالب',
@@ -62,7 +63,7 @@ return [
     'notify_msg' => 'سيتم إعلامك عندما تصبح متاحة.',
     'add_to_wishlist' => 'إضافة إلى قائمة الرغبات',
     'added_to_wishlist' => 'تمت الإضافة إلى قائمة الرغبات',
-    "in_wishlist" => 'في قائمة الرغبات',
+    'in_wishlist' => 'في قائمة الرغبات',
     'removeFromWishlist' => 'إزالة من قائمة الرغبات',
     'removed_from_wishlist' => 'تمت الإزالة من قائمة الرغبات',
     'downloadCertificate' => 'قم بتحميل الشهادة',
@@ -80,7 +81,7 @@ return [
     'getCertificate' => 'احصل على شهادتك الآن',
     'shareToLinkedIn' => 'مشاركة على لينكد إن',
     'addToLinkedInProfile' => 'إضافة إلى ملف لينكد إن',
-    'linkedInShareText' => "لقد أكملت للتو دورة \":course\" وحصلت على شهادتي! 🎓",
+    'linkedInShareText' => 'لقد أكملت للتو دورة ":course" وحصلت على شهادتي! 🎓',
 
     'heroTitle' => 'اكتشف مهاراتك',
     'heroSubtitle' => 'ما ستحققه في هذه التدريب',
@@ -89,7 +90,7 @@ return [
     'foryou' => 'دورتنا مصممة خصيصا لك',
     'testimonials' => [
         'title' => 'آراء الطلاب',
-        'subtitle' => 'ما يقوله طلابنا عن هذه الدورة'
+        'subtitle' => 'ما يقوله طلابنا عن هذه الدورة',
     ],
     'continueLearning' => 'متابعة التعلّم',
     'congrats' => 'تهانينا!',
@@ -97,14 +98,14 @@ return [
         'title' => 'لقد فعلتها! تهانينا!',
         'subtitle' => 'لقد قمت باكمال درس <b>":course"</b>.',
         'content' => 'خطوتك التالية للحصول على الشهادة هي باخذ الاختبار النهائي.',
-        'note' => "ملاحظة: ستتاح لك دائمًا الفرصة لأداء الاختبار في أي وقت تريده",
-        'cancel_btn' => "ساخذ الاختبار في وقت لاحق"
+        'note' => 'ملاحظة: ستتاح لك دائمًا الفرصة لأداء الاختبار في أي وقت تريده',
+        'cancel_btn' => 'ساخذ الاختبار في وقت لاحق',
     ],
     'finished' => 'نجحت',
 
     'survey' => [
         'title' => 'استبيان',
-        'experience' => 'هل يمكن أن تخبرنا بتجربتك لمساعدتنا في تحسين دوراتنا التدريبية؟'
+        'experience' => 'هل يمكن أن تخبرنا بتجربتك لمساعدتنا في تحسين دوراتنا التدريبية؟',
     ],
     'enroll_success' => 'لقد سجلت بنجاح في التدريب ويمكنك العثور على فاتورتك في <a class="text-primary underline" href=":link">صفحة معلومات الدفع</a> في الاعدادات',
     'free_enroll_success' => 'لقد تم تسجيلك في الدورة بنجاح. يمكنك العثور عليها الآن في صفحة <a class="text-primary underline" href=":link">دوراتي</a>.',
@@ -174,9 +175,9 @@ return [
     'enrolled_students' => 'طالب مسجل',
     'lessons' => 'الدروس',
     'levels' => [
-        "beginner" => "مبتدئ",
-        "intermediate" => "متوسط",
-        "advanced" => "متقدم"
+        'beginner' => 'مبتدئ',
+        'intermediate' => 'متوسط',
+        'advanced' => 'متقدم',
     ],
-    'on_sale' => 'عرض خاص'
+    'on_sale' => 'عرض خاص',
 ];

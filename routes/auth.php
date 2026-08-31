@@ -1,18 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\VerifyCaptcha;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Auth\CompleteProfileController;
-use App\Http\Controllers\Auth\ProviderController;
-use App\Http\Controllers\App\Auth\VerifyEmailController;
+use App\Http\Controllers\App\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\App\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\App\Auth\NewPasswordController;
 use App\Http\Controllers\App\Auth\PasswordResetLinkController;
-use App\Http\Controllers\App\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\App\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\App\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\CompleteProfileController;
+use App\Http\Controllers\Auth\ProviderController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImpersonationController;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\VerifyCaptcha;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->prefix('auth')->group(function () {
     Route::view('/login', 'auth.login')->name('auth.login');

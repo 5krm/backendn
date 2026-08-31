@@ -1,11 +1,11 @@
 <?php
 
+use App\Enums\CourseEmailType;
+use App\Models\Courses\Course;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Courses\Course;
-use App\Models\User;
-use App\Enums\CourseEmailType;
 
 return new class extends Migration
 {

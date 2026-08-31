@@ -8,31 +8,27 @@ use App\Http\Controllers\App\DashboardController;
 use App\Http\Controllers\App\Emails\EmailPreferenceController;
 use App\Http\Controllers\App\Lessons\LessonController;
 use App\Http\Controllers\App\Lessons\LessonResourceDownloadController;
+use App\Http\Controllers\App\OrganizationController;
 use App\Http\Controllers\App\Profile\BillingController;
 use App\Http\Controllers\App\Profile\ProfileController;
-use App\Http\Controllers\App\OrganizationController;
-use App\Http\Controllers\App\PromotionController;
-use App\Http\Controllers\App\TutorController;
 use App\Http\Controllers\App\Profile\SettingController;
+use App\Http\Controllers\App\PromotionController;
 use App\Http\Controllers\App\SurveyController;
+use App\Http\Controllers\App\TutorController;
 use App\Http\Controllers\App\YoutubeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CertificateVerificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LegalController;
+use App\Http\Controllers\SitemapController;
 use App\Mail\CourseRatingMail;
 use App\Mail\PromotionAnnouncement;
-use App\Mail\CourseSuggestion;
-use App\Mail\PublishedLesson;
-use App\Mail\VerifyEmail;
 use App\Models\Certificate;
 use App\Models\Courses\Course;
-use App\Models\Lessons\Lesson;
+use App\Models\Promotion;
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
@@ -76,7 +72,6 @@ Route::middleware(['auth', 'complete_profile'])->prefix('app')->group(function (
             Route::post('/complete', [LessonController::class, 'markComplete'])->name('app.lessons.complete_lesson');
         });
 
-
         Route::group(['middleware' => ['check_course'], 'prefix' => '/{course}'], function () {
 
             Route::get('', [CourseController::class, 'show'])->name('app.courses.details');
@@ -113,28 +108,28 @@ Route::prefix('/tutors/{token}/setup')->group(function () {
     Route::post('/', [TutorAccountController::class, 'setup'])->name('email.setup_tutor_setup');
 });
 
-
 Route::get('/certificate/{certificate}/download', [CertificateVerificationController::class, 'download'])->name('certificate.download');
 
 Route::get('/course-certificate/{course}/certificate', function (Course $course) {
     $certificate = Certificate::where('course_id', $course->id)->where('user_id', auth()->id())->first();
+
     return redirect(route('certificates.verify', $certificate->verification_code));
 })->name('certificate_by_course');
 
-Route::get('/certificates/verify/{code}', [App\Http\Controllers\CertificateVerificationController::class, 'show'])
+Route::get('/certificates/verify/{code}', [CertificateVerificationController::class, 'show'])
     ->name('certificates.verify');
 
 // Legal pages
-Route::get('/faq', [App\Http\Controllers\LegalController::class, 'faq'])->name('legal.faq');
-Route::get('/privacy-policy', [App\Http\Controllers\LegalController::class, 'privacyPolicy'])->name('legal.privacy-policy');
-Route::get('/terms-of-service', [App\Http\Controllers\LegalController::class, 'termsOfService'])->name('legal.terms-of-service');
-Route::get('/cookie-policy', [App\Http\Controllers\LegalController::class, 'cookiePolicy'])->name('legal.cookie-policy');
-Route::get('/contact', [App\Http\Controllers\LegalController::class, 'contact'])->name('legal.contact');
+Route::get('/faq', [LegalController::class, 'faq'])->name('legal.faq');
+Route::get('/privacy-policy', [LegalController::class, 'privacyPolicy'])->name('legal.privacy-policy');
+Route::get('/terms-of-service', [LegalController::class, 'termsOfService'])->name('legal.terms-of-service');
+Route::get('/cookie-policy', [LegalController::class, 'cookiePolicy'])->name('legal.cookie-policy');
+Route::get('/contact', [LegalController::class, 'contact'])->name('legal.contact');
 
 // Sitemap
-Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 Route::get('/preview-mail', function () {
     $user = User::first() ?? new User(['name' => 'Sarah']);
     $course = Course::first();
@@ -148,7 +143,7 @@ Route::get('/preview-mail', function () {
 Route::get('/preview-promotion-mail', function () {
     $user = User::first() ?? new User(['name' => 'Sarah']);
     $course = Course::first();
-    $promotion = App\Models\Promotion::query()->active()->first() ?? \App\Models\Promotion::first();
+    $promotion = Promotion::query()->active()->first() ?? Promotion::first();
 
     return new PromotionAnnouncement(
         user: $user,

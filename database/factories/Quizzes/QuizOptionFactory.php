@@ -2,10 +2,11 @@
 
 namespace Database\Factories\Quizzes;
 
+use App\Models\Quizzes\QuizOption;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Quizzes\QuizOption>
+ * @extends Factory<QuizOption>
  */
 class QuizOptionFactory extends Factory
 {
