@@ -20,6 +20,7 @@
     "dependencies": {
         "@iconify-json/mdi": "^1.1.64",
         "@iconify/tailwind": "^0.1.4",
+        "@vercel/speed-insights": "^2.0.0",
         "@vimeo/player": "^2.21.0",
         "alpinejs": "^3.15.2",
         "swiper": "^11.0.7"
